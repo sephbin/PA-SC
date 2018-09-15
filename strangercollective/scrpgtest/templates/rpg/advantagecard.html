@@ -1,0 +1,26 @@
+<div class="col-md-4" id="advantagecard">
+	<div class="card">
+		<div class="card-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">Advantages</th>
+						<th scope="col">Cost</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for a in instance.reladvantage.all %}
+						<tr>
+							<td>{{a.advantage}}
+								{% if a.modifiers %}
+									({% for m in a.modifiers.modifier_set.all %}{{m.name}}, {{m.modifier}}%{% if forloop.last %}{% else %}; {% endif %}{% endfor %})
+								{% endif %}
+							</td>
+							<td>[{{a.cost}}]</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -25,6 +25,7 @@ urlpatterns = [
     path(r'markdownx/', include('markdownx.urls')),
     path(r'articles/', include('articles.urls')),
     path(r'tests/', include('tests.urls')),
+    path(r'rpg/', include('scrpgtest.urls')),
     path(r'redback/', include('redback.urls')),
     path(r'code/', include('unswcode.urls')),
     path(r'cv/', include('cv.urls')),

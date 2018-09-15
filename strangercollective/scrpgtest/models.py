@@ -1,6 +1,7 @@
 from django.db import models
 import math
 import json
+import requests
 # from django.contrib.auth.models import User
 # from taggit.managers import TaggableManager
 # Create your models here.
@@ -178,6 +179,10 @@ class character(models.Model):
                 except:
                     pass
         return tally
+    def save(self, *args, **kwargs):
+        super(character, self).save(*args, **kwargs)
+        payload = {'value1': self.firstname+" "+self.lastname+" ["+str(self.cost())+"]", 'value2': 'http://www.strangercollective.com/rpg/'+str(self.id)}
+        r = requests.post("https://maker.ifttt.com/trigger/crowbarcharacteredit/with/key/bhFn8UCEstaDR_dRNGLoBd", data=payload)
 
 
 class modPackage(models.Model):

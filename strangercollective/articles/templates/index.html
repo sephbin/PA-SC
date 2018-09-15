@@ -1,0 +1,448 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<title>COX LABS</title>
+
+	<meta name="HandheldFriendly" content="True" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<meta name="description" content="OpenAI is a non-profit AI research company, discovering and enacting the path to safe artificial general intelligence." />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="canonical" href="https://blog.openai.com/" />
+	<meta name="referrer" content="no-referrer-when-downgrade" />
+	
+	<meta property="og:site_name" content="OpenAI Blog" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="OpenAI Blog" />
+	<meta property="og:description" content="OpenAI is a non-profit AI research company, discovering and enacting the path to safe artificial general intelligence." />
+	<meta property="og:url" content="https://blog.openai.com/" />
+	<meta property="og:image" content="https://blog.openai.com/content/images/2017/03/og_image.png" />
+	<meta property="article:publisher" content="https://www.facebook.com/openai.research" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="OpenAI Blog" />
+	<meta name="twitter:description" content="OpenAI is a non-profit AI research company, discovering and enacting the path to safe artificial general intelligence." />
+	<meta name="twitter:url" content="https://blog.openai.com/" />
+	<meta name="twitter:image" content="https://blog.openai.com/content/images/2017/03/og_image.png" />
+	<meta name="twitter:site" content="@openai" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	
+	<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"publisher": {
+		"@type": "Organization",
+		"name": "COX LABS Blog",
+		"logo": {
+			"@type": "ImageObject",
+			// "url": "https://blog.openai.com/content/images/2017/03/twitter.png",
+			"url": "<<UPDATE>>",
+			"width": 60,
+			"height": 60
+		}
+	},
+	"url": "https://blog.openai.com/",
+	"image": {
+		"@type": "ImageObject",
+		// "url": "https://blog.openai.com/content/images/2017/03/og_image.png",
+		"url": "<<UPDATE>>",
+		"width": 1200,
+		"height": 630
+	},
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		// "@id": "https://blog.openai.com/"
+		"@id": "<<UPDATE>>"
+	},
+	// "description": "OpenAI is a non-profit AI research company, discovering and enacting the path to safe artificial general intelligence."
+	"description": "<<UPDATE>>"
+}
+	</script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "710c928a5473"
+});
+</script>
+	<!-- <meta name="generator" content="Ghost 1.24" /> -->
+	<!-- <link rel="alternate" type="application/rss+xml" title="OpenAI Blog" href="https://blog.openai.com/rss/" /> -->
+
+	<!-- <link rel="icon" href="/assets/images/favicon/favicon.ico"> -->
+	<!-- <link rel="shortcut icon" href="/assets/images/favicon/favicon.ico"> -->
+	<!-- <link rel="apple-touch-icon" href="/assets/images/favicon/favicon.png"> -->
+
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/style.css' %}" />
+
+</head>
+<body class="home-template">
+
+
+	<main class="Main">
+
+	<div class="MainContent">
+
+		<div class="Shared-Navigation">
+	<div class="Shared-Navigation-logo">
+	<a href="https://openai.com/"
+		title="OpenAI"
+		class="Shared-Navigation-link
+				Shared-Navigation-link--logo">
+		<img class="logo" src="/assets/images/navigation/nav-logo.svg?v=f8f6625064" width="27" height="27" alt="COX LABS" />
+	</a>
+	</div>
+
+	<div class="Shared-Navigation-linksContainer">
+
+
+		<div class="Shared-Navigation-link
+					Shared-Navigation-mobileNavToggle"
+			 ontouchstart=""> 
+			 <!-- Note: ontouchstart makes :active work -->
+			<div class="Shared-Navigation-mobileNavIconContainer">
+			<div class="Shared-Navigation-mobileOpen"></div>
+			<div class="Shared-Navigation-mobileClose"></div>
+			</div>
+		</div>
+
+		<div class="Shared-Navigation-MobileContainer">
+
+			<div class="container-fluid">
+		
+		<div class="row
+					center-xs">
+			<div class="col-xs-9
+						col-sm-6">
+
+			<ul class="Shared-Navigation-list">
+				<li class="Shared-Navigation-listItem-0">
+				<a class="Shared-Navigation-link Shared-Navigation-link--listLink" href="https://openai.com/research">Research</a>
+				</li>
+				<li class="Shared-Navigation-listItem-1">
+					<a class="Shared-Navigation-link Shared-Navigation-link--listLink" href="https://openai.com/systems">Systems</a>
+				</li>
+			</ul>
+
+			</div>
+			<div class="col-xs-9
+						col-sm-6">
+
+			<ul class="Shared-Navigation-list
+						Shared-Navigation-list--rightAligned">
+				<li class="Shared-Navigation-listItem-2">
+				<a class="Shared-Navigation-link Shared-Navigation-link--listLink" href="https://openai.com/about">About</a>
+				</li>
+				<li class="Shared-Navigation-listItem-3">
+				<a class="Shared-Navigation-link
+							Shared-Navigation-link--listLink
+							Shared-Navigation-link--selected" href="https://blog.openai.com/">Blog</a>
+				</li>
+			</ul>
+
+			</div>
+		</div>
+
+	 </div>
+	</div>
+		
+
+	</div><!-- ./Shared-Navigation-linksContainer -->
+</div><!-- ./Shared-Navigation -->
+		
+		
+
+	<header class="Shared-SectionHeader">
+	<div class="Shared-SectionHeader-inner">
+		<h1>
+		Blog
+			<a href="/language-unsupervised/" class="Shared-SectionHeader-Link">
+			Latest post
+			</a>
+		</h1>
+		<section class="Shared-SectionHeader-linkWrap
+						Shared-SectionHeader-linkWrap--social">	
+			<a class="twitter" href="https://twitter.com/openai">Twitter</a>
+			<a class="facebook" href="https://www.facebook.com/openai.research">Facebook</a>
+		</section>
+	</div>
+	</header>
+
+
+	<div class="PostList-container PostList--index">
+
+	<div class="PostList PostList--cardify">
+{% for obj in object_list %}
+	{% if obj.headerimg %}
+	{% if obj.headerimg.width < obj.headerimg.height %}
+	<article class="Shared-Card post tag-alec-radford tag-hash-research-release-post-no-14 tag-hash-research-release-post" id="article">
+	<a class="Shared-Card-anchor" href="../detail/{{obj.id}}">
+		<span class="Shared-Card-background">
+			<span class="Shared-Card-background-inner"><svg class="icon" width="100%" height="100%" viewBox="0 0 330 418"></svg></span>
+		</span>
+		<span class="Shared-Card-inner">
+			<h2 class="Shared-Card-title"><span class="format-research-titles">{{obj.title}}</span></h2>
+			<span class="Shared-Card-coverContainer">
+				<span class="Shared-Card-coverContainer-inner">
+					<span class="Shared-Card-coverContainer-meta"><time datetime="2018-06-11"><span class="Shared-card-coverContainer-meta-date"></span><span class="Shared-card-coverContainer-meta-date">{{obj.updated.day}}/{{obj.updated.month}}</span><span class="Shared-card-coverContainer-meta-date">{{obj.updated.year}}</span></time></span>
+					<div class="Shared-Card-coverContainer-cover"data-parallax-z-index='1'><img	src="/media/{{obj.headerimg}}" alt="{{obj.title}}" /><span class="Shared-Card-glare"></span></div>
+				</span>
+			</span>
+		</span>
+		</a>
+	</article>
+	{% else %}
+<article class="Shared-Card post type1" id="article">
+	<a class="Shared-Card-anchor" href="../detail/{{obj.id}}">
+		<span class="Shared-Card-background">
+			<span class="Shared-Card-glare"></span>
+			<span class="Shared-Card-background-inner"><!-- <svg class="icon" width="100%" height="100%" viewBox="0 0 330 418"> <use class="background-shape" xlink:href="#square" x="0" y="0" /> </svg> --></span>
+		</span>
+		<span class="Shared-Card-inner">
+			<h2 class="Shared-Card-title">{{obj.title}}</h2>
+			<span class='Shared-Card-imageContainer' data-parallax-z-index='1'>
+				<span class="Shared-Card-image">
+					<span class="Shared-Card-glare"></span>
+					<img src="/media/{{obj.headerimg}}">
+				</span>
+			</span>
+			<span class="Shared-Card-meta">
+			<span class='Shared-Card-meta-category'></span>
+			<span class="Shared-Card-meta-date">
+				<time datetime="2016-08-29">{{obj.updated.day}}-{{obj.updated.month}}-{{obj.updated.year}}</time>
+				</span>
+			</span>
+		</span>
+	</a>
+</article>
+{% endif %}
+	{% else %}
+	<article class="Shared-Card post type1" id="article">
+		<a class="Shared-Card-anchor" href="../detail/{{obj.id}}">
+			<!-- <span class="background-type1"> -->
+			<span class="Shared-Card-background">
+				<span class="Shared-Card-glare"></span>
+					<span class="Shared-Card-background-inner"> <svg class="icon" width="100%" height="100%" viewBox="0 0 330 418"> </svg> </span>
+				</span>
+				<span class="Shared-Card-inner"> <h2 class="Shared-Card-title"> {{obj.title}} </h2> <span class='Shared-Card-iconContainer'>
+					<span class="Shared-Card-iconCSS">
+						<span class="Shared-Card-iconCSS-img "></span>
+					</span>
+					<!-- <img src="/assets/images/cards/blog/categories/openai-fellows.svg?v=f8f6625064" style="max-width:60%;" /> -->
+				</span>
+				<span class="Shared-Card-meta">
+					<span class='Shared-Card-meta-category'>CATEGORY</span>
+					<span class="Shared-Card-meta-date">
+						<time datetime="{{obj.updated}}">{{obj.updated.day}}-{{obj.updated.month}}-{{obj.updated.year}}</time>
+					</span>
+				</span>
+			</span>
+		</a>
+	</article>
+	{% endif %}
+{% endfor %}
+
+<!-- <article class="Shared-Card post tag-larissa-schiavo tag-igor-mordatch tag-john-schulman tag-hash-openai-fellows tag-hash-openai-fellows-post" id="openai-fellows"> <a class="Shared-Card-anchor" href="/openai-fellows/"> <span class="Shared-Card-background"> <span class="Shared-Card-glare"></span> <span class="Shared-Card-background-inner"> <svg class="icon" width="100%" height="100%" viewBox="0 0 330 418"> </svg> </span> </span> <span class="Shared-Card-inner"> <h2 class="Shared-Card-title"> OpenAI<br/> Fellows </h2> <span class='Shared-Card-iconContainer'> <span class="Shared-Card-iconCSS"> <span class="Shared-Card-iconCSS-img "></span> </span> <img src="/assets/images/cards/blog/categories/openai-fellows.svg?v=f8f6625064" style="max-width:60%;" /> </span> <span class="Shared-Card-meta"> <span class='Shared-Card-meta-category'></span> <span class="Shared-Card-meta-date"> <time datetime="2018-05-30">May 30, 2018</time> </span> </span> </span> </a> </article> -->
+
+<!-- <article class="Shared-Card post tag-scott-gray tag-alec-radford tag-durk-kingma tag-hash-research-release-post tag-hash-research-release-video-cover tag-hash-research-release-no-10" id="block-sparse-gpu-kernels"> <a class="Shared-Card-anchor" href="/block-sparse-gpu-kernels/"> <span class="Shared-Card-background"> <span class="Shared-Card-background-inner"> <svg class="icon" width="100%" height="100%" viewBox="0 0 330 418"> </svg> </span> </span> <span class="Shared-Card-inner"> <h2 class="Shared-Card-title"> <span class="format-research-titles">Block-Sparse GPU Kernels</span> </h2> <span class="Shared-Card-coverContainer"> <span class="Shared-Card-coverContainer-inner"> <span class="Shared-Card-coverContainer-meta"> <time datetime="2017-12-06"> <span class="Shared-card-coverContainer-meta-date"> No. 10 </span> <span class="Shared-card-coverContainer-meta-date">Dec 6</span> <span class="Shared-card-coverContainer-meta-date">2017</span> </time> </span> <div class="Shared-Card-coverContainer-cover"data-parallax-z-index='1'> <video autoplay="true" loop="true" poster="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/2x-no-mark-animated-poster.jpg"> <source src="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/2x-no-mark-animated.mp4" media="screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (min-resolution: 144dpi)" /> <source src="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/2x-no-mark-animated.webm" media="screen and (-webkit-min-device-pixel-ratio: 1.5), screen and (min-resolution: 144dpi)" /> <source src="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/1x-no-mark-animated.mp4" /> <source src="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/1x-no-mark-animated.webm" /> <img	src="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/1x-no-mark.jpg"srcset="https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/1x-no-mark.jpg 1x, https://d4mucfpksywv.cloudfront.net/research-covers/block-sparse-gpu-kernels/2x-no-mark.jpg 2x"alt="Block-Sparse GPU Kernels" /> </video> <span class="Shared-Card-glare"></span> </div> </span> </span> </span> </a> </article> -->
+<!-- <div class="PostList-bar"> <div class="NewsletterBar"> <label for='subscribe-email'>Sign up for newsletter:</label> <div class="SubscribeForm"> <form method="post" action="/subscribe/" class=""> <input class="confirm" type="hidden" name="confirm"	/><input class="location" type="hidden" name="location"	/><input class="referrer" type="hidden" name="referrer"	/> <div class="form-group"> <input class="subscribe-email" type="email" name="email"	placeholder="your@email.com" /> </div> <button class="" type="submit">Subscribe</button> <script>(function(g,h,o,s,t){h[o]('.location')[s]=h[o]('.location')[s] || g.location.href;h[o]('.referrer')[s]=h[o]('.referrer')[s] || h.referrer;})(window,document,'querySelector','value');</script> </form> </div> </div> </div> -->
+<!-- <div class="PostList-bar"> <div class="SocialBar"> <a href="/subscribe" class="SocialBar-link SocialBar-link--newsletter"> Newsletter </a> <a href="https://twitter.com/openai" class="SocialBar-link SocialBar-link--twitter"> @openai </a> <a href="https://www.facebook.com/openai.research" class="SocialBar-link SocialBar-link--facebook"> /openai </a> </div> </div> -->
+			
+			
+			
+
+	</div>
+	</div>
+
+
+	</div>
+
+	<footer class="Shared-Footer">
+
+	<div class="Shared-Footer-linksContainer">
+
+	<div class="container-fluid">
+<!--		
+		<div class="row">
+			<div class="col-xs-9
+						col-sm-6">-->
+
+		<div class="Shared-Footer-wrap">
+
+			<ul class="Shared-Footer-list">
+
+				<li class="">
+				<a class="Shared-Footer-link
+							Shared-Footer-link--listLink"
+					href="https://openai.com/research/">Research</a>
+				</li>
+
+				<li class="">
+				<a class="Shared-Footer-link
+							Shared-Footer-link--listLink"
+					href="https://openai.com/systems/">Systems</a>
+				</li>
+
+				<li class="Shared-Footer-separated-x">
+				<a class="Shared-Footer-link
+							Shared-Footer-link--listLink" href="https://openai.com/about/">About</a>
+				</li>
+				<li class="">
+				<a class="Shared-Footer-link
+							Shared-Footer-link--listLink" href="https://blog.openai.com/">Blog</a>
+				</li>
+				<li class="">
+				<a class="Shared-Footer-link
+							Shared-Footer-link--listLink" href="https://openai.com/jobs/">Jobs</a>
+				</li>
+			</ul>
+
+			<!--</div>
+
+			<div class="col-xs-3
+						col-sm-6">-->
+			<section class="Shared-Footer-social">	
+				<a class="Shared-Footer-link
+						Shared-Footer-link--image
+						Shared-Footer-link--twitter" href="https://twitter.com/openai">Twitter</a>
+				<a class="Shared-Footer-link
+						Shared-Footer-link--image
+						Shared-Footer-link--facebook" href="https://www.facebook.com/openai.research">Facebook</a>
+			</section>
+			<!--</div>
+
+		</div>-->
+
+		</div>
+
+	</div>
+		
+	</div><!-- ./Shared-Footer-linksContainer -->
+</footer><!-- ./Shared-Footer -->
+	</main>
+
+	
+	<script type="text/javascript" src="/assets/js/app.js?v=f8f6625064"></script>
+
+
+
+<svg width="0" height="0" viewBox="0 0 330 418" style='visibility:hidden;width:0;height:0;display:block;'>
+	
+	<filter id="f1" x="-50%" y="-50%" width="200%" height="200%">
+	<feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+	</filter>
+
+	<defs>
+	<linearGradient id="blue">
+		<stop offset="0" stop-color="rgb(94,33,217)" />
+		<stop offset="1" stop-color="rgb(18,165,226)" />
+	</linearGradient>
+	<linearGradient id="blue_green">
+		<stop offset="0" stop-color="rgb(47,134,215)"/>
+		<stop offset="1" stop-color="rgb(28,245,186)"/>
+	</linearGradient>
+	<linearGradient id="cyan">
+		<stop offset="0" stop-color="rgb(64,100,216)"/>
+		<stop offset="1" stop-color="rgb(74,216,221)"/>
+	</linearGradient>
+	<linearGradient id="purple">
+		<stop offset="0" stop-color="rgb(90,64,216)"/>
+		<stop offset="1" stop-color="rgb(216,74,221)"/>
+	</linearGradient>
+	<linearGradient id="red">
+		<stop offset="0" stop-color="rgb(183,24,102)"/>
+		<stop offset="1" stop-color="rgb(235,52,52)"/>
+	</linearGradient>
+	<linearGradient id="orange">
+		<stop offset="0" stop-color="rgb(211,56,56)"/>
+		<stop offset="1" stop-color="rgb(242,153,38)"/>
+	</linearGradient>
+	<linearGradient id="yellow">
+		<stop offset="0" stop-color="rgb(232,91,6)"/>
+		<stop offset="1" stop-color="rgb(229,231,42)"/>
+	</linearGradient>
+	<linearGradient id="green">
+		<stop offset="0" stop-color="rgb(13,163,130)"/>
+		<stop offset="1" stop-color="rgb(103,228,78)"/>
+	</linearGradient>
+	<linearGradient id="black">
+		<stop offset="0" stop-color="rgb(0,0,0)"/>
+		<stop offset="1" stop-color="rgb(38,38,38)"/>
+	</linearGradient>
+	<linearGradient id="slate-dark">
+		<stop offset="0" stop-color="rgb(34,34,34)"/>
+		<stop offset="1" stop-color="rgb(69,69,77)"/>
+	</linearGradient>
+	<linearGradient id="slate-mid">
+		<stop offset="0" stop-color="rgb(59,62,76)"/>
+		<stop offset="1" stop-color="rgb(102,102,120)"/>
+	</linearGradient>
+	<linearGradient id="slate-light">
+		<stop offset="0" stop-color="rgb(137,137,155)"/>
+		<stop offset="1" stop-color="rgb(181,181,196)"/>
+	</linearGradient>
+
+
+	<!-- Outer shape -->
+	<symbol id="outer">
+		<path d="M268.7 12c-10.16-4.21-26.79-4.21-37 0l-137 56.74C84.61 73 72.85 84.71 68.64 94.87l-56.74 137c-4.21 10.16-4.21 26.79 0 37l56.74 137c4.21 10.16 16 21.92 26.13 26.13l137 56.74c10.16 4.21 26.79 4.21 37 0l137-56.74c10.16-4.21 21.92-16 26.13-26.13l56.74-137c4.21-10.16 4.21-26.79 0-37l-56.74-137c-4.21-10.16-16-21.92-26.13-26.13z" />
+	</symbol>
+
+	<!-- Inner shape -->
+	<symbol id="inner">
+		<path d="M250.22 56.28l-137.2 56.84-56.84 137.21 56.84 137.21 137.21 56.83 137.2-56.84 56.84-137.21-56.84-137.2-137.21-56.84z"/>
+	</symbol>
+
+	<mask id="outerMask" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="500">
+		<rect x="0" y="0" width="500" height="500" fill="white"/>
+		<use filter="url(#f1)" xlink:href="#outer" />
+	</mask>
+
+	<mask id="outlineMask" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="500">
+		<use fill="white" xlink:href="#outer" />
+		<use fill="black" xlink:href="#inner" />
+	</mask>
+
+	</defs>
+	<symbol id="circle">
+	<path class="cls-1" d="M46.633,169.834A171,171,0,1,1-162.8,290.749,171,171,0,0,1,46.633,169.834Z"/>
+	<circle class="cls-2" cx="250.625" cy="98.984" r="171.063"/>
+	</symbol>
+	<symbol id="hexagon">
+	<path d="M103.728-104.851a20.335,20.335,0,0,0-13.505,0L-16.926-60.458a20.338,20.338,0,0,0-9.549,9.55L-70.851,56.249a20.338,20.338,0,0,0,0,13.506L-26.458,176.9a20.343,20.343,0,0,0,9.551,9.55L90.249,230.828a20.336,20.336,0,0,0,13.505,0L210.9,186.435a20.337,20.337,0,0,0,9.549-9.55L264.828,69.729a20.336,20.336,0,0,0,0-13.505L220.435-50.926a20.337,20.337,0,0,0-9.551-9.549Z"/>
+	<path d="M186.713,201.118a20.332,20.332,0,0,0-13.506,0l-107.16,44.4a20.342,20.342,0,0,0-9.55,9.551L12.117,362.232a20.341,20.341,0,0,0,0,13.507L56.515,482.9a20.335,20.335,0,0,0,9.551,9.55l107.166,44.38a20.334,20.334,0,0,0,13.507,0l107.159-44.4a20.339,20.339,0,0,0,9.55-9.552l44.38-107.166a20.338,20.338,0,0,0,0-13.506l-44.4-107.16a20.343,20.343,0,0,0-9.552-9.55Z"/>
+	</symbol>
+	<symbol id="square">
+	<path d="M184.988,276.989a14.03,14.03,0,0,1,0,19.774L38.917,442.917a14.011,14.011,0,0,1-19.762,0L-126.916,296.762a14.027,14.027,0,0,1,0-19.773L19.155,130.835a14.009,14.009,0,0,1,19.762,0Z" transform="translate(0 -47)"/>
+	<path d="M464.677,206.029a14.843,14.843,0,0,1,0,20.932L309.948,381.673a14.846,14.846,0,0,1-20.933,0L134.286,226.96a14.844,14.844,0,0,1,0-20.931L289.015,51.317a14.847,14.847,0,0,1,20.934,0Z" transform="translate(0 -47)"/>
+	</symbol>
+	<symbol id="triangle">
+	<path d="M71.037-26.913c-4.7-8.144-12.378-8.144-17.074,0L-130,292.192c-4.695,8.144-.854,14.808,8.537,14.808H246.462c9.391,0,13.232-6.664,8.537-14.808Z"/>
+	<path d="M305-.476C299.5-10,290.5-10,285-.476L69.5,372.683C64,382.208,68.5,390,79.5,390h431c11,0,15.5-7.792,10-17.317Z"/>
+	</symbol>
+
+
+	<symbol id="hexagon-icon">
+	<g mask="url(#outlineMask)">
+		<rect mask="url(#outerMask)"	x="-50%" y="-50%" width="200%" height="200%" fill="black"/>
+		<rect mask="url(#outerMask)"	x="-50%" y="-50%" width="200%" height="200%" fill="black"/>
+		<rect mask="url(#outerMask)"	x="-50%" y="-50%" width="200%" height="200%" fill="black"/>
+	</g>
+	</symbol>
+</svg>
+
+
+
+	<!-- Segment snippet -->
+	<script type="text/javascript">
+	!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="4.0.0";
+	analytics.load("6gG9RqmGss3RlZ1wdayfXrkImRHAx0hE");
+	analytics.page("Blog", "OpenAI Blog");
+	}}();
+	</script>
+
+</body>
+</html>

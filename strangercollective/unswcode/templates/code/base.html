@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}CODE{% endblock %}</title>
+	<script
+			  src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+	<style type="text/css">
+	@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400|Source+Sans+Pro:900');
+		body{
+			background: #263238;
+			font-family: 'Roboto Mono', monospace;
+			color:White;
+		}
+		h1,h2,h3,h4{
+			font-family: 'Source Sans Pro', sans-serif;
+		}
+		.disabled{
+			opacity:0.2;
+		}
+		a{
+			color:#FF9100;
+			text-decoration: inherit;
+		}
+	</style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-wrapper black" style="padding-left: 1em; padding-right: 1em;">
+      <a href="#" class="brand-logo">SC - UNSW CoDe</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      	{% block extranav %}
+      	{% endblock extranav %}
+        <li><form action="/sc/logout/" method="post">{% csrf_token %}<button class="btn orange">Log Out</button></form></li>
+      </ul>
+    </div>
+  </nav>
+        
+<div></div>
+<div class="container">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+</html>

@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+{% if rooms %}
+    <ul>
+    {% for room in rooms %}
+        <li><a href="/polls/{{ room.id }}/">{{ room.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No rooms are available.</p>
+{% endif %}

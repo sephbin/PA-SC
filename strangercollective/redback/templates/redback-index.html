@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>REDBACK</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/93/three.min.js" ></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/TransformControls.js"></script>
+
+	<script>
+        {% include 'viewport-bundle.js' %}
+    </script>
+
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,400i" rel="stylesheet">
+
+    <style type="text/css">
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            padding-left: 20px;
+        }
+        p {
+            color: #FFFFFF;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    </style>
+</head>
+<body>
+	<h2>Redback is awesome</h2>
+
+	<div
+        id="container"
+        style="width:900px;height:500px;display:inline-block;background-color:#FFFFFF;opacity:1;"
+    ></div>
+
+    <div
+        class="archijson"
+        id="archijson"
+        style="width:400px;height:500px;display:inline-block;background-color:#000000;opacity:1;position:absolute;"
+    ><p>This is some text inside the archijson div. Here is some more text to see</p></div>
+
+    <script onload="handleLoad()" >
+
+        var displayGeometry = {{instance.displayGeom|safe}};
+        var archiJson = {{instance.archiJson|safe}};
+        console.log(archiJson)
+
+        var sphere = {
+            "origin": [0,0,0],
+            "radius": 5,
+            "primitive":"sphere"
+        };
+
+        var textblock = "hello world";
+    
+        viewport = new Viewport(document.querySelector('#container'));
+
+        viewport.setGeometryJson(sphere);
+
+        var elem = document.querySelector("div.archijson");
+        var html = elem.innerHTML;
+        elem.innerHTML = "<p>"+archiJson.name+"<p>";
+
+        // viewport.setGeometryJson(textblock);
+
+    </script>
+
+    <div id="root"></div>
+
+</body>
+</html>

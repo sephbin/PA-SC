@@ -1,0 +1,26 @@
+{% extends 'code/base.html' %}
+
+{% block title %}CODE 1240{% endblock %}
+{% block content %}
+	<h3>{{user.profile.name}}</h3>
+	<h4>Assignment {{assignment}} Submit</h4>
+    <form method="POST" action="/code/submitPost/"> {% csrf_token %}
+    <div class="col s12 m6">
+      <div class="card white">
+        <div class="card-content black-text">
+          Please enter your choice of Cloud Share link below. Please make sure you share a folder with the assignment files, not just 1 single file.<br>
+          You can resubmit with this as well, it will overwrite your previous submission.
+			<div class="input-field col s6">
+	          <input id="link" type="text" class="validate" name="link">
+	          <label for="link">Cloud Link</label>
+	        </div>
+          <input style="display: none" id="assignment" name="assignment" value="{{assignment}}">
+        </div>
+        <div class="card-action">
+          <input class="waves-effect waves-light btn orange" type="submit" value="Submit Assignment">
+
+        </div>
+      </div>
+    </div>
+  </form>
+{% endblock %}

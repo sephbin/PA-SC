@@ -57,7 +57,7 @@ def submitPost(request):
 		return HttpResponseRedirect("/code/")
 
 @user_passes_test(teacher_check)
-def marking(request):
+def marking(request, ass_no):
 	if request.method == "POST":
 		postData = json.loads(request.POST["data"])
 		stringOb = ""
@@ -78,7 +78,7 @@ def marking(request):
 			except Exception as e:
 				stringOb += str(e)
 		return HttpResponse(stringOb)
-	subs = submission.objects.filter(assignment="CODE1240 AS1")
+	subs = submission.objects.filter(assignment=ass_no)
 	cleansubs = {}
 	cleanlist = []
 	for s in subs:

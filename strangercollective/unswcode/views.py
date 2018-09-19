@@ -86,6 +86,9 @@ def marking(request, ass_no):
 	for k in cleansubs:
 		cleanlist.append(cleansubs[k])
 	for c in cleanlist:
-		c.mark = json.loads(c.mark)
+		try:
+			c.mark = json.loads(c.mark)
+		except:
+			c.mark = {}
 	context = {"subs":cleanlist}
 	return render(request, "codeMarking.html", context)

@@ -4,7 +4,7 @@ y
 {% block content %}
 	<h3>{{user.profile.name}}</h3>
 	<table class="highlight" style="width:100%">
-		<tr><td>Assignment 1 - Cinema</td><td><a href="submit/CODE1240 AS1">Submit</a></td>{% if AS1 %}<td><a href="{{AS1.link}}">Link</a></td>{% endif %}<td>{{AS1.markjson.total}}%</td><td>{{AS1.markjson.comment.val}}</td></tr>
+		<tr><td>Assignment 1 - Cinema</td><td><a href="submit/CODE1240 AS1">Submit</a></td>{% if AS1 %}<td><a href="{{AS1.link}}">Link</a></td>{% endif %}<td>{{AS1.markjson.total}}%</td><td style="width:33%">{{AS1.markjson.comment.val}}</td></tr>
 		<tr><td>Assignment 2 - Residence</td><td><a href="submit/CODE1240 AS2">Submit</a></td>{% if AS2 %}<td><a href="{{AS2.link}}">Link</a></td>{% endif %}</tr>
 		<tr class="disabled"><td>Assignment 3 - Combined</td><td>Submit</td></tr>
 		<tr class="disabled"><td>Assignment 4 - Checklist</td><td></td></tr>

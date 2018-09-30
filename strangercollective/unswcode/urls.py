@@ -6,6 +6,6 @@ urlpatterns = [
     path(r'', views.codeHome),
     path(r'lecture/<int:lecture_wk>', views.lecture),
     path(r'submit/<str:ass_no>', views.submit),
-    path(r'marking', views.marking),
+    path(r'marking/<str:ass_no>', views.marking),
     path(r'submitPost/', views.submitPost),
 ]

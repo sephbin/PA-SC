@@ -19,7 +19,10 @@ class submission(models.Model):
 	date = models.DateTimeField(auto_now=False,auto_now_add=True)
 	mark = models.TextField(max_length=200,null=True,blank=True)
 	def markjson(self):
-		return json.loads(self.mark)
+		try:
+			return json.loads(self.mark)
+		except:
+			return {}
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -9,10 +9,15 @@ def home(request):
 	context = {"instance":instance}
 	return render(request, "rpg/home.html",context)
 
-def advantagecard(request,characterid):
+def card(request,characterid):
 	instance = get_object_or_404(character, id=characterid)
-	context = {"instance":instance}
 	if request.method == "POST":
-		return render(request, "rpg/advantagecard.html",context)
-	else:
-		return render(request, "rpg/advantagecard.html",context)
+		pData = json.loads(request.POST["data"])
+		# pData = {"card":"advantage"}
+		lookup = {
+			"attributes":{"template":"attributescard.html"},
+			"advantage":{"template":"advantagecard.html"},
+			"disadvantage":{"template":"disadvantagecard.html"},
+		}
+		context = {"instance":instance}
+		return render(request, "rpg/"+lookup[pData['card']]['template'],context)

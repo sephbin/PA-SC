@@ -1,0 +1,25 @@
+<div class="col-md-4" id="skillcard">
+	<div class="card">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col" colspan="2">Skills</th>
+						<th scope="col">Ch</th>
+						<th scope="col">Rel</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for a in instance.relskill.all %}
+						<tr>
+							<td>{{a.relative_value}}</td>
+							<td class="max">{{a.skill}}</td>
+							<td>{{a.skill_challenge}}</td>
+							<td>{{a.relative_skill}}</td>
+							<td>[{{a.cost}}]</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+	</div>
+</div>

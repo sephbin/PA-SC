@@ -288,7 +288,7 @@ class rel_skill(models.Model):
         if rel > 0:
             operator = "+"
         if rel != 0:
-            return atr+operator+str(rel)
+            return atr.upper()+operator+str(rel)
         else:
             return atr
     def relative_value(self):

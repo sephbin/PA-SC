@@ -1,0 +1,24 @@
+<div class="col-md-4" id="languagecard">
+	<div class="card">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col" class="max">Language</th>
+						<th scope="col">Written</th>
+						<th scope="col">Spoken</th>
+						<th scope="col"></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for a in instance.rellanguage.all %}
+						<tr>
+							<td>{{a.language}}</td>
+							<td>{{a.written}}</td>
+							<td>{{a.spoken}}</td>
+							<td>[{{a.cost}}]</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+	</div>
+</div>

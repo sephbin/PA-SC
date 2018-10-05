@@ -95,4 +95,4 @@ def marking(request, ass_no):
 		except:
 			c.mark = {}
 	context = {"subs":cleanlist}
-	return render(request, "codeMarking.html", context)
+	return render(request, ass_no+".html", context)

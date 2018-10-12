@@ -148,6 +148,7 @@ class character(models.Model):
     will = models.IntegerField(default=10)
     per = models.IntegerField(default=10)
     fp = models.IntegerField(default=10)
+    sm = models.IntegerField(default=1)
     bs = models.FloatField(default=5)
     bm = models.IntegerField(default=5)
 
@@ -236,6 +237,15 @@ class rel_advantage(models.Model):
             return ef
         else:
             return []
+    def name(self):
+        try:
+            modStr = []
+            for i in self.modifiers.modifier_set.all():
+                modStr.append("%s, %s%%"%(i.name, i.modifier))
+            modStr = "; ".join(modStr)
+            return str(self.advantage)+" ("+modStr+")"
+        except:
+            return str(self.advantage)
     def __str__(self):
         return str(self.rank)
 
@@ -262,6 +272,17 @@ class rel_disadvantage(models.Model):
         
         moddedcost = int(math.ceil(float(cost)*float(modval)))
         return moddedcost
+    def name(self):
+        try:
+            modStr = []
+            for i in self.modifiers.modifier_set.all():
+                modStr.append("%s, %s%%"%(i.name, i.modifier))
+            modStr = "; ".join(modStr)
+            return str(self.disadvantage)+" ("+modStr+")"
+        except:
+            return str(self.disadvantage)
+    def __str__(self):
+        return str(self.rank)
 
 class rel_skill(models.Model):
     character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='relskill')

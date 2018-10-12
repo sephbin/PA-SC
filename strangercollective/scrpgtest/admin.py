@@ -29,7 +29,7 @@ class languageInline(admin.TabularInline):
 	extra = 0 # how many rows to show
 
 class characterModelAdmin(admin.ModelAdmin):
-	list_display = ("__str__","cost","status")
+	list_display = ("__str__","id","cost","status")
 #   list_display_links = ["updated"]
 	list_filter = ["race","status"]
 	search_fields = ["name"]

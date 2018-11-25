@@ -10,6 +10,17 @@ def home(request):
 	context = {"instance":instance}
 	return render(request, "rpg/home.html",context)
 
+def characterlist(request):
+	user = request.user
+	chars = character.objects.all()
+	context = {"characterList":[]}
+	for c in chars:
+		abop = {"name":str(c),"id":c.id}
+		context["characterList"].append(abop)
+	abop = {"name":str(user),"id":0}
+	context["characterList"].append(abop)
+	return JsonResponse(context)
+
 def characterdata(request, characterid):
 	ins = get_object_or_404(character, id=characterid)
 	context = {
@@ -30,6 +41,10 @@ def characterdata(request, characterid):
 	"disadvantages"	: [],
 	"skills"		: [],
 	"languages"		: [],
+	"possessions"	: [],
+	"possessionsTotals": {"cost": 0, "weight": 0},
+	"melee"		: [],
+	"ranged"		: [],
 	}
 	for i in ins.reladvantage.all():
 		apob = {}
@@ -56,6 +71,25 @@ def characterdata(request, characterid):
 		apob["spoken"] = i.choices[i.spoken][1]
 		apob["cost"] = i.cost()
 		context["languages"].append(apob)
+	for i in ins.relpossession.all():
+		apob = {}
+		apob["name"] = str(i.possession)
+		apob["ammount"] = i.ammount
+		apob["weight"] = i.weight()
+		context["possessionsTotals"]["weight"] += i.weight()
+		apob["cost"] = i.cost()
+		context["possessionsTotals"]["cost"] += i.cost()
+		context["possessions"].append(apob)
+		if i.possession.meleeStatsText:
+			apob = {}
+			apob["name"] = str(i.possession)
+			apob["meleestats"] = i.meleeStats()
+			context["melee"].append(apob)
+		if i.possession.rangeStatsText:
+			apob = {}
+			apob["name"] = str(i.possession)
+			apob["rangestats"] = i.rangeStats()
+			context["ranged"].append(apob)
 	return JsonResponse(context)
 
 @csrf_exempt

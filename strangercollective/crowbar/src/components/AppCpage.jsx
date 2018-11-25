@@ -10,10 +10,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			"page":"CharacterPage",
-			"characterList": [],
-			"character":{"attributes":{
+		this.state = {"character":{"attributes":{
 			"st":10,
 			"dx":10,
 			"iq":10,
@@ -30,10 +27,6 @@ class App extends Component {
 			"disadvantages":[],
 			"skills":[],
 			"languages":[],
-			"possessions":[],
-			"possessionsTotals":{"cost":0,"weight":0},
-			"melee":[{"meleestats":[]}],
-			"ranged":[{"rangestats":[]}],
 		},
 			"layout":{"universal":{"sideWidth":"2.3em"},"left":[
 				// {"tooltip":"Button 1","image":"https://image.flaticon.com/icons/svg/1152/1152840.svg"},
@@ -42,45 +35,28 @@ class App extends Component {
 				// {"tooltip":"Button 4","image":"https://image.flaticon.com/icons/svg/1152/1152812.svg"}
 			]
 		}};
-	
 	}
-	
-
 	componentDidMount() {
-	// console.log("ATTEMPT FETCH")
-	// fetch('http://localhost:8000/rpg/characterlist')
- //      .then(response => (response.json()))
- //      .then(characterList => this.setState({ characterList: characterList.characterList }))
- //      .then(characterList => console.log(characterList))
- //      .catch(error => console.log("error",error));
-	// }
+	console.log("ATTEMPT FETCH")
     fetch('http://localhost:8000/rpg/character/2')
       .then(response => response.json())
       .then(character => this.setState({ character }))
       .then(character => console.log(character))
       .catch(error => console.log("error",error));
+      // .then(response => console.log("Complete"))
 	}
 	
 
 
-	eventFunction = (charid) => {
-	fetch('http://localhost:8000/rpg/character/'+charid)
-      .then(response => response.json())
-      .then(character => this.setState({ character }))
-      .then(character => console.log(character))
-      .then(this.setState({page: "CharacterPage" }))
-      .catch(error => console.log("error",error));		
-    console.log(charid);
-	}
+
   render() {
     return (
       <Fragment>
-      {/*<button onClick={() => this.eventFunction()}>Hello</button>*/}
       <Top json={this.state}/>
       <Left json={this.state}/>
       <Right json={this.state}/>
       <Bottom json={this.state}/>
-      <Content json={this.state} func={this.eventFunction}/>
+      <Content json={this.state}/>
       </Fragment>
     );
   }

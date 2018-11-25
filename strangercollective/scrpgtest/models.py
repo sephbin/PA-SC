@@ -108,8 +108,30 @@ class skill(models.Model):
     skill_challenge = models.CharField(max_length=2, choices=skillchchoices, null=True, blank=True)
     skill_attribute = models.CharField(max_length=4, choices=skillatchoices, null=True, blank=True)
     skill_description = models.TextField(max_length = 9999, blank=True, null=True)
+    skill_defaults = models.TextField(max_length = 9999, blank=True, null=True)
     def __str__(self):
         return self.skill_name
+class possession(models.Model):
+    possession_name = models.CharField(max_length=120)
+    possession_description = models.TextField(max_length = 9999, blank=True, null=True)
+    possession_weight = models.IntegerField(default=0)
+    possession_cost = models.IntegerField(default=0)
+    ####WEAPONS ARMOURS ETC ####
+    meleeStatsText = models.TextField(max_length = 9999, blank=True, null=True)
+    rangeStatsText = models.TextField(max_length = 9999, blank=True, null=True)
+    armourStatsText = models.TextField(max_length = 9999, blank=True, null=True)
+    def __str__(self):
+        return self.possession_name
+    def meleeStats(self):
+        try:
+            return json.loads(self.meleeStatsText)
+        except:
+            return []
+    def rangeStats(self):
+        try:
+            return json.loads(self.rangeStatsText)
+        except:
+            return []
 class language(models.Model):
     language_name = models.CharField(max_length=120)
     def __str__(self):
@@ -135,6 +157,7 @@ class character(models.Model):
     # cultures = models.ForeignKey(culture, on_delete=models.CASCADE)
     reactions = models.CharField(max_length = 2000)
     # possessions = models.ForeignKey(possession, on_delete=models.CASCADE)
+    possessions = models.ManyToManyField(possession, through='rel_possession',through_fields=('character', 'possession'), blank=True,)
     connection = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True,)
     notes =  models.CharField(max_length = 9000, null=True, blank=True,)
     ##############
@@ -183,7 +206,10 @@ class character(models.Model):
     def save(self, *args, **kwargs):
         super(character, self).save(*args, **kwargs)
         payload = {'value1': self.firstname+" "+self.lastname+" ["+str(self.cost())+"]", 'value2': 'http://www.strangercollective.com/rpg/'+str(self.id)}
-        r = requests.post("https://maker.ifttt.com/trigger/crowbarcharacteredit/with/key/bhFn8UCEstaDR_dRNGLoBd", data=payload)
+        try:
+            r = requests.post("https://maker.ifttt.com/trigger/crowbarcharacteredit/with/key/bhFn8UCEstaDR_dRNGLoBd", data=payload)
+        except:
+            pass
 
 
 class modPackage(models.Model):
@@ -330,6 +356,36 @@ class rel_skill(models.Model):
             return atr+rel+tef
         except Exception as e:
             return str(e)
+class rel_possession(models.Model):
+    ammount = models.IntegerField(default=1)
+    character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='relpossession')
+    possession =  models.ForeignKey(possession, on_delete=models.CASCADE, related_name='relpossession')
+    def __str__(self):
+        return str(self.ammount)+"x "+str(self.possession)
+    def cost(self):
+        return self.ammount*self.possession.possession_cost
+    def weight(self):
+        return self.ammount*self.possession.possession_weight
+    def meleeStats(self):
+        stats = self.possession.meleeStats()
+        test = []
+        charskills = self.character.relskill.all()
+        for s in stats:
+            s['value'] = 0
+            for cs in charskills:
+                if s['skill']==cs.skill.skill_name:
+                    s['value'] = cs.relative_value()
+        return stats
+    def rangeStats(self):
+        stats = self.possession.rangeStats()
+        test = []
+        charskills = self.character.relskill.all()
+        for s in stats:
+            s['value'] = 0
+            for cs in charskills:
+                if s['skill']==cs.skill.skill_name:
+                    s['value'] = cs.relative_value()
+        return stats
 
 
 class rel_language(models.Model):

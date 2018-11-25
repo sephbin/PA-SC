@@ -6,4 +6,5 @@ urlpatterns = [
     path(r'', views.home),
     path(r'card/<int:characterid>/', views.card),
     path(r'character/<int:characterid>/', views.characterdata),
+    path(r'characterlist/', views.characterlist),
 ]

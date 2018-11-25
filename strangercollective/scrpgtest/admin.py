@@ -28,6 +28,12 @@ class languageInline(admin.TabularInline):
 	fields = ('language','written','spoken','cost')
 	extra = 0 # how many rows to show
 
+class possessionInline(admin.TabularInline):
+	model = rel_possession
+	readonly_fields = ('cost',)
+	fields = ('ammount','possession','cost')
+	extra = 1 # how many rows to show
+
 class characterModelAdmin(admin.ModelAdmin):
 	list_display = ("__str__","id","cost","status")
 #   list_display_links = ["updated"]
@@ -36,7 +42,7 @@ class characterModelAdmin(admin.ModelAdmin):
 	list_editable = ["status"]
 	readonly_fields = ('cost',)
 	# fields = ('cost',)
-	inlines = (advInline, disadvInline, skillInline, languageInline)
+	inlines = (advInline, disadvInline, skillInline, languageInline, possessionInline)
 admin.site.register(character, characterModelAdmin)
 
 class modPackageAdmin(admin.ModelAdmin):
@@ -58,5 +64,6 @@ admin.site.register(disadvantage,advantageAdmin)
 admin.site.register(modifier,listAdmin)
 admin.site.register(skill,listAdmin)
 admin.site.register(language,listAdmin)
+admin.site.register(possession,listAdmin)
 admin.site.register(specialmodifier,listAdmin)
 admin.site.register(modPackage,modPackageAdmin)

@@ -14,32 +14,22 @@ import CultureCard from '../CultureCard'
 import PossesionCard from '../PossesionCard'
 import LanguageCard from '../LanguageCard'
 import MainCard from '../MainCard'
-import CharacterPage from '../pages/CharacterPage'
-import CharacterList from '../pages/CharacterList'
 
-class Content extends Component {
+
+class CharacterList extends Component {
   render() {
-  	const style = {
-	position: 'fixed',
-	bottom: this.props.json.layout.universal.sideWidth,
-	left: this.props.json.layout.universal.sideWidth,
-	right: this.props.json.layout.universal.sideWidth,
-	top: this.props.json.layout.universal.sideWidth,
-	backgroundColor: '#111',
-	padding: 8
-};
 
     return (
-      <div style={style}>
-      {this.props.json.page === "CharacterList" && (
-      <CharacterList json={this.props.json} func={this.props.func} />
-        )}
-      {this.props.json.page === "CharacterPage" && (
-      <CharacterPage json={this.props.json} />
-      )}
+      <div>
+{this.props.json.characterList.map( (sk, i) => {
+  return (
+    <Card id={(sk.id)} key={(sk.id)} onClick={() => this.props.func(sk.id) } >{sk.name}</Card>
+  )
+})}
       </div>
     );
   }
 }
+export default CharacterList;
 
-export default Content;
+

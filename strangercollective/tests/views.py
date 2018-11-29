@@ -8,4 +8,5 @@ def ortho(request):
 	return render(request, "ortho.html")
 
 def dir(request):
-	return HttpResponse(os.path.dirname(os.path.abspath(__file__)))
+	# return HttpResponse(os.path.dirname(os.path.abspath(__file__)))
+	return HttpResponse(CUSTOMDIR)

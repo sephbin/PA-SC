@@ -1,0 +1,2313 @@
+[
+  {
+    "fields": {
+      "name": "Red Hot Mob"
+    },
+    "model": "scrpgtest.campaign",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "type": "NPC"
+    },
+    "model": "scrpgtest.charactertype",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "type": "PC"
+    },
+    "model": "scrpgtest.charactertype",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "race": "Human"
+    },
+    "model": "scrpgtest.race",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "status": "Alive"
+    },
+    "model": "scrpgtest.status",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "-",
+      "effect": "",
+      "name": "Fit",
+      "sources": null,
+      "speciallimitations": null,
+      "type": "P"
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "-",
+      "effect": "",
+      "name": "No Sleep",
+      "sources": "E",
+      "speciallimitations": null,
+      "type": "P"
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "basecost": 15,
+      "description": "-",
+      "effect": "",
+      "name": "Luck",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "-",
+      "effect": "",
+      "name": "Musical Ability",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "basecost": 15,
+      "description": "-",
+      "effect": "",
+      "name": "Smooth Operator",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "-",
+      "effect": "",
+      "name": "Status",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "basecost": 100,
+      "description": "-",
+      "effect": "",
+      "name": "Super Luck",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "-",
+      "effect": "",
+      "name": "Visualization",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "basecost": 2,
+      "description": "Acute Hearing",
+      "effect": "",
+      "name": "Acute Hearing",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "basecost": 12,
+      "description": "Attractive",
+      "effect": "",
+      "name": "Attractive",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "Charisma",
+      "effect": "",
+      "name": "Charisma",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "basecost": 12,
+      "description": "Comtacts",
+      "effect": "",
+      "name": "Contacts",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "Fashion Sense",
+      "effect": "",
+      "name": "Fashion Sense",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "Social Regard",
+      "effect": "",
+      "name": "Social Regard",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "Voice",
+      "effect": "",
+      "name": "Voice",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "Affliction",
+      "effect": "",
+      "name": "Affliction",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "basecost": 15,
+      "description": "Combat Reflexes",
+      "effect": "",
+      "name": "Combat Reflexes",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "basecost": 50,
+      "description": "Terror",
+      "effect": "",
+      "name": "Terror* -2",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "basecost": 2,
+      "description": "Fearlessness",
+      "effect": "",
+      "name": "Fearlessness",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "Single-Minded",
+      "effect": "",
+      "name": "Single-Minded",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "-",
+      "effect": "",
+      "name": "Channeling",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "basecost": 10,
+      "description": "-",
+      "effect": "",
+      "name": "Medium",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "basecost": 1,
+      "description": "-",
+      "effect": "",
+      "name": "Autotrance",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "-",
+      "effect": "",
+      "name": "Claim to Hospitality",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "basecost": 5,
+      "description": "-",
+      "effect": "",
+      "name": "Sensitive Empathy",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.advantage",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "-",
+      "name": "Stubbourn",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "basecost": -20,
+      "description": "Alcoholism",
+      "name": "Alcoholism (RHM)",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "Compulsive Carousing",
+      "name": "Compulsive Carousing",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Compulsive Gambling",
+      "name": "Compulsive Gambling",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Curious",
+      "name": "Curious",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Pacifism",
+      "name": "Pacifism",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Secret",
+      "name": "Secret",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Nightmares",
+      "name": "Nightmares",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "Insomniac",
+      "name": "Insomniac",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "Overconfidence",
+      "name": "Overconfidence",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "Addiction (Amphetamines)",
+      "name": "Addiction (Amphetamines)",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "basecost": -15,
+      "description": "-",
+      "name": "Charitable",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "basecost": -2,
+      "description": "-",
+      "name": "Unnatural Features",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "basecost": -15,
+      "description": "-",
+      "name": "Fanaticism",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "-",
+      "name": "Guilt Complex",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "basecost": -15,
+      "description": "-",
+      "name": "Lecherousness",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "-",
+      "name": "Pacifism",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "-",
+      "name": "Secret",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "-",
+      "name": "Enemy (Local law-enforcement agency; Watcher; 9 or less)",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "basecost": -5,
+      "description": "-",
+      "name": "Callous",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "basecost": -15,
+      "description": "-",
+      "name": "Compulsive Lying",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "basecost": -10,
+      "description": "-",
+      "name": "Megalomania",
+      "sources": null,
+      "speciallimitations": null,
+      "type": null
+    },
+    "model": "scrpgtest.disadvantage",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "E",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Knife"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Streetwise"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Fast-Talk"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Holdout"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Merchant"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Disguise"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Smuggling"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "E",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Area Knowledge (Home Turf)"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "E",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Guns (Pistol)"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "E",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Fast-Draw (Pistol)"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "A",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Driving"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "E",
+      "skill_defaults": null,
+      "skill_description": "",
+      "skill_name": "Savoir-Faire"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "skill_attribute": "will",
+      "skill_challenge": "H",
+      "skill_defaults": "",
+      "skill_description": "Autohypnosis",
+      "skill_name": "Autohypnosis"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "Boating",
+      "skill_name": "Boating"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "skill_attribute": "ht",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "Carousing",
+      "skill_name": "Carousing"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "Current Affairs",
+      "skill_name": "Current Affairs"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "VH",
+      "skill_defaults": "",
+      "skill_description": "Musical Influence",
+      "skill_name": "Musical Influence"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "skill_attribute": "ht",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "Singing",
+      "skill_name": "Singing"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "Performance",
+      "skill_name": "Performance"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "Dancing",
+      "skill_name": "Dancing"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "Gambling",
+      "skill_name": "Gambling"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "Makeup",
+      "skill_name": "Makeup"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "skill_attribute": "ht",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Sex Appeal"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Erotic Art"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "skill_attribute": "per",
+      "skill_challenge": "H",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Detect Lies"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Shadowing"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Lockpicking"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Interrogation"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Stealth"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "skill_attribute": "dx",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Brawling"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Acting"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "skill_attribute": "per",
+      "skill_challenge": "A",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Observation"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "H",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "Diplomacy"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "skill_attribute": "iq",
+      "skill_challenge": "E",
+      "skill_defaults": "",
+      "skill_description": "",
+      "skill_name": "First Aid"
+    },
+    "model": "scrpgtest.skill",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "armourStatsText": "",
+      "meleeStatsText": "[{\"damage\": \"sw-2 cut\", \"parry\": \"-1\", \"reach\": \"C,1\", \"skill\": \"Knife\"}, {\"damage\": \"thr imp\", \"parry\": \"-1\", \"reach\": \"C\", \"skill\": \"Knife\"} ]",
+      "possession_cost": 1,
+      "possession_description": "",
+      "possession_name": "Large Knife",
+      "possession_weight": 1,
+      "rangeStatsText": "[{\"damage\": \"thr imp\", \"range\": \"x0.8/x1.5\", \"skill\":\"Knife\"} ]"
+    },
+    "model": "scrpgtest.possession",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "armourStatsText": "",
+      "meleeStatsText": "",
+      "possession_cost": 400,
+      "possession_description": "",
+      "possession_name": "S&W .22 LadySmith",
+      "possession_weight": 1,
+      "rangeStatsText": "[{\"rcl\": \"2\", \"strength\": \"7\", \"notes\": \"\", \"damage\": \"1d pi-\", \"rateOfFire\": \"3\", \"bulk\": \"-1\", \"range\": \"50/850\", \"shots\": \"7(2i)\", \"skill\": \"Guns (Pistol)\", \"accuracy\": \"1\"} ]"
+    },
+    "model": "scrpgtest.possession",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "armourStatsText": "",
+      "meleeStatsText": "",
+      "possession_cost": 10,
+      "possession_description": "",
+      "possession_name": "Cigarette Lighter",
+      "possession_weight": 0,
+      "rangeStatsText": ""
+    },
+    "model": "scrpgtest.possession",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "language_name": "French"
+    },
+    "model": "scrpgtest.language",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "language_name": "English"
+    },
+    "model": "scrpgtest.language",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "attributesText": "{}",
+      "bm": 5,
+      "bs": 5.0,
+      "campaign": 1,
+      "characterType": 1,
+      "connection": null,
+      "drText": "{}",
+      "dx": 10,
+      "firstname": "Monsieur",
+      "fp": 10,
+      "hp": 10,
+      "ht": 10,
+      "iq": 12,
+      "lastname": "Petit-pois",
+      "notes": null,
+      "occupation": "Hotelier",
+      "per": 12,
+      "race": 1,
+      "reactions": "{}",
+      "sm": 1,
+      "st": 10,
+      "status": 1,
+      "will": 12
+    },
+    "model": "scrpgtest.character",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "attributesText": "{}",
+      "bm": 5,
+      "bs": 5.0,
+      "campaign": 1,
+      "characterType": 2,
+      "connection": null,
+      "drText": "{}",
+      "dx": 11,
+      "firstname": "Esther",
+      "fp": 10,
+      "hp": 10,
+      "ht": 10,
+      "iq": 11,
+      "lastname": "Fayette",
+      "notes": null,
+      "occupation": "Hostess",
+      "per": 10,
+      "race": 1,
+      "reactions": "{}",
+      "sm": 1,
+      "st": 11,
+      "status": 1,
+      "will": 10
+    },
+    "model": "scrpgtest.character",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "attributesText": "-",
+      "bm": 5,
+      "bs": 5.0,
+      "campaign": 1,
+      "characterType": 2,
+      "connection": null,
+      "drText": "-",
+      "dx": 11,
+      "firstname": "Rosa",
+      "fp": 14,
+      "hp": 16,
+      "ht": 10,
+      "iq": 11,
+      "lastname": "Laveau",
+      "notes": null,
+      "occupation": "Jazz Singer",
+      "per": 12,
+      "race": 1,
+      "reactions": "-",
+      "sm": 0,
+      "st": 8,
+      "status": 1,
+      "will": 12
+    },
+    "model": "scrpgtest.character",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "attributesText": "-",
+      "bm": 5,
+      "bs": 5.0,
+      "campaign": 1,
+      "characterType": 2,
+      "connection": null,
+      "drText": "-",
+      "dx": 10,
+      "firstname": "Vincent",
+      "fp": 10,
+      "hp": 10,
+      "ht": 12,
+      "iq": 12,
+      "lastname": "Amant",
+      "notes": null,
+      "occupation": "Barman",
+      "per": 10,
+      "race": 1,
+      "reactions": "-",
+      "sm": 1,
+      "st": 10,
+      "status": 1,
+      "will": 10
+    },
+    "model": "scrpgtest.character",
+    "pk": 4
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 1
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 2
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 3
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 4
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 5
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "description": "Test",
+      "modPackage": 1,
+      "modifier": 10,
+      "name": "Test"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "description": "-",
+      "modPackage": 1,
+      "modifier": 10,
+      "name": "Second"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "description": "A  Mod 2",
+      "modPackage": 2,
+      "modifier": 100,
+      "name": "Mod 2"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "description": "-",
+      "modPackage": 3,
+      "modifier": -10,
+      "name": "PM Super"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "description": "-",
+      "modPackage": 3,
+      "modifier": -10,
+      "name": "Requires IQ Roll"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "description": "-",
+      "modPackage": 4,
+      "modifier": -10,
+      "name": "PM Super"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "description": "Heart Attack",
+      "modPackage": 5,
+      "modifier": 300,
+      "name": "Heart Attack"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "description": "Power Modifier Psionic",
+      "modPackage": 5,
+      "modifier": -10,
+      "name": "PM Psionic"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "description": "You can only use your Luck to reroll failed active defense rolls, resistance rolls, or HT rolls to resist the effects of",
+      "modPackage": 6,
+      "modifier": -20,
+      "name": "Defensive"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "advantage": 1,
+      "character": 1,
+      "modifiers": 1,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "advantage": 2,
+      "character": 1,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "advantage": 3,
+      "character": 2,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "advantage": 4,
+      "character": 2,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "advantage": 5,
+      "character": 2,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "advantage": 6,
+      "character": 2,
+      "modifiers": null,
+      "rank": 2
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "advantage": 7,
+      "character": 2,
+      "modifiers": 3,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "advantage": 8,
+      "character": 2,
+      "modifiers": 4,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "advantage": 9,
+      "character": 3,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "advantage": 10,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "advantage": 11,
+      "character": 3,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "advantage": 12,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "advantage": 13,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "advantage": 4,
+      "character": 3,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "advantage": 14,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "advantage": 15,
+      "character": 3,
+      "modifiers": null,
+      "rank": 2
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "advantage": 16,
+      "character": 4,
+      "modifiers": 5,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "advantage": 17,
+      "character": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "advantage": 12,
+      "character": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "advantage": 12,
+      "character": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "advantage": 18,
+      "character": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "advantage": 19,
+      "character": 4,
+      "modifiers": null,
+      "rank": 3
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "advantage": 20,
+      "character": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "advantage": 16,
+      "character": 3,
+      "modifiers": null,
+      "rank": 1
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "advantage": 21,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "advantage": 22,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "advantage": 23,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "advantage": 24,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "advantage": 25,
+      "character": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "advantage": 3,
+      "character": 3,
+      "modifiers": 6,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_advantage",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "character": 1,
+      "disadvantage": 1,
+      "modifiers": 2,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 2,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 3,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 4,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 5,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 6,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 7,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "character": 4,
+      "disadvantage": 8,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "character": 4,
+      "disadvantage": 9,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "character": 4,
+      "disadvantage": 10,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "character": 4,
+      "disadvantage": 11,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "character": 4,
+      "disadvantage": 5,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 12,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 13,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 14,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 15,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 16,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 17,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "character": 3,
+      "disadvantage": 18,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "character": 2,
+      "disadvantage": 19,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "character": 2,
+      "disadvantage": 20,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "character": 2,
+      "disadvantage": 21,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "character": 2,
+      "disadvantage": 16,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "character": 2,
+      "disadvantage": 22,
+      "modifiers": null,
+      "rank": null
+    },
+    "model": "scrpgtest.rel_disadvantage",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "character": 1,
+      "rank": 1,
+      "skill": 1
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 4,
+      "skill": 2
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 4,
+      "skill": 3
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 4,
+      "skill": 4
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 4,
+      "skill": 5
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 3,
+      "skill": 6
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 4,
+      "skill": 7
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 7
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 2,
+      "skill": 8
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 8
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 3,
+      "skill": 9
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 9
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 3,
+      "skill": 10
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 10
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 3,
+      "skill": 11
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 11
+  },
+  {
+    "fields": {
+      "character": 2,
+      "rank": 2,
+      "skill": 12
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 12
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 3,
+      "skill": 8
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 13
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 13
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 14
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 1,
+      "skill": 14
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 15
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 1,
+      "skill": 15
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 16
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 16
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 17
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 17
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 18
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 3,
+      "skill": 18
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 19
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 3
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 20
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 19
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 21
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 1,
+      "skill": 20
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 22
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 2,
+      "skill": 1
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 23
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 3,
+      "skill": 21
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 24
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 1,
+      "skill": 22
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 25
+  },
+  {
+    "fields": {
+      "character": 3,
+      "rank": 1,
+      "skill": 2
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 26
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 8
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 27
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 23
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 28
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 24
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 29
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 25
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 30
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 3,
+      "skill": 26
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 31
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 27
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 32
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 3,
+      "skill": 1
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 33
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 3,
+      "skill": 28
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 34
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 29
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 35
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 2
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 36
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 30
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 37
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 1,
+      "skill": 31
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 38
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 1,
+      "skill": 3
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 39
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 1,
+      "skill": 32
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 40
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 3,
+      "skill": 33
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 41
+  },
+  {
+    "fields": {
+      "character": 4,
+      "rank": 2,
+      "skill": 34
+    },
+    "model": "scrpgtest.rel_skill",
+    "pk": 42
+  },
+  {
+    "fields": {
+      "ammount": 1,
+      "character": 2,
+      "possession": 1
+    },
+    "model": "scrpgtest.rel_possession",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "ammount": 1,
+      "character": 2,
+      "possession": 2
+    },
+    "model": "scrpgtest.rel_possession",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "ammount": 1,
+      "character": 3,
+      "possession": 3
+    },
+    "model": "scrpgtest.rel_possession",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "ammount": 1,
+      "character": 2,
+      "possession": 3
+    },
+    "model": "scrpgtest.rel_possession",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "character": 1,
+      "language": 1,
+      "spoken": 3,
+      "written": 3
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "character": 1,
+      "language": 2,
+      "spoken": 2,
+      "written": 3
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "character": 2,
+      "language": 2,
+      "spoken": 3,
+      "written": 3
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "character": 3,
+      "language": 1,
+      "spoken": 3,
+      "written": 3
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 4
+  },
+  {
+    "fields": {
+      "character": 3,
+      "language": 2,
+      "spoken": 2,
+      "written": 2
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 5
+  },
+  {
+    "fields": {
+      "character": 4,
+      "language": 2,
+      "spoken": 3,
+      "written": 3
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 6
+  },
+  {
+    "fields": {
+      "character": 4,
+      "language": 1,
+      "spoken": 2,
+      "written": 2
+    },
+    "model": "scrpgtest.rel_language",
+    "pk": 7
+  }
+]

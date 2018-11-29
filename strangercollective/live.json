@@ -1,0 +1,53 @@
+[
+  {
+    "fields": {
+      "type": "NPC"
+    },
+    "model": "scrpgtest.charactertype",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "race": "Human"
+    },
+    "model": "scrpgtest.race",
+    "pk": 1
+  },
+  {
+    "fields": {
+      "status": "Alive"
+    },
+    "model": "scrpgtest.status",
+    "pk": 1
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 1
+  },
+  {
+    "fields": {},
+    "model": "scrpgtest.modpackage",
+    "pk": 2
+  },
+  {
+    "fields": {
+      "description": "Another Mod",
+      "modPackage": 2,
+      "modifier": -50,
+      "name": "Mod 1"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 3
+  },
+  {
+    "fields": {
+      "description": "Another mod",
+      "modPackage": 2,
+      "modifier": -50,
+      "name": "Mod 2"
+    },
+    "model": "scrpgtest.modifier",
+    "pk": 4
+  },
+]

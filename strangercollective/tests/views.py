@@ -10,4 +10,4 @@ def ortho(request):
 
 def dir(request):
 	# return HttpResponse(os.path.dirname(os.path.abspath(__file__)))
-	return HttpResponse(settings.CUSTOMDIR)
+	return HttpResponse(settings.STATICFILES_DIRS)

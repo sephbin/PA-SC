@@ -54,7 +54,7 @@ class App extends Component {
  //      .then(characterList => console.log(characterList))
  //      .catch(error => console.log("error",error));
 	// }
-    fetch('http://localhost:8000/rpg/character/2')
+    fetch('http://www.strangercollective.com/rpg/character/2')
       .then(response => response.json())
       .then(character => this.setState({ character }))
       .then(character => console.log(character))
@@ -64,7 +64,7 @@ class App extends Component {
 
 
 	eventFunction = (charid) => {
-	fetch('http://localhost:8000/rpg/character/'+charid)
+	fetch('http:/www.strangercollective.com/rpg/character/'+charid)
       .then(response => response.json())
       .then(character => this.setState({ character }))
       .then(character => console.log(character))

@@ -3,7 +3,15 @@ from django.shortcuts import get_object_or_404, render
 from .models import *
 from django.contrib  import messages
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets
+from .serializers import *
 # Create your views here.
+class CharacterViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = character.objects.all()
+    serializer_class = CharacterSerializer
 
 def home(request):
 	instance = get_object_or_404(character, id=1)

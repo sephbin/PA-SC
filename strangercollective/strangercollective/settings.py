@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'articles',
     'tests',
     'home',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'taggit',
     'redback',
     'corsheaders',
+    'api',
 
 ]
 

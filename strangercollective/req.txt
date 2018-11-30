@@ -1,0 +1,8 @@
+django
+django-markdownx
+django-colorfield
+django-tagging
+django-taggit
+django-cors-headers
+djangorestframework
+requests

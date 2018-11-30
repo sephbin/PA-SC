@@ -7,15 +7,16 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import AttributeCard from '../AttributeCard'
-import TraitCard from '../TraitCard'
-import SkillCard from '../SkillCard'
-import CultureCard from '../CultureCard'
-import PossesionCard from '../PossesionCard'
-import RangedCard from '../RangedCard'
-import MeleeCard from '../MeleeCard'
-import LanguageCard from '../LanguageCard'
-import MainCard from '../MainCard'
+import CharacterCard from '../CharacterCard';
+import AttributeCard from '../AttributeCard';
+import TraitCard from '../TraitCard';
+import SkillCard from '../SkillCard';
+import CultureCard from '../CultureCard';
+import PossesionCard from '../PossesionCard';
+import RangedCard from '../RangedCard';
+import MeleeCard from '../MeleeCard';
+import LanguageCard from '../LanguageCard';
+import MainCard from '../MainCard';
 
 
 class CharacterPage extends Component {
@@ -24,6 +25,7 @@ class CharacterPage extends Component {
     return (
       <Grid container spacing={"8"} style={{height:"100%"}}>
         <Grid item xs={3}>
+          <CharacterCard json={this.props.json.character} />
           <AttributeCard json={this.props.json.character} />
           <TraitCard cardTitle="Advantages" json={this.props.json.character.advantages} />
           <TraitCard cardTitle="Disadvantages" json={this.props.json.character.disadvantages} />

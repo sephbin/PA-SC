@@ -11,6 +11,7 @@ class MainCard extends Component {
           <span style={{paddingLeft:8, color:"#FFF"}}> </span>
         </div>
         <div style={{padding:8}}>
+         {JSON.stringify(this.props.json)}
       </div>
       </Paper>
     );

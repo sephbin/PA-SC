@@ -19,8 +19,8 @@ class SkillCard extends Component {
         }
         return (
         <tr>
-        <td style={{borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)", whiteSpace:"nowrap"}}><b>{sk.value}</b> - </td>
-        <td style={{width: '100%', borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.name}</td>
+        <td style={{borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)", whiteSpace:"nowrap"}}><b>{sk.relative_value}</b> - </td>
+        <td style={{width: '100%', borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.skill.skill_name}</td>
         <td style={{borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.challenge}</td>
         <td style={{borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.relative}</td>
         <td style={{textAlign: "right", borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>[{sk.cost}]</td>

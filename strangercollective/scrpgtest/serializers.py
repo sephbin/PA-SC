@@ -73,6 +73,7 @@ class CharacterSerializer(serializers.ModelSerializer):
 	reldisadvantage = RelDisadvantageSerializer(read_only=True, many=True)
 	relskill = RelSkillSerializer(read_only=True, many=True)
 	relpossession = RelPossessionSerializer(read_only=True, many=True)
+	possessionTotals = serializers.DictField()
 	class Meta:
 		model = character
 		fields = ('__all__')

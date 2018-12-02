@@ -10,7 +10,7 @@ class MainCard extends Component {
         <div style={{backgroundColor:"#F00"}}>
           <span style={{paddingLeft:8, color:"#FFF"}}> </span>
         </div>
-        <div style={{padding:8}}>
+        <div style={{padding:8, wordWrap: 'break-word'}}>
          {JSON.stringify(this.props.json)}
       </div>
       </Paper>

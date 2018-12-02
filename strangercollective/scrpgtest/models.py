@@ -179,6 +179,14 @@ class character(models.Model):
 
     def __str__(self):
         return self.firstname+" "+self.lastname
+    def possessionTotals(self):
+        cost = 0
+        weight = 0
+        for p in self.relpossession.all():
+            cost += p.cost()
+            weight += p.weight()
+        return {'cost':cost, 'weight': weight}
+
     def cost(self):
         tally = 0
         attr = {

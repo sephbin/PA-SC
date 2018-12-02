@@ -39,7 +39,7 @@ class CharacterPage extends Component {
           {/*<CultureCard json={this.props.json.character} />*/}
           {/*<MeleeCard json={this.props.json.character.melee} />*/}
           {/*<RangedCard json={this.props.json.character.ranged} />*/}
-          {/*<PossesionCard json={this.props.json.character.possessions} char={this.props.json.character} />*/}
+          <PossesionCard json={this.props.json.character.relpossession} char={this.props.json.character} />
         </Grid>
       </Grid>
     );

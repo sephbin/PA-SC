@@ -26,7 +26,10 @@ class Content extends Component {
 	right: this.props.json.layout.universal.sideWidth,
 	top: this.props.json.layout.universal.sideWidth,
 	backgroundColor: '#111',
-	padding: 8
+	padding: 8,
+  overflowX: 'hidden',
+  overflowY: 'hidden',
+  // overflowY: 'auto',
 };
 
     return (

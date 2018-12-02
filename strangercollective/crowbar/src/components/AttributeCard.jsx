@@ -13,23 +13,23 @@ class AttributeCard extends Component {
         <div style={{padding:8}}>
       <table style={{width:"100%"}}>
       <tr style={{height:"2em", textAlign:"center"}}>
-      <td><b>ST</b></td> <td>{this.props.json.attributes.st}</td><td>[0]</td>
-      <td><b>HP</b></td> <td>{this.props.json.attributes.hp}</td><td>[0]</td>
-      <td><b>SM</b></td> <td>{this.props.json.attributes.sm}</td><td>[0]</td>
+      <td><b>ST</b></td> <td>{this.props.json.st}</td><td>[0]</td>
+      <td><b>HP</b></td> <td>{this.props.json.hp}</td><td>[0]</td>
+      <td><b>SM</b></td> <td>{this.props.json.sm}</td><td>[0]</td>
       </tr>
       <tr style={{height:"2em", textAlign:"center"}}>
-      <td><b>DX</b></td><td>{this.props.json.attributes.dx}</td><td>[0]</td>
-      <td><b>Per</b></td><td>{this.props.json.attributes.per}</td><td>[0]</td>
-      <td><b>BS</b></td><td>{this.props.json.attributes.bs}</td><td>[0]</td>
+      <td><b>DX</b></td><td>{this.props.json.dx}</td><td>[0]</td>
+      <td><b>Per</b></td><td>{this.props.json.per}</td><td>[0]</td>
+      <td><b>BS</b></td><td>{this.props.json.bs}</td><td>[0]</td>
       </tr>
       <tr style={{height:"2em", textAlign:"center"}}>
-      <td><b>IQ</b></td><td>{this.props.json.attributes.iq}</td><td>[0]</td>
-      <td><b>Will</b></td><td>{this.props.json.attributes.will}</td><td>[0]</td>
-      <td><b>BM</b></td><td>{this.props.json.attributes.bm}</td><td>[0]</td>
+      <td><b>IQ</b></td><td>{this.props.json.iq}</td><td>[0]</td>
+      <td><b>Will</b></td><td>{this.props.json.will}</td><td>[0]</td>
+      <td><b>BM</b></td><td>{this.props.json.bm}</td><td>[0]</td>
       </tr>
       <tr style={{height:"2em", textAlign:"center"}}>
-      <td><b>HT</b></td><td>{this.props.json.attributes.ht}</td><td>[0]</td>
-      <td><b>FP</b></td><td>{this.props.json.attributes.fp}</td><td>[0]</td>
+      <td><b>HT</b></td><td>{this.props.json.ht}</td><td>[0]</td>
+      <td><b>FP</b></td><td>{this.props.json.fp}</td><td>[0]</td>
       </tr>
       </table>
       </div>

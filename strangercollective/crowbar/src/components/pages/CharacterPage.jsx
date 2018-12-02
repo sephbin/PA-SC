@@ -27,19 +27,19 @@ class CharacterPage extends Component {
         <Grid item xs={3}>
           <CharacterCard json={this.props.json.character} />
           <AttributeCard json={this.props.json.character} />
-          <TraitCard cardTitle="Advantages" json={this.props.json.character.advantages} />
-          <TraitCard cardTitle="Disadvantages" json={this.props.json.character.disadvantages} />
-          <SkillCard json={this.props.json.character.skills} />
+          <TraitCard cardTitle="Advantages" json={this.props.json.character.reladvantage} />
+          <TraitCard cardTitle="Disadvantages" json={this.props.json.character.reldisadvantage} />
+          {/*<SkillCard json={this.props.json.character.relskill} />*/}
         </Grid>
         <Grid item xs={6}>
           <MainCard json={this.props.json.character} />
         </Grid>
         <Grid item xs ={3}>
-          <LanguageCard json={this.props.json.character.languages} />
-          <CultureCard json={this.props.json.character} />
-          <MeleeCard json={this.props.json.character.melee} />
-          <RangedCard json={this.props.json.character.ranged} />
-          <PossesionCard json={this.props.json.character.possessions} char={this.props.json.character} />
+          {/*<LanguageCard json={this.props.json.character.languages} />*/}
+          {/*<CultureCard json={this.props.json.character} />*/}
+          {/*<MeleeCard json={this.props.json.character.melee} />*/}
+          {/*<RangedCard json={this.props.json.character.ranged} />*/}
+          {/*<PossesionCard json={this.props.json.character.possessions} char={this.props.json.character} />*/}
         </Grid>
       </Grid>
     );

@@ -67,6 +67,7 @@ class CharacterSerializer(serializers.ModelSerializer):
 	characterType = characterTypeSerializer(read_only=True)
 	reladvantage = RelAdvantageSerializer(read_only=True, many=True)
 	reldisadvantage = RelDisadvantageSerializer(read_only=True, many=True)
+	relskill = RelSkillSerializer(read_only=True, many=True)
 	relpossession = RelPossessionSerializer(read_only=True, many=True)
 	class Meta:
 		model = character

@@ -8,7 +8,7 @@ class AttributeCard extends Component {
     return (
       <Paper style={{marginBottom:8}}>
         <div style={{backgroundColor:"#F00"}}>
-          <span style={{paddingLeft:8, color:"#FFF"}}> -- </span>
+          <span style={{paddingLeft:8, color:"#FFF"}}> {this.props.json.firstname} {this.props.json.lastname} </span>
         </div>
         <div style={{padding:8}}>
        

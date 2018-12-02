@@ -13,7 +13,7 @@ class App extends Component {
 		this.state = {
 			"page":"CharacterPage",
 			"characterList": [],
-			"character":{"attributes":{
+			"character":{
 			"st":10,
 			"dx":10,
 			"iq":10,
@@ -24,16 +24,15 @@ class App extends Component {
 			"fp":10,
 			"sm":1,
 			"bs":5,
-			"bm":5
-		},
-			"advantages":[],
-			"disadvantages":[],
-			"skills":[],
+			"bm":5,
+			"reladvantage":[],
+			"reldisadvantage":[],
+			"relskill":[],
 			"languages":[],
-			"possessions":[],
-			"possessionsTotals":{"cost":0,"weight":0},
-			"melee":[{"meleestats":[]}],
-			"ranged":[{"rangestats":[]}],
+			// "relpossession":[],
+			// "possessionsTotals":{"cost":0,"weight":0},
+			// "melee":[{"meleestats":[]}],
+			// "ranged":[{"rangestats":[]}],
 		},
 			"layout":{"universal":{"sideWidth":"2.3em"},"left":[
 				// {"tooltip":"Button 1","image":"https://image.flaticon.com/icons/svg/1152/1152840.svg"},
@@ -54,7 +53,7 @@ class App extends Component {
  //      .then(characterList => console.log(characterList))
  //      .catch(error => console.log("error",error));
 	// }
-    fetch('http://www.strangercollective.com/rpg/character/2')
+    fetch('http://www.strangercollective.com/rpg/characters/2')
       .then(response => response.json())
       .then(character => this.setState({ character }))
       .then(character => console.log(character))
@@ -64,7 +63,7 @@ class App extends Component {
 
 
 	eventFunction = (charid) => {
-	fetch('http:/www.strangercollective.com/rpg/character/'+charid)
+	fetch('http:/www.strangercollective.com/rpg/characters/'+charid)
       .then(response => response.json())
       .then(character => this.setState({ character }))
       .then(character => console.log(character))

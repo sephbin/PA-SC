@@ -32,11 +32,11 @@ class PossesionCard extends Component {
         }
       )
       }
-      {/*<tr>*/}
-        {/*<th colspan={2} style={{textAlign: "left"}}>Total</th>*/}
-        {/*<th>{this.props.char.possessionsTotals.weight}</th>*/}
-        {/*<th>{this.props.char.possessionsTotals.cost}</th>*/}
-      {/*</tr>*/}
+      <tr>
+        <th colspan={2} style={{textAlign: "left"}}>Total</th>
+        <th>{this.props.char.possessionTotals.weight}</th>
+        <th>{this.props.char.possessionTotals.cost}</th>
+      </tr>
       </table>
       </div>
       </Paper>

@@ -30,7 +30,7 @@ class App extends Component {
 			"relskill":[],
 			"languages":[],
 			"relpossession":[],
-			// "possessionsTotals":{"cost":0,"weight":0},
+			"possessionTotals":{"cost":0,"weight":0},
 			// "melee":[{"meleestats":[]}],
 			// "ranged":[{"rangestats":[]}],
 		},

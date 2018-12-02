@@ -43,6 +43,10 @@ class SkillSerializer(serializers.ModelSerializer):
 class RelSkillSerializer(serializers.ModelSerializer):
 		skill = SkillSerializer(read_only=True)
 		cost = serializers.IntegerField()
+		skill_challenge = serializers.CharField()
+		skill_attribute = serializers.CharField()
+		relative_skill = serializers.CharField()
+		relative_value = serializers.IntegerField()
 		class Meta:
 			model = rel_skill
 			fields = ('__all__')

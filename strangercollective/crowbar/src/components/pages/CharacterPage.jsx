@@ -29,7 +29,7 @@ class CharacterPage extends Component {
           <AttributeCard json={this.props.json.character} />
           <TraitCard cardTitle="Advantages" json={this.props.json.character.reladvantage} />
           <TraitCard cardTitle="Disadvantages" json={this.props.json.character.reldisadvantage} />
-          {/*<SkillCard json={this.props.json.character.relskill} />*/}
+          <SkillCard json={this.props.json.character.relskill} />
         </Grid>
         <Grid item xs={6}>
           <MainCard json={this.props.json.character} />

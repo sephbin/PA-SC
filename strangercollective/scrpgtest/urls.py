@@ -5,11 +5,12 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'characters', views.CharacterViewSet)
+router.register(r'races', views.RaceViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [
 	url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),
     # path(r'card/<int:characterid>/', views.card),
     # path(r'character/<int:characterid>/', views.characterdata),

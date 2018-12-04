@@ -31,7 +31,7 @@ class CharacterPage extends Component {
           <TraitCard cardTitle="Disadvantages" json={this.props.json.character.reldisadvantage} />
           <SkillCard json={this.props.json.character.relskill} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={6} style={{height:'100%'}}>
           <MainCard json={this.props.json.character} />
         </Grid>
         <Grid item xs ={3}>

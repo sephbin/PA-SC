@@ -176,9 +176,12 @@ class character(models.Model):
     bm = models.IntegerField(default=5)
 
 
-
     def __str__(self):
         return self.firstname+" "+self.lastname
+    def damage(self):
+        lookup = {"1":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"2":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"3":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"4":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"5":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"6":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"7":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"8":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"9":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":-1}},"10":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":0}},"11":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":1}},"12":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":2}},"13":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":-1}},"14":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":0}},"15":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":1}},"16":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":2}},"17":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":-1}},"18":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":0}},"19":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":1}},"20":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":2}}}
+        damkey = str(self.st)
+        return(lookup[damkey])
     def possessionTotals(self):
         cost = 0
         weight = 0
@@ -379,6 +382,19 @@ class rel_possession(models.Model):
         test = []
         charskills = self.character.relskill.all()
         for s in stats:
+            charDam = self.character.damage()
+            try:
+                thisCharDam = {"die":s['damageStats']['die'], "mod":0}
+            except:
+                thisCharDam = charDam[s['damageStats']['stType']]
+            newMod = thisCharDam['mod']+s['damageStats']['mod']
+            modOpe = ""
+            if newMod == 0:
+                newMod = ""
+            elif newMod > 0:
+                modOpe = "+"
+            newDam = str((thisCharDam['die']))+"d"+modOpe+str(newMod)+" "+s['damageStats']['damType'] 
+            s['damage'] = newDam
             s['value'] = 0
             for cs in charskills:
                 if s['skill']==cs.skill.skill_name:
@@ -389,6 +405,19 @@ class rel_possession(models.Model):
         test = []
         charskills = self.character.relskill.all()
         for s in stats:
+            charDam = self.character.damage()
+            try:
+                thisCharDam = {"die":s['damageStats']['die'], "mod":0}
+            except:
+                thisCharDam = charDam[s['damageStats']['stType']]
+            newMod = thisCharDam['mod']+s['damageStats']['mod']
+            modOpe = ""
+            if newMod == 0:
+                newMod = ""
+            elif newMod > 0:
+                modOpe = "+"
+            newDam = str((thisCharDam['die']))+"d"+modOpe+str(newMod)+" "+s['damageStats']['damType']
+            s['damage'] = newDam
             s['value'] = 0
             for cs in charskills:
                 if s['skill']==cs.skill.skill_name:

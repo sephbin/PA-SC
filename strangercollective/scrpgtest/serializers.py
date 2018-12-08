@@ -60,6 +60,8 @@ class RelPossessionSerializer(serializers.ModelSerializer):
 		possession = PossessionSerializer(read_only=True)
 		cost = serializers.IntegerField()
 		weight = serializers.FloatField()
+		meleeStats = serializers.ListField()
+		rangeStats = serializers.ListField()
 		class Meta:
 			model = rel_possession
 			fields = ('__all__')
@@ -74,6 +76,7 @@ class CharacterSerializer(serializers.ModelSerializer):
 	relskill = RelSkillSerializer(read_only=True, many=True)
 	relpossession = RelPossessionSerializer(read_only=True, many=True)
 	possessionTotals = serializers.DictField()
+	damage = serializers.DictField()
 	class Meta:
 		model = character
 		fields = ('__all__')

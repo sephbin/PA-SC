@@ -45,7 +45,15 @@ class App extends Component {
 	}
 	
 
-	componentDidMount() {
+componentDidMount() {
+  this.timer = setInterval(()=> this.getItems(), 1000);
+}
+
+componentWillUnmount() {
+  this.timer = null; // here...
+}
+
+getItems() {
 	// console.log("ATTEMPT FETCH")
 	// fetch('http://localhost:8000/rpg/characterlist')
  //      .then(response => (response.json()))

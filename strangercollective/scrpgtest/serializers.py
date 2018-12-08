@@ -77,6 +77,7 @@ class CharacterSerializer(serializers.ModelSerializer):
 	relpossession = RelPossessionSerializer(read_only=True, many=True)
 	possessionTotals = serializers.DictField()
 	damage = serializers.DictField()
+	cost = serializers.IntegerField()
 	class Meta:
 		model = character
 		fields = ('__all__')

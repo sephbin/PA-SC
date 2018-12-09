@@ -32,13 +32,13 @@ class CharacterPage extends Component {
           <SkillCard json={this.props.json.character.relskill} />
         </Grid>
         <Grid item xs={6} style={{height:'100%'}}>
-          <MainCard json={this.props.json.character} />
+          <MainCard json={this.props.json} />
         </Grid>
         <Grid item xs ={3}>
           {/*<LanguageCard json={this.props.json.character.languages} />*/}
           {/*<CultureCard json={this.props.json.character} />*/}
-          {/*<MeleeCard json={this.props.json.character.melee} />*/}
-          {/*<RangedCard json={this.props.json.character.ranged} />*/}
+          <MeleeCard json={this.props.json.character.relpossession} />
+          <RangedCard json={this.props.json.character.relpossession} />
           <PossesionCard json={this.props.json.character.relpossession} char={this.props.json.character} />
         </Grid>
       </Grid>

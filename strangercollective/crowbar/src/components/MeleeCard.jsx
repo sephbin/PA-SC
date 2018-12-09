@@ -17,13 +17,43 @@ class MeleeCard extends Component {
         if (i === (this.props.json.length - 1)) {
           bwidth = 0
         }
+        let row
+        if (sk.possession.meleeStatsText != '') {
+        row = (<tr>
+          <td colspan={99}>{sk.possession.possession_name}</td>
+          </tr>);
+        }
         return (
         <Fragment>
-        {/*<tr>{JSON.stringify(sk.rangestats)}</tr>*/}
-        {sk.meleestats.map(( st, j ) => {return (<Fragment><tr style={{borderBottomWidth: 1, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>
-          <td style={{whiteSpace: 'nowrap'}}><span>v</span> <b>{st.value} -</b></td>
-          <td style={{width:'100%'}} colspan={99}>{sk.name}: {st.damage}</td>
-          </tr></Fragment> )} )}
+        {row}
+        {/*<tr>{JSON.stringify(sk)}</tr>*/}
+        {sk.meleeStats.map(( st, j ) => {return (
+          <Fragment>
+            <tr style={{borderBottomWidth: 1, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>
+              <td style={{whiteSpace: 'nowrap'}}><b>{st.value} -</b></td>
+              <td colspan={1}>{st.damageStats.stType}:</td>
+              <td style={{width:'100%'}} colspan={99}>{st.damage}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td className="details" colspan={99}>
+                <table style={{width:"100%"}}>
+                  <tr>
+                    <td>Reach</td>
+                    <td>Parry</td>
+                    <td>ST</td>
+                    <td>Notes</td>
+                  </tr>
+                  <tr>
+                    <td>{st.reach}</td>
+                    <td>{st.parry}</td>
+                    <td>{st.strength}</td>
+                    <td>{st.notes}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </Fragment> )} )}
         </Fragment>
 
           )

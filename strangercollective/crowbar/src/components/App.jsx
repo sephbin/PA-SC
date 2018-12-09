@@ -13,6 +13,9 @@ class App extends Component {
 		this.state = {
 			"page":"CharacterPage",
 			"characterList": [],
+			"characterPage":{
+				"mainContents":"<h1>HELLO</h1>This is rendering some extra HTML"
+			},
 			"character":{
 			"st":10,
 			"dx":10,
@@ -35,7 +38,8 @@ class App extends Component {
 			// "ranged":[{"rangestats":[]}],
 		},
 			"layout":{"universal":{"sideWidth":"2.3em"},"left":[
-				// {"tooltip":"Button 1","image":"https://image.flaticon.com/icons/svg/1152/1152840.svg"},
+				{"tooltip":"Characters","image":"https://image.flaticon.com/icons/svg/149/149910.svg"},
+				// {"tooltip":"Characters","image":"https://image.flaticon.com/icons/svg/1152/1152840.svg"},
 				// {"tooltip":"Button 2","image":"https://image.flaticon.com/icons/svg/1152/1152810.svg"},
 				// {"tooltip":"Button 3","image":"https://image.flaticon.com/icons/svg/1152/1152833.svg"},
 				// {"tooltip":"Button 4","image":"https://image.flaticon.com/icons/svg/1152/1152812.svg"}
@@ -54,13 +58,6 @@ componentWillUnmount() {
 }
 
 getItems() {
-	// console.log("ATTEMPT FETCH")
-	// fetch('http://localhost:8000/rpg/characterlist')
- //      .then(response => (response.json()))
- //      .then(characterList => this.setState({ characterList: characterList.characterList }))
- //      .then(characterList => console.log(characterList))
- //      .catch(error => console.log("error",error));
-	// }
     fetch('http://www.strangercollective.com/rpg/characters/2')
       .then(response => response.json())
       .then(character => this.setState({ character }))

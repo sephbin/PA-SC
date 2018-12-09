@@ -17,36 +17,51 @@ class RangedCard extends Component {
         if (i === (this.props.json.length - 1)) {
           bwidth = 0
         }
+        let row
+        if (sk.possession.rangeStatsText != '') {
+        row = (<tr>
+          <td colspan={99}>{sk.possession.possession_name}</td>
+          </tr>);
+        }
         return (
         <Fragment>
-        {/*<tr>{JSON.stringify(sk.rangestats)}</tr>*/}
-        {sk.rangestats.map(( st, j ) => {return (<Fragment><tr style={{borderBottomWidth: 1, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>
-          <td style={{whiteSpace: 'nowrap'}}><span>v</span> <b>{st.value} -</b></td>
-          <td style={{width:'100%'}} colspan={99}>{sk.name}: {st.damage}</td>
-          </tr>
-          <tr style={{textAlign:"right"}}>
-            <td></td>
-            <td>Range</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>RoF</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>Bulk</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>Rcl</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>St</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>Shots</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>Acc</td>
-            <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>Notes</td>
-          </tr>
-          <tr style={{textAlign:"right"}}>
-          {/*style={{display:"none"}}*/}
-          <td></td>
-          <td>{st.range}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.rateOfFire}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.bulk}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.rcl}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.strength}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.shots}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.accuracy}</td>
-          <td style={{borderLeftWidth: 1, borderLeftStyle:"solid", borderLeftColor:"rgba(0,0,0,0.2)"}}>{st.notes}</td>
-          </tr></Fragment> )} )}
+        {row}
+        {/*<tr>{JSON.stringify(sk)}</tr>*/}
+        {sk.rangeStats.map(( st, j ) => {return (
+          <Fragment>
+            <tr style={{borderBottomWidth: 1, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>
+              <td style={{whiteSpace: 'nowrap'}}><b>{st.value} -</b></td>
+              <td colspan={1}>{st.damageStats.stType}:</td>
+              <td style={{width:'100%'}} colspan={99}>{st.damage}</td>
+            </tr>
+            <tr className="details">
+              <td></td>
+              <td colspan={99}>
+                <table style={{width:"100%"}}>
+                  <tr>
+                    <td>Acc</td>
+                    <td>Range</td>
+                    <td>RoF</td>
+                    <td>Shots</td>
+                    <td>Strength</td>
+                    <td>Rcl</td>
+                    <td>Bulk</td>
+                    <td>Notes</td>
+                  </tr>
+                  <tr>
+                    <td>{st.accuracy}</td>
+                    <td>{st.range}</td>
+                    <td>{st.rateOfFire}</td>
+                    <td>{st.shots}</td>
+                    <td>{st.strength}</td>
+                    <td>{st.rcl}</td>
+                    <td>{st.bulk}</td>
+                    <td>{st.notes}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </Fragment> )} )}
         </Fragment>
 
           )

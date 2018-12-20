@@ -50,7 +50,7 @@ class App extends Component {
 	
 
 componentDidMount() {
-  this.timer = setInterval(()=> this.getItems(), 1000);
+  this.timer = setInterval(()=> this.getItems(), 60000);
 }
 
 componentWillUnmount() {

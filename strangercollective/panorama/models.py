@@ -46,4 +46,25 @@ class panorama(models.Model):
 
 			super(panorama,self).save()
 		else:
+			#Opening the uploaded image
+			im = Image.open(self.image)
+			w, h = im.size
+			loutput = BytesIO()
+
+			#Resize/modify the image
+			lim = im.crop((0, 0, w, h))
+
+			#after modifications, save it to the loutput
+			lim.save(loutput, format='JPEG', quality=100)
+			loutput.seek(0)
+			
+
+			routput = BytesIO()
+			rim = im.crop((0, 0, w, h))
+			rim.save(routput, format='JPEG', quality=100)
+			routput.seek(0)
+
+			#change the imagefield value to be the newley modifed image value
+			self.image = InMemoryUploadedFile(loutput,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(loutput), None)
+			self.extraimage = InMemoryUploadedFile(routput,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(routput), None)
 			super(panorama,self).save()

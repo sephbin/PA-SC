@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,700');
+:root {
+  --nav_size: 2em;
+  --nav_background: #222222;
+}
+
+body{
+	font-family: 'Roboto Mono', monospace;
+	font-size: 16px;
+}
+
+.top.layout{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: var(--nav_size);
+	background-color: var(--nav_background);
+}
+
+.left.layout{
+	position: fixed;
+	top: var(--nav_size);
+	left: 0;
+	bottom: 0;
+	width: var(--nav_size);
+	background-color: var(--nav_background);
+}
+
+.right.layout{
+	position: fixed;
+	top: var(--nav_size);
+	bottom: 0;
+	right: 0;
+	width: var(--nav_size);
+	background-color: var(--nav_background);
+}
+
+
+.bottom.layout{
+	position: fixed; bottom:0;
+	bottom: 0;
+	left: var(--nav_size);
+	right: var(--nav_size);
+	height: var(--nav_size);
+	background-color: var(--nav_background);
+	}
+
+.console{
+		font-size: .7em;
+		padding-left: .5em;
+		font-weight: 300;
+		opacity: .2;
+		color: #FFF;
+	    height: 100%;
+	    width:100%;
+        vertical-align: middle;
+}
+
+.content.layout{
+	position: fixed;
+	top: var(--nav_size);
+	left: var(--nav_size);
+	right: var(--nav_size);
+	bottom: var(--nav_size);
+	background: #111;
+	-moz-box-shadow:    inset 0 0 100px rgba(0,0,0,.5);
+	-webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+	box-shadow:         inset 0 0 100px rgba(0,0,0,.5);
+}
+
+.content.layout > * {
+	font-size: 11px;
+}
+
+.content.wrapper {
+    position: relative;
+	height: 100%;
+}
+
+.left.column{
+	display: inline-block;
+	float:left;
+	width: 30%;
+	height:100%;
+	overflow-y: auto;
+}
+
+.right.column{
+	display: inline-block;
+	float: right;
+	width: 30%;
+	height:100%;
+	overflow-y: auto;
+}
+
+.column.wrapper{
+	padding: 1em;
+}
+
+.center.column{
+	position: absolute;
+	width: 40%;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #FFF;
+	top: 0px;
+	bottom: 0px;
+	overflow-y: auto;
+}
+
+.center > .column.wrapper{
+	padding-top: 3em;
+}
+
+@media only screen and (max-width: 428px) {
+  .content.layout {
+    background-color: lightblue;
+  }
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+table .right {
+	text-align: right;
+}
+
+table .left {
+	text-align: left;
+}
+
+table .wide {
+	width: 100%;
+}
+
+table .nowrap{
+	white-space:nowrap;
+}
+
+span.badge {
+	color: white;
+	padding-left: 1em;
+	padding-right: 1em;
+	background: #90f;
+	border-radius: 1em;
+	cursor: pointer;
+}

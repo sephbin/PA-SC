@@ -9,6 +9,7 @@ router.register(r'races', views.RaceViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [
+	path(r'api/newpos/<int:characterid>', views.newpos),
 	url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),

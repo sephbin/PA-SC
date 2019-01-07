@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'unswcode',
     'cv',
     'sc',
+    'panorama',
     'colorfield',
     'tagging',
     'taggit',

@@ -1,32 +1,33 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import CardHeader from './CardHeader';
+import CardContent from './CardContent';
 
 class PossesionCard extends Component {
   render() {
   	const style = {
     };
     return (
-      <div className="Card">
-        <div style={{backgroundColor:"#F00"}}>
-          <span style={{paddingLeft:8, color:"#FFF"}}> Possesions </span>
-        </div>
+      <div className="card">
+        <CardHeader cardTitle="Possessions"/>
         <div style={{padding:8}}>
-        <table style={{width:"100%"}}>
+        <table className="trait-table">
         <tr>
         <td></td>
         <td></td>
         <td style={{textAlign: "right"}}>Wt</td>
         <td style={{textAlign: "right"}}>$</td>
         </tr>
-      {this.props.json.map( (sk, i) => {
-        let bwidth = 1
-        
+      {this.props.character.relpossession.map( (sk, i) => {
+              
         return (
         <tr>
-        <td style={{borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)", whiteSpace:"nowrap"}}><b>{sk.ammount}</b>x </td>
-        <td style={{width: '100%', borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.possession.possession_name}</td>
-        <td style={{textAlign: "right", borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.weight}</td>
-        <td style={{textAlign: "right", borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{sk.cost}</td>
+        <td style={{whiteSpace:"nowrap"}}><b>{sk.ammount}</b>x </td>
+        <td style={{width: '100%'}}>{sk.possession.possession_name}</td>
+        <td style={{textAlign: "right"}}>{sk.weight}</td>
+        <td style={{textAlign: "right"}}>{sk.cost}</td>
         </tr>
           )
         }
@@ -34,8 +35,8 @@ class PossesionCard extends Component {
       }
       <tr>
         <th colspan={2} style={{textAlign: "left"}}>Total</th>
-        <th>{this.props.char.possessionTotals.weight}</th>
-        <th>{this.props.char.possessionTotals.cost}</th>
+        <th>{this.props.character.possessionTotals.weight}</th>
+        <th>{this.props.character.possessionTotals.cost}</th>
       </tr>
       </table>
       </div>
@@ -44,4 +45,12 @@ class PossesionCard extends Component {
   }
 }
 
-export default PossesionCard;
+PossesionCard.propTypes = {
+  character: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+  character: state.reducedata.displayCharacter,
+});
+
+export default connect(mapStateToProps, {})(PossesionCard);

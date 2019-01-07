@@ -1,7 +1,15 @@
-import { __ACTION1__, __ACTION2__, __ACTION3__, __CHANGECHARACTER__ } from './Types';
+import {
+__ACTION1__,
+__ACTION2__,
+__ACTION3__,
+__CHANGECHARACTER__,
+__ADDPOSSESSION__,
+__CHANGEINPUT__,
+} from './Types';
 
 export const __action1__ = () => dispatch => {
-		fetch('http://www.strangercollective.com/rpg/characters/')
+    // fetch('http://www.strangercollective.com/rpg/characters/')
+		fetch('http://localhost:8000/rpg/characters/')
   		.then(result => result.json())
   		.then(data => dispatch({
   			type: __ACTION1__,
@@ -29,7 +37,7 @@ console.log(postData);
 dispatch({
         type: __ACTION3__,
         payload: {}
-      })
+      });
 };
 
 
@@ -37,6 +45,23 @@ export const __changeCharacter__ = (newSelector) => dispatch => {
 dispatch({
         type: __CHANGECHARACTER__,
         payload: newSelector
-      })
+      });
 };
 
+export const __addpossession__ = (characterid) => dispatch => {
+    fetch('http://localhost:8000/rpg/api/newpos/'+characterid, {
+      method: 'GET',
+    });
+      // .then(result => result.json())
+      // .then(data => dispatch({
+        // type: __ADDPOSSESSION__,
+        // payload: data
+      // }));
+};
+
+export const __changeinput__ = (input,value) => dispatch => {
+dispatch({
+        type: __CHANGEINPUT__,
+        payload: {input: input, value: value}
+      });
+};

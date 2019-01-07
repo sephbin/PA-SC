@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import CharacterCard from '../Cards/CharacterCard';
 import AttributeCard from '../Cards/AttributeCard';
-// import TraitCard from '../Cards/TraitCard';
-// import SkillCard from '../Cards/SkillCard';
+import TraitCard from '../Cards/TraitCard';
+import SkillCard from '../Cards/SkillCard';
 // import CultureCard from '../Cards/CultureCard';
-// import PossesionCard from '../Cards/PossesionCard';
-// import RangedCard from '../Cards/RangedCard';
-// import MeleeCard from '../Cards/MeleeCard';
+import MeleeCard from '../Cards/MeleeCard';
+import RangedCard from '../Cards/RangedCard';
+import PossesionCard from '../Cards/PossesionCard';
 // import LanguageCard from '../Cards/LanguageCard';
 import MainCard from '../Cards/MainCard';
+import BaseModal from '../Modals/BaseModal';
 import '../Cards/Cards.css';
+import '../Modals/Modals.css';
 
 class CharacterPage extends Component {
   render() {
@@ -20,9 +22,9 @@ class CharacterPage extends Component {
       <div className="column wrapper">
           <CharacterCard/>
           <AttributeCard/>
-          {/*<TraitCard cardTitle="Advantages" json={this.props.json.character.reladvantage} />*/}
-          {/*<TraitCard cardTitle="Disadvantages" json={this.props.json.character.reldisadvantage} />*/}
-          {/*<SkillCard json={this.props.json.character.relskill} />*/}
+          <TraitCard cardTitle="Advantages" cardArray="reladvantage" />
+          <TraitCard cardTitle="Disadvantages" cardArray="reldisadvantage" />
+          <SkillCard />
         </div>
         </div>
 
@@ -35,11 +37,13 @@ class CharacterPage extends Component {
         <div className="column wrapper">
           {/*<LanguageCard json={this.props.json.character.languages} />*/}
           {/*<CultureCard json={this.props.json.character} />*/}
-          {/*<MeleeCard json={this.props.json.character.relpossession} />*/}
-          {/*<RangedCard json={this.props.json.character.relpossession} />*/}
-          {/*<PossesionCard json={this.props.json.character.relpossession} char={this.props.json.character} />*/}
+          <MeleeCard />
+          <RangedCard />
+          <PossesionCard />
         </div>
         </div>
+      {/*MODALS*/}
+      <BaseModal />
         </Fragment>
     );
   }

@@ -1,37 +1,46 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
+import CardHeader from './CardHeader';
+import CardContent from './CardContent';
 
 class TraitCard extends Component {
-  render() {
-  	const style = {
-    };
+  constructor(props) {
+    super(props);
+  }
 
+  render() {
+  const selector = this.props.cardArray
+  const mapOb = this.props.character[selector]; 
     return (
-      <div className="Card">
-        <div style={{backgroundColor:"#F00"}}>
-          <span style={{paddingLeft:8, color:"#FFF"}}> {this.props.cardTitle} </span>
-        </div>
-        <div style={{padding:8}}>
-      <table style={{width:"100%"}}>
-      {this.props.json.map( (ad, i) => {
-        let bwidth = 1
-        if (i === (this.props.json.length - 1)) {
-          bwidth = 0
-        }
+      <div className="card">
+        <CardHeader cardTitle={this.props.cardTitle}/>
+        <CardContent>
+      <table className="trait-table">
+      {mapOb.map( (ad, i) => {
         return (
         <tr>
-        <td style={{width: '100%', borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>{ad.name}</td>
-        <td style={{textAlign: "right", borderBottomWidth: bwidth, borderBottomStyle:"solid", borderBottomColor:"rgba(0,0,0,0.2)"}}>[{ad.cost}]</td>
+        <td style={{width: '100%'}}>{ad.name}</td>
+        <td style={{textAlign: "right"}}>[{ad.cost}]</td>
         </tr>
           )
         }
       )
       }
       </table>
-      </div>
+      </CardContent>
       </div>
     );
   }
 }
 
-export default TraitCard;
+TraitCard.propTypes = {
+  character: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+  character: state.reducedata.displayCharacter,
+});
+
+export default connect(mapStateToProps, {})(TraitCard);

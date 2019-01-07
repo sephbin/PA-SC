@@ -1,0 +1,40 @@
+.modal-background {
+	position: fixed;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.modal-wrapper {
+	background: white;
+	position: absolute;
+	top: 7em;
+	left: 7em;
+	bottom: 7em;
+	right: 7em;
+	padding: 1em;
+}
+
+.modal-wrapper input {
+	text-align: right;
+	border: none;
+}
+
+.modal-wrapper input.ammount {
+	text-align: right;
+	width: 3em;
+}
+
+.modal-header {
+	padding-left: .5em;
+	color: White;
+	font-size: 3em;
+	font-weight: 700;
+	background: var(--nav_background);
+}
+
+.modal-content {
+	padding-top: 1em;
+}

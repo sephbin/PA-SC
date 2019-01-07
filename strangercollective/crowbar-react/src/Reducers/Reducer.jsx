@@ -1,9 +1,22 @@
-import { __ACTION1__, __ACTION2__, __ACTION3__, __CHANGECHARACTER__ } from '../Actions/Types';
+import {
+	__ACTION1__,
+	__ACTION2__,
+	__ACTION3__,
+	__CHANGECHARACTER__,
+	__ADDPOSSESSION__,
+	__CHANGEINPUT__,
+} from '../Actions/Types';
 
 
 const initialState = {
-	displayCharacter: {},
-	selectCharacter: 0,
+	displayCharacter: {
+		reladvantage: [],
+		reldisadvantage: [],
+		relskill: [],
+		relpossession: [],
+		possessionTotals:{},
+	},
+	selectCharacter: 1,
 	items: [],
 	characters: [{}],
 	item: 0,
@@ -39,6 +52,16 @@ export default function(state = initialState, action) {
 				selectCharacter :parseInt(action.payload),
 				displayCharacter: state.characters[parseInt(action.payload)],
 				consoleText: initialState.consoleText.concat(["Changed character to " + state.characters[parseInt(action.payload)].firstname]),
+			};
+		case __CHANGEINPUT__:
+			let chars = state.characters;
+			var dChar = chars[state.selectCharacter];
+			dChar.relpossession[action.payload.input].possession.possession_name = action.payload.value
+			return {
+				...state,
+				characters: chars,
+				displayCharacter: chars[state.selectCharacter],
+				consoleText: initialState.consoleText.concat(["Changing Value"]),
 			};
 		default:
 			return state;

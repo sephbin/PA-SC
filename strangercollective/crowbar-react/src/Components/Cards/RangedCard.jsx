@@ -1,4 +1,9 @@
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import CardHeader from './CardHeader';
+import CardContent from './CardContent';
 
 
 class RangedCard extends Component {
@@ -6,17 +11,11 @@ class RangedCard extends Component {
   	const style = {
     };
     return (
-      <div className="Card">
-        <div style={{backgroundColor:"#F00"}}>
-          <span style={{paddingLeft:8, color:"#FFF"}}> Ranged </span>
-        </div>
+      <div className="card">
+        <CardHeader cardTitle="Ranged"/>
         <div style={{padding:8}}>
         <table style={{width:"100%"}}>
-      {this.props.json.map( (sk, i) => {
-        let bwidth = 1
-        if (i === (this.props.json.length - 1)) {
-          bwidth = 0
-        }
+      {this.props.character.relpossession.map( (sk, i) => {
         let row
         if (sk.possession.rangeStatsText != '') {
         row = (<tr>
@@ -75,4 +74,12 @@ class RangedCard extends Component {
   }
 }
 
-export default RangedCard;
+RangedCard.propTypes = {
+  character: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+  character: state.reducedata.displayCharacter,
+});
+
+export default connect(mapStateToProps, {})(RangedCard);

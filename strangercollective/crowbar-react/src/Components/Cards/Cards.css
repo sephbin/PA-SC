@@ -28,3 +28,17 @@
 .card-content{
 	padding: 1em;
 }
+
+
+.trait-table{
+	border-collapse: collapse;
+	width: 100%;	
+}
+
+.trait-table tr {
+	border-bottom: 1px solid lightgrey; 
+}
+
+.trait-table tr:last-child{
+	border-bottom: none; 
+}

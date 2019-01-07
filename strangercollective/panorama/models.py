@@ -6,13 +6,13 @@ import sys
 
 # Create your models here.
 class collection(models.Model):
-	collection_name = models.CharField(max_length=256, unique=True)
+	collection_name = models.CharField(max_length=255, unique=True)
 	def __str__(self):
 		return self.collection_name
 
 class panorama(models.Model):
 	collection = models.ForeignKey(collection, on_delete=models.CASCADE)
-	panorama_name = models.CharField(max_length=256, unique=True)
+	panorama_name = models.CharField(max_length=255, unique=True)
 	image = models.ImageField()
 	stereoscopic = models.BooleanField(default=False)
 	extraimage = models.ImageField(blank=True)

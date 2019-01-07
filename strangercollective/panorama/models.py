@@ -11,11 +11,15 @@ class collection(models.Model):
 		return self.collection_name
 
 class panorama(models.Model):
-	collection = models.ForeignKey(collection, on_delete=models.CASCADE)
+	collection = models.ForeignKey(collection, on_delete=models.CASCADE, related_name='panorama')
 	panorama_name = models.CharField(max_length=255, unique=True)
 	image = models.ImageField()
 	stereoscopic = models.BooleanField(default=False)
 	extraimage = models.ImageField(blank=True)
+	
+	def loopurl(self):
+		return r"%s/%s" %(self.collection.collection_name, self.panorama_name)
+
 	def save(self):
 		if self.stereoscopic:
 			#Opening the uploaded image
@@ -40,4 +44,6 @@ class panorama(models.Model):
 			self.image = InMemoryUploadedFile(loutput,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(loutput), None)
 			self.extraimage = InMemoryUploadedFile(routput,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(routput), None)
 
+			super(panorama,self).save()
+		else:
 			super(panorama,self).save()

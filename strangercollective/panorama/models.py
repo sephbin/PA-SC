@@ -15,13 +15,49 @@ class panorama(models.Model):
 	panorama_name = models.CharField(max_length=255, unique=True)
 	image = models.ImageField()
 	stereoscopic = models.BooleanField(default=False)
+	cubemap = models.BooleanField(default=False)
 	extraimage = models.ImageField(blank=True)
 	
+	PX = models.ImageField(blank=True)
+	PY = models.ImageField(blank=True)
+	PZ = models.ImageField(blank=True)
+	NX = models.ImageField(blank=True)
+	NY = models.ImageField(blank=True)
+	NZ = models.ImageField(blank=True)
+
 	def loopurl(self):
 		return r"%s/%s" %(self.collection.collection_name, self.panorama_name)
 
 	def save(self):
-		if self.stereoscopic:
+		if self.cubemap and not self.stereoscopic:
+			#Opening the uploaded image
+			im = Image.open(self.image)
+			w, h = im.size
+			print(w,h)
+
+			#Resize/modify the image
+			ims = {
+			"PX": {"x0":0,"x1":(w/6)*1,"y0":0,"y1":h},
+			"PY": {"x0":(w/6)*1,"x1":(w/6)*2,"y0":0,"y1":h},
+			"PZ": {"x0":(w/6)*2,"x1":(w/6)*3,"y0":0,"y1":h},
+			"NX": {"x0":(w/6)*3,"x1":(w/6)*4,"y0":0,"y1":h},
+			"NY": {"x0":(w/6)*4,"x1":(w/6)*5,"y0":0,"y1":h},
+			"NZ": {"x0":(w/6)*5,"x1":(w/6)*6,"y0":0,"y1":h},
+			}
+			# output = BytesIO()
+			# self.image = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
+			for k,v in ims.items():
+				output = BytesIO()
+				print(k)
+				print(v)
+				temp = im.crop((v["x0"], v["y0"], v["x1"], v["y1"]))
+				temp.save(output, format='JPEG', quality=100)
+				output.seek(0)
+				setattr(self, k, InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None))
+
+			super(panorama,self).save()
+
+		if self.stereoscopic and not self.cubemap:
 			#Opening the uploaded image
 			im = Image.open(self.image)
 			w, h = im.size
@@ -45,7 +81,7 @@ class panorama(models.Model):
 			self.extraimage = InMemoryUploadedFile(routput,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(routput), None)
 
 			super(panorama,self).save()
-		else:
+		if not self.stereoscopic and not self.cubemap:
 			#Opening the uploaded image
 			im = Image.open(self.image)
 			w, h = im.size

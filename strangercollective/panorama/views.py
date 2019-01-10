@@ -13,4 +13,5 @@ def panoramaview(request,colle,pano):
 	nextItem = p_collection[(currentindex+1) % len(p_collection)]
 	print(currentindex)
 	context = { "context": instance, "last":lastItem, "next":nextItem }
-	return render(request, "panorama/aframe.html", context)
+	if instance.cubemap and not instance.stereoscopic:
+		return render(request, "panorama/aframe-cm-m.html", context)

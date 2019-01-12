@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { __addpossession__, __changeinput__, __togglemodal__} from '../../Actions/Actions';
 
-class BaseModal extends Component {
+class AdvantageModal extends Component {
   constructor(props) {
 	super(props);
     this.addItem = this.addItem.bind(this);
@@ -21,7 +21,7 @@ class BaseModal extends Component {
     this.props.__changeinput__(i,a);
 	}
   onExit(e){
-    this.props.__togglemodal__("possessions");
+    this.props.__togglemodal__("advantages");
   }
 
   render() {
@@ -30,23 +30,18 @@ class BaseModal extends Component {
     return (
       <div className={"modal-background possessions "+this.props.display} >
         <div className="modal-wrapper">
-        <div className="modal-header"><table width="100%"><tr><td width="100%">Edit Possessions</td><td onClick={this.onExit}>X</td></tr></table></div>
+        <div className="modal-header"><table width="100%"><tr><td width="100%">Edit Advantages</td><td onClick={this.onExit}>X</td></tr></table></div>
         <div className="modal-content">
         <table className="trait-table">
         <tr>
         <td></td>
         <td></td>	
-        <td className="right" ><b>Wt</b></td>
-        <td className="right" ><b>$</b></td>
-        <td className="right" ></td>
         </tr>
-      {this.props.character.relpossession.map( (sk, i) => {
+      {this.props.character.reladvantage.map( (sk, i) => {
         console.log(i); 
         return (
         <tr key={i}>
-        <td className="nowrap" ><input type='number' value={sk.ammount} className="ammount"/>x </td>
-        <td className="wide" ><input index={i} onChange={this.onChange} list="possessionslist" value={sk.possession.possession_name} /></td>
-        <td className="right" >{sk.weight}</td>
+        <td className="wide" ><input index={i} onChange={this.onChange} list="advantageslist" value={sk.advantage.name} /></td>
         <td className="right" >{sk.cost}</td>
         <td className="right" ><span className="badge">x</span></td>
         </tr>
@@ -55,19 +50,13 @@ class BaseModal extends Component {
       )
       }
       <tr>
-        <th colspan={4} ></th>
+        <th colspan={2} ></th>
         <th className="right" ><span onClick={this.addItem} className="badge">+</span></th>
-      </tr>
-      <tr>
-        <th colspan={2} className="right">Total</th>
-        <th>{this.props.character.possessionTotals.weight}</th>
-        <th>{this.props.character.possessionTotals.cost}</th>
-        <th></th>
       </tr>
       </table>
         </div>
         </div>
-<datalist id="possessionslist">
+<datalist id="advantageslist">
 {this.props.possessions.map( (sk, i) => {
 	return (
   <option value={sk.possession_name} />
@@ -79,7 +68,7 @@ class BaseModal extends Component {
   }
 }
 
-BaseModal.propTypes = {
+AdvantageModal.propTypes = {
 	__addpossession__: PropTypes.func.isRequired,
   __changeinput__: PropTypes.func.isRequired,
 	__togglemodal__: PropTypes.func.isRequired,
@@ -92,8 +81,8 @@ BaseModal.propTypes = {
 const mapStateToProps = state => ({
   character: state.reducedata.displayCharacter,
   possessions: state.reducedata.possessions,
-  display: state.reducedata.page.modals.possessions,
+  display: state.reducedata.page.modals.advantages,
   con: state.reducedata.consoleText,
 });
 
-export default connect(mapStateToProps, {__addpossession__, __changeinput__,__togglemodal__})(BaseModal);
+export default connect(mapStateToProps, {__addpossession__, __changeinput__,__togglemodal__})(AdvantageModal);

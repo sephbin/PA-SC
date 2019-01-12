@@ -28,12 +28,14 @@ def newpos(request, characterid):
 	try:
 		print(characterid)
 		instance = character.objects.get(id=characterid)
-		blankitem = possession.objects.get(id=4)
+		blankitem = possession.objects.get(possession_name="None")
 		q = rel_possession(ammount=1, character=instance, possession=blankitem)
 		q.save()
+		serializer = CharacterSerializer(instance)
+		return JsonResponse(serializer.data)
 	except Exception as e:
 		print(e)
-	return JsonResponse({})
+		return JsonResponse({})
 
 
 

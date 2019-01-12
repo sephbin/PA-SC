@@ -15,7 +15,7 @@ class TraitCard extends Component {
   const mapOb = this.props.character[selector]; 
     return (
       <div className="card">
-        <CardHeader cardTitle={this.props.cardTitle}/>
+        <CardHeader cardTitle={this.props.cardTitle} modal="advantages"/>
         <CardContent>
       <table className="trait-table">
       {mapOb.map( (ad, i) => {

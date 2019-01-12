@@ -19,6 +19,7 @@ const initialState = {
 	selectCharacter: 1,
 	items: [],
 	characters: [{}],
+	possessions: [{}],
 	item: 0,
 	consoleText: []
 }
@@ -29,9 +30,9 @@ export default function(state = initialState, action) {
 		console.log('reducer dispatched');
 			return {
 				...state,
-				characters: action.payload,
-				displayCharacter: action.payload[initialState.selectCharacter],
-				item: 999,
+				characters: action.payload.character,
+				displayCharacter: action.payload.character[initialState.selectCharacter],
+				possessions: action.payload.possession,
 				consoleText: initialState.consoleText.concat(["Welcome to Crowbar"])
 			};
 		case __ACTION2__:

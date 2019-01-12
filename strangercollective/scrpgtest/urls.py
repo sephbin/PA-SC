@@ -6,6 +6,8 @@ from . import views
 router = routers.DefaultRouter()
 router.register(r'characters', views.CharacterViewSet)
 router.register(r'races', views.RaceViewSet)
+router.register(r'possessions', views.PossessionViewSet)
+router.register(r'campaigns', views.CampaignViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [

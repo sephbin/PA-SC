@@ -45,6 +45,10 @@ class characterModelAdmin(admin.ModelAdmin):
 	inlines = (advInline, disadvInline, skillInline, languageInline, possessionInline)
 admin.site.register(character, characterModelAdmin)
 
+class possessionModelAdmin(admin.ModelAdmin):
+	filter_horizontal = ('campaign',) 
+
+
 class modPackageAdmin(admin.ModelAdmin):
 	inlines = (modInline,)
 	# pass
@@ -64,7 +68,7 @@ admin.site.register(disadvantage,advantageAdmin)
 admin.site.register(modifier,listAdmin)
 admin.site.register(skill,listAdmin)
 admin.site.register(language,listAdmin)
-admin.site.register(possession,listAdmin)
+admin.site.register(possession,possessionModelAdmin)
 admin.site.register(specialmodifier,listAdmin)
 admin.site.register(modPackage,modPackageAdmin)
 admin.site.register(rel_possession,listAdmin)

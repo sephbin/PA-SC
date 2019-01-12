@@ -68,7 +68,6 @@ class RelPossessionSerializer(serializers.ModelSerializer):
 
 class CharacterSerializer(serializers.ModelSerializer):
 	race = raceSerializer(read_only=True)
-	campaign = campaignSerializer(read_only=True)
 	status = statusSerializer(read_only=True)
 	characterType = characterTypeSerializer(read_only=True)
 	reladvantage = RelAdvantageSerializer(read_only=True, many=True)
@@ -83,3 +82,9 @@ class CharacterSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 		# fields = ('id', 'firstname', 'race', 'advantages')
+class CampaignSerializer(serializers.ModelSerializer):
+		character = CharacterSerializer(read_only=True, many=True)
+		possession = PossessionSerializer(read_only=True, many=True)
+		class Meta:
+			model = campaign
+			fields = ('__all__')

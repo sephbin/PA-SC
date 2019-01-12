@@ -14,6 +14,15 @@ class RaceViewSet(viewsets.ModelViewSet):
     queryset = race.objects.all()
     serializer_class = raceSerializer
 
+class PossessionViewSet(viewsets.ModelViewSet):
+    queryset = possession.objects.all()
+    serializer_class = PossessionSerializer
+
+class CampaignViewSet(viewsets.ModelViewSet):
+    queryset = campaign.objects.all()
+    serializer_class = CampaignSerializer
+
+
 def newpos(request, characterid):
 	print("NEWPOS")
 	try:

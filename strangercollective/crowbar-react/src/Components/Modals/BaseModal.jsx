@@ -64,11 +64,11 @@ class BaseModal extends Component {
         </div>
         </div>
 <datalist id="possessionslist">
-	<option value="Internet Explorer" />
-	<option value="Firefox" />
-	<option value="Chrome" />
-	<option value="Opera" />
-	<option value="Safari" />
+{this.props.possessions.map( (sk, i) => {
+	return (
+  <option value={sk.possession_name} />
+  )
+  })}
 </datalist>
       </div>
     );
@@ -78,12 +78,14 @@ class BaseModal extends Component {
 BaseModal.propTypes = {
 	__addpossession__: PropTypes.func.isRequired,
 	__changeinput__: PropTypes.func.isRequired,
-	character: PropTypes.object.isRequired,
+  character: PropTypes.object.isRequired,
+	possessions: PropTypes.array.isRequired,
 	con: PropTypes.array.isRequired,
 }
 
 const mapStateToProps = state => ({
   character: state.reducedata.displayCharacter,
+  possessions: state.reducedata.possessions,
   con: state.reducedata.consoleText,
 });
 

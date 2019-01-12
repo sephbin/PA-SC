@@ -112,6 +112,7 @@ class skill(models.Model):
     def __str__(self):
         return self.skill_name
 class possession(models.Model):
+    campaign = models.ManyToManyField(campaign, related_name="possession")
     possession_name = models.CharField(max_length=120)
     possession_description = models.TextField(max_length = 9999, blank=True, null=True)
     possession_weight = models.IntegerField(default=0)
@@ -138,7 +139,7 @@ class language(models.Model):
         return self.language_name
 
 class character(models.Model):
-    campaign = models.ForeignKey(campaign, on_delete=models.CASCADE)
+    campaign = models.ForeignKey(campaign, on_delete=models.CASCADE, related_name="character")
     characterType = models.ForeignKey(characterType, on_delete=models.CASCADE)
     firstname = models.CharField(max_length = 120)
     lastname = models.CharField(max_length = 120)

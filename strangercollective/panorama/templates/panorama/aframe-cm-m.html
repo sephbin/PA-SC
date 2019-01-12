@@ -73,16 +73,14 @@
 		      <img src="/media/{{context.NX}}">
 		      <img src="/media/{{context.NY}}">
 		      <img src="/media/{{context.NZ}}">
-		    </a-cubemap>
+			</a-cubemap>
 	  </a-assets>
-	  <a-camera position="0 -1.6 0" look-controls wasd-controls="acceleration: 0"></a-camera>
-    	<!-- <a-camera position="0 0 0" stereocam="eye:left;"> <a-cursor color="black"></a-cursor> </a-camera> -->
+	  <a-camera position="0 -1.6 0" look-controls wasd-controls="acceleration: 0">
+	  	<a-cursor color="black"></a-cursor>
+	  </a-camera>
+
     	<a-light type="ambient" color="#fff"></a-light>
-    	<a-entity id="dice" scale="10 10 10">
-			<!-- <a-curvedimage src="/media/{{context.PX}}" height="1" radius="1" theta-length="90" rotation="0 0 0"></a-curvedimage> -->
-			<!-- <a-curvedimage src="/media/{{context.NY}}" height="1" radius="1" theta-length="90" rotation="0 90 0"></a-curvedimage> -->
-			<!-- <a-curvedimage src="/media/{{context.PY}}" height="1" radius="1" theta-length="90" rotation="0 180 0"></a-curvedimage> -->
-			<!-- <a-curvedimage src="/media/{{context.NZ}}" height="1" radius="1" theta-length="90" rotation="0 270 0"></a-curvedimage> -->
+      <a-entity id="skybox" scale="100 100 100">
 			<a-plane position="-0.5 0 0" rotation="0 -90 0" 	src="/media/{{context.PX}}"		material="side: back"></a-plane>
 			<a-plane position="0.5 0 0" rotation="0 90 0"		src="/media/{{context.PY}}"		material="side: back"></a-plane>
 			<a-plane position="0 0.5 0" rotation="-90 0 180"	src="/media/{{context.PZ}}"		material="side: back"></a-plane>
@@ -102,4 +100,12 @@
 				window.location = "../"+address;
 			}
 		</script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132320002-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132320002-1');
+</script>
 </html>

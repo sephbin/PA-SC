@@ -38,11 +38,11 @@ class panorama(models.Model):
 			#Resize/modify the image
 			ims = {
 			"PX": {"x0":0,"x1":(w/6)*1,"y0":0,"y1":h},
-			"PY": {"x0":(w/6)*1,"x1":(w/6)*2,"y0":0,"y1":h},
-			"PZ": {"x0":(w/6)*2,"x1":(w/6)*3,"y0":0,"y1":h},
-			"NX": {"x0":(w/6)*3,"x1":(w/6)*4,"y0":0,"y1":h},
-			"NY": {"x0":(w/6)*4,"x1":(w/6)*5,"y0":0,"y1":h},
-			"NZ": {"x0":(w/6)*5,"x1":(w/6)*6,"y0":0,"y1":h},
+			"PY": {"x0":int((w/6)*1),"x1":int((w/6)*2),"y0":0,"y1":h},
+			"PZ": {"x0":int((w/6)*2),"x1":int((w/6)*3),"y0":0,"y1":h},
+			"NX": {"x0":int((w/6)*3),"x1":int((w/6)*4),"y0":0,"y1":h},
+			"NY": {"x0":int((w/6)*4),"x1":int((w/6)*5),"y0":0,"y1":h},
+			"NZ": {"x0":int((w/6)*5),"x1":int((w/6)*6),"y0":0,"y1":h},
 			}
 			# output = BytesIO()
 			# self.image = InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)

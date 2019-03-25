@@ -5,6 +5,7 @@ import {
 	__CHANGECHARACTER__,
 	__ADDPOSSESSION__,
 	__CHANGEINPUT__,
+	__TOGGLEMODAL__,
 } from '../Actions/Types';
 
 
@@ -21,7 +22,13 @@ const initialState = {
 	characters: [{}],
 	possessions: [{}],
 	item: 0,
-	consoleText: []
+	consoleText: [],
+	page:{
+		modals: {
+			advantages: 'hidden',
+			possessions: 'hidden'
+		}
+	}
 }
 
 export default function(state = initialState, action) {
@@ -63,6 +70,27 @@ export default function(state = initialState, action) {
 				characters: chars,
 				displayCharacter: chars[state.selectCharacter],
 				consoleText: initialState.consoleText.concat(["Changing Value"]),
+			};
+		case __ADDPOSSESSION__:
+			let __ap__chars = state.characters;
+			__ap__chars[state.selectCharacter] = action.payload;
+			return {
+				...state,
+				characters: __ap__chars,
+				displayCharacter: action.payload,
+				consoleText: initialState.consoleText.concat(["Added Possession"]),
+			};
+		case __TOGGLEMODAL__:
+			let __tm__page = state.page;
+			if (__tm__page.modals[action.payload.modal] == 'hidden') {
+			__tm__page.modals[action.payload.modal] = 'visible';
+			}else{
+			__tm__page.modals[action.payload.modal] = 'hidden';
+		}
+			return {
+				...state,
+				page: __tm__page
+
 			};
 		default:
 			return state;

@@ -5,6 +5,7 @@ __ACTION3__,
 __CHANGECHARACTER__,
 __ADDPOSSESSION__,
 __CHANGEINPUT__,
+__TOGGLEMODAL__
 } from './Types';
 
 export const __action1__ = () => dispatch => {
@@ -51,17 +52,24 @@ dispatch({
 export const __addpossession__ = (characterid) => dispatch => {
     fetch('http://localhost:8000/rpg/api/newpos/'+characterid, {
       method: 'GET',
-    });
-      // .then(result => result.json())
-      // .then(data => dispatch({
-        // type: __ADDPOSSESSION__,
-        // payload: data
-      // }));
+    })
+      .then(result => result.json())
+      .then(data => dispatch({
+        type: __ADDPOSSESSION__,
+        payload: data
+      }));
 };
 
 export const __changeinput__ = (input,value) => dispatch => {
 dispatch({
         type: __CHANGEINPUT__,
         payload: {input: input, value: value}
+      });
+};
+
+export const __togglemodal__ = (modal) => dispatch => {
+dispatch({
+        type: __TOGGLEMODAL__,
+        payload: {'modal': modal}
       });
 };

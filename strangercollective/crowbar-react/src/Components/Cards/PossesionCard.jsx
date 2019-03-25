@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { __addpossession__, __changeinput__} from '../../Actions/Actions';
 
 import CardHeader from './CardHeader';
 import CardContent from './CardContent';
 
 class PossesionCard extends Component {
   render() {
-  	const style = {
-    };
+
     return (
       <div className="card">
-        <CardHeader cardTitle="Possessions"/>
+        <CardHeader cardTitle="Possessions" modal="possessions"/>
         <div style={{padding:8}}>
         <table className="trait-table">
         <tr>

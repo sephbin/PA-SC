@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { __addpossession__, __changeinput__, __togglemodal__} from '../../Actions/Actions';
 
-class BaseModal extends Component {
+class PossessionModal extends Component {
   constructor(props) {
 	super(props);
     this.addItem = this.addItem.bind(this);
@@ -54,10 +54,10 @@ class BaseModal extends Component {
         }
       )
       }
-      {/*<tr>*/}
-        {/*<th colspan={4} ></th>*/}
-        {/*<th className="right" ><span onClick={this.addItem} className="badge">+</span></th>*/}
-      {/*</tr>*/}
+      <tr>
+        <th colspan={4} ></th>
+        <th className="right" ><span onClick={this.addItem} className="badge">+</span></th>
+      </tr>
       <tr>
         <th colspan={2} className="right">Total</th>
         <th>{this.props.character.possessionTotals.weight}</th>
@@ -79,7 +79,7 @@ class BaseModal extends Component {
   }
 }
 
-BaseModal.propTypes = {
+PossessionModal.propTypes = {
 	__addpossession__: PropTypes.func.isRequired,
   __changeinput__: PropTypes.func.isRequired,
 	__togglemodal__: PropTypes.func.isRequired,
@@ -96,4 +96,4 @@ const mapStateToProps = state => ({
   con: state.reducedata.consoleText,
 });
 
-export default connect(mapStateToProps, {__addpossession__, __changeinput__,__togglemodal__})(BaseModal);
+export default connect(mapStateToProps, {__addpossession__, __changeinput__,__togglemodal__})(PossessionModal);

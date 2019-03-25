@@ -9,7 +9,8 @@ import RangedCard from '../Cards/RangedCard';
 import PossesionCard from '../Cards/PossesionCard';
 // import LanguageCard from '../Cards/LanguageCard';
 import MainCard from '../Cards/MainCard';
-import BaseModal from '../Modals/BaseModal';
+import PossessionModal from '../Modals/PossessionModal';
+import AdvantageModal from '../Modals/AdvantageModal';
 import '../Cards/Cards.css';
 import '../Modals/Modals.css';
 
@@ -43,7 +44,8 @@ class CharacterPage extends Component {
         </div>
         </div>
       {/*MODALS*/}
-      <BaseModal />
+      <PossessionModal />
+      <AdvantageModal />
         </Fragment>
     );
   }

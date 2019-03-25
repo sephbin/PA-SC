@@ -14,17 +14,28 @@ class RaceViewSet(viewsets.ModelViewSet):
     queryset = race.objects.all()
     serializer_class = raceSerializer
 
+class PossessionViewSet(viewsets.ModelViewSet):
+    queryset = possession.objects.all()
+    serializer_class = PossessionSerializer
+
+class CampaignViewSet(viewsets.ModelViewSet):
+    queryset = campaign.objects.all()
+    serializer_class = CampaignSerializer
+
+
 def newpos(request, characterid):
 	print("NEWPOS")
 	try:
 		print(characterid)
 		instance = character.objects.get(id=characterid)
-		blankitem = possession.objects.get(id=4)
+		blankitem = possession.objects.get(possession_name="None")
 		q = rel_possession(ammount=1, character=instance, possession=blankitem)
 		q.save()
+		serializer = CharacterSerializer(instance)
+		return JsonResponse(serializer.data)
 	except Exception as e:
 		print(e)
-	return JsonResponse({})
+		return JsonResponse({})
 
 
 

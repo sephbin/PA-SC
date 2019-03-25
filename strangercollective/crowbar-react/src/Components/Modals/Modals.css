@@ -38,3 +38,7 @@
 .modal-content {
 	padding-top: 1em;
 }
+
+.modal-background.hidden{
+	display: none;
+}

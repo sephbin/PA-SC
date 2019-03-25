@@ -19,6 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import urls as wagtaildocs_urls
+from wagtail.core import urls as wagtail_urls
+
 urlpatterns = [
     path('polls/', include('polls.urls')),
     # path('jet/', include('jet.urls')), # jet URLS
@@ -36,6 +40,12 @@ urlpatterns = [
     path(r'', include('home.urls'),name='home'),
     re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
     
+]
+
+urlpatterns += [
+    re_path(r'^cms/', include(wagtailadmin_urls)),
+    re_path(r'^documents/', include(wagtaildocs_urls)),
+    re_path(r'^pages/', include(wagtail_urls)),
 ]
 
 if settings.DEBUG:

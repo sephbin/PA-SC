@@ -50,10 +50,10 @@ class BaseModal extends Component {
         }
       )
       }
-      <tr>
-        <th colspan={4} ></th>
-        <th className="right" ><span onClick={this.addItem} className="badge">+</span></th>
-      </tr>
+      {/*<tr>*/}
+        {/*<th colspan={4} ></th>*/}
+        {/*<th className="right" ><span onClick={this.addItem} className="badge">+</span></th>*/}
+      {/*</tr>*/}
       <tr>
         <th colspan={2} className="right">Total</th>
         <th>{this.props.character.possessionTotals.weight}</th>

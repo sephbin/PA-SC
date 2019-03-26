@@ -1,5 +1,34 @@
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% image page.feed_image width-400 as tmp_photo %}
+<style>
+div.page {
+	width:50%;
+	margin: 0 auto;
+}
+div.header{
+	height:200px;
+	background-image: url({{tmp_photo.url}});
+	background-size: cover;
+	background-position: center;
+}
+</style>
 
+<div class="page">
+<div class="header"></div>
+    
     <h1>{{ page.title }}</h1>
-
+    {% if page.exotic %} E {% endif %}
+    {% if page.physical %} P {% endif %}
     <p>{{ page.body|richtext }}</p>
+    
+
+    {% if page.special_limitations != "<p></p>" %}
+    <h2> Special Limitations </h2>
+    <p>{{ page.special_limitations|richtext }}</p>
+    {% endif %}
+    {% if page.special_enhancements != "<p></p>" %}
+    <h2> Special Enhancements </h2>
+    <p>{{ page.special_enhancements|richtext }}</p>
+    {% endif %}
+</div>

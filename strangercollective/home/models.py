@@ -1,10 +1,11 @@
 from django.db import models
-
+from wagtail.core import blocks
 from wagtail.core.models import Page
-from wagtail.core.fields import RichTextField
-from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images.blocks import ImageChooserBlock
 
 
 class HomePage(Page):
@@ -83,3 +84,25 @@ class AdvantagePage(Page):
 		MultiFieldPanel(Page.promote_panels, "Common page configuration"),
 		ImageChooserPanel('feed_image'),
 	]
+
+
+	def save(self, *args, **kwargs):
+		import re
+		s = self.body
+		replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
+		self.body = replaced
+
+		super(AdvantagePage, self).save(*args, **kwargs)
+
+
+
+class TestPage(Page):
+	body = StreamField([
+		('heading', blocks.CharBlock(classname="full title")),
+		('paragraph', blocks.RichTextBlock()),
+		('image', ImageChooserBlock()),
+	])
+	content_panels = Page.content_panels + [
+		StreamFieldPanel('body'),
+	]
+

@@ -6,3 +6,4 @@ class ListAdmin(admin.ModelAdmin):
 	pass
 
 admin.site.register(AdvantagePage, ListAdmin)
+admin.site.register(TestPage, ListAdmin)

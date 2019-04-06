@@ -1,0 +1,30 @@
+<style>
+    body{
+        background: #111;
+        color: #DDD;
+    }
+    
+    .box{
+        background: #222;
+        width: 10em;
+        height : 10em;
+        margin: 0.2em;
+    }
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+div.page {
+    width:50%;
+    margin: 0 auto;
+}
+div.header{
+    height:200px;
+    background-image: url({{tmp_photo.url}});
+    background-size: cover;
+    background-position: center;
+}
+</style>
+{% block content %}
+{% endblock %}

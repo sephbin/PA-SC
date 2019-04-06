@@ -1,0 +1,32 @@
+{% extends "home/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+
+    <h1>{{ page.title }}</h1>
+
+    <!-- <div class="intro">{{ page.intro|richtext }}</div> -->
+    <div class="container">
+        
+    {% for post in page.get_children %}
+            <div class="box" onclick="goto('{% pageurl post %}')">
+            {{ post.title }}
+            </div>
+        <script> function goto(url){window.location.href = url } </script>
+    {% endfor %}
+
+    {% for post in page.get_children %}
+            <div class="box" onclick="goto('{% pageurl post %}')">
+            {{ post.title }}
+            </div>
+        <script> function goto(url){window.location.href = url } </script>
+    {% endfor %}
+    {% for post in page.get_children %}
+            <div class="box" onclick="goto('{% pageurl post %}')">
+            {{ post.title }}
+            </div>
+        <script> function goto(url){window.location.href = url } </script>
+    {% endfor %}
+    </div>
+
+{% endblock %}

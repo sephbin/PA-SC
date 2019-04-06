@@ -14,19 +14,6 @@
             </div>
         <script> function goto(url){window.location.href = url } </script>
     {% endfor %}
-
-    {% for post in page.get_children %}
-            <div class="box" onclick="goto('{% pageurl post %}')">
-            {{ post.title }}
-            </div>
-        <script> function goto(url){window.location.href = url } </script>
-    {% endfor %}
-    {% for post in page.get_children %}
-            <div class="box" onclick="goto('{% pageurl post %}')">
-            {{ post.title }}
-            </div>
-        <script> function goto(url){window.location.href = url } </script>
-    {% endfor %}
     </div>
 
 {% endblock %}

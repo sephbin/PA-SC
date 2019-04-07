@@ -4,6 +4,11 @@
 {% image page.feed_image width-400 as tmp_photo %}
 
 {% block content %}
+<style type="text/css">
+    div.header{
+    background-image: url({{tmp_photo.url}});
+}
+</style>
 <div class="page">
 <div class="header"></div>
     

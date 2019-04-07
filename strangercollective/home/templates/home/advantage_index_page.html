@@ -9,7 +9,9 @@
     <div class="container">
         
     {% for post in page.get_children %}
-            <div class="box" onclick="goto('{% pageurl post %}')">
+    {% load wagtailimages_tags %}
+    {% image page.feed_image width-400 as tmp_photo %}
+            <div style="background-image: url({{tmp_photo.url}})" class="box" onclick="goto('{% pageurl post %}')">
             {{ post.title }}
             </div>
         <script> function goto(url){window.location.href = url } </script>

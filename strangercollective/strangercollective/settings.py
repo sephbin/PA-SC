@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail.core',
     'modelcluster',
+    'wagtail.api.v2',
 
     'articles',
     'tests',

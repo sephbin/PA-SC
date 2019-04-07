@@ -1,9 +1,9 @@
 {% extends "home/base.html" %}
+{% block content %}
+
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% image page.feed_image width-400 as tmp_photo %}
-
-{% block content %}
 <style type="text/css">
     div.header{
     background-image: url({{tmp_photo.url}});

@@ -20,7 +20,7 @@
     <a href="/cms/pages/{{ page.id }}/edit/">Edit</a>
     {% if page.exotic %} E {% endif %}
     {% if page.physical %} P {% endif %}
-    <p>{{ page.body|richtext }}</p>
+    <p>{{ page.body_progress }}</p>
     
 
     {% if page.special_limitations != "<p></p>" %}

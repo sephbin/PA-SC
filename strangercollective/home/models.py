@@ -6,6 +6,7 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
+from django.utils.safestring import mark_safe
 
 
 class HomePage(Page):
@@ -87,7 +88,29 @@ class AdvantagePage(Page):
 		ImageChooserPanel('feed_image'),
 	]
 
+	@mark_safe
+	def body_progress(self):
+		import json
+		text = self.body
+		text = text.replace("</p><p>","</p><nl><p>")
+		text = text.replace("<p>","")
+		text = text.replace("</p>","")
+		text = text.split("<nl>")
+		outob = []
+		for t in text:
+			outtext = ""
+			try:
+				t = t.replace('&quot;','"')
+				jsob = json.loads(t)
+				if jsob['type'] == "example":
+					outtext = '<p style="color: Yellow;" class="example"><i>Example:<br>%s</i></p>' % (jsob['text']) 
 
+			except:
+				outtext = "<p>%s</p>" % (t)
+			outob.append(outtext)
+		rtext = "".join(outob)
+		return rtext
+	body_progress.allow_tags = True
 	def save(self, *args, **kwargs):
 		import re
 		s = self.body

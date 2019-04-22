@@ -55,6 +55,7 @@ class AdvantageIndexPage(Page):
 
 class AdvantagePage(Page):
 	body = RichTextField(blank=True)
+	points = RichTextField(blank=True)
 	special_limitations = RichTextField(blank=True)
 	special_enhancements = RichTextField(blank=True)
 	feed_image = models.ForeignKey(
@@ -75,6 +76,7 @@ class AdvantagePage(Page):
 
 	content_panels = Page.content_panels + [
 	MultiFieldPanel([FieldPanel('exotic'),FieldPanel('physical')], heading="Types", classname="collapsible collapsed"),
+	FieldPanel('points', classname="full"),
 	FieldPanel('body', classname="full"),
 	FieldPanel('special_limitations', classname="full"),
 	FieldPanel('special_enhancements', classname="full"),

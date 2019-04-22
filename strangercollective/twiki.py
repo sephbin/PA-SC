@@ -17,6 +17,12 @@ with open('wiki.xml') as fd:
 				apob = {}
 				apob["title"] = i["title"]
 				apob["main"] = scontent[0]
+				pts = text[5]
+				pts = pts.replace('<font size="3">',"")
+				pts = pts.replace('\'\'',"")
+				pts = pts.replace('</font>',"")
+				pts = pts.replace('\n',"")
+				apob["points"] = pts
 				del scontent[0]
 				for s in scontent:
 					if "'Special Limitations'" in s:

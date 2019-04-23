@@ -112,7 +112,7 @@ class AdvantagePage(Page):
 					outtext = '<p style="color: Yellow;" class="example"><i>%s</i></p>' % (text) 
 
 			except Exception as e:
-				outtext = "<p>%s - %s</p>" % (str(e), t)
+				outtext = "<p>%s</p>" % (t)
 			outob.append(outtext)
 		rtext = "".join(outob)
 		return rtext

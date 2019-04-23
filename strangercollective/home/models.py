@@ -91,22 +91,28 @@ class AdvantagePage(Page):
 	@mark_safe
 	def body_progress(self):
 		import json
+		import re
 		text = self.body
-		text = text.replace("</p><p>","</p><nl><p>")
+		text = text.replace("</p><p>","</p><br/><p>")
 		text = text.replace("<p>","")
 		text = text.replace("</p>","")
-		text = text.split("<nl>")
+		text = text.split("<br/>")
 		outob = []
 		for t in text:
 			outtext = ""
 			try:
 				t = t.replace('&quot;','"')
+				t = t.replace('&lt;','<')
+				t = t.replace('&gt;','>')
+				t = t.replace('\n','<br>')
 				jsob = json.loads(t)
 				if jsob['type'] == "example":
-					outtext = '<p style="color: Yellow;" class="example"><i>Example:<br>%s</i></p>' % (jsob['text']) 
+					text = jsob['text']
+					text = re.sub('^(.+?):','<b>\g<1>:</b>', text)
+					outtext = '<p style="color: Yellow;" class="example"><i>%s</i></p>' % (text) 
 
-			except:
-				outtext = "<p>%s</p>" % (t)
+			except Exception as e:
+				outtext = "<p>%s - %s</p>" % (str(e), t)
 			outob.append(outtext)
 		rtext = "".join(outob)
 		return rtext

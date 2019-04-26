@@ -11,6 +11,10 @@
 </style>
 <div class="page">
 <div class="header"></div>
+<table style="width:100%"><tr>
+<td style="width:50%"><a href="{{ page.prev_sibling.url }}"><----</a></td>
+<td style="width:50%; text-align: right;"><a href="{{ page.next_sibling.url }}">----></a></td>
+</tr></table>
     <table>
         <tr>
             <td> <h1>{{ page.title }}</h1></td>
@@ -33,7 +37,9 @@
     {% endif %}
 </td></tr>
     </table>
-    <table style="width:100%"><tr><td style="width:50%"><a href="{{ page.next_sibling.url }}"><</a></td><td style="width:50%">
-    <a href="{{ page.prev_sibling.url }}">></a></td></tr></table>
+<table style="width:100%"><tr>
+<td style="width:50%"><a href="{{ page.prev_sibling.url }}"><----</a></td>
+<td style="width:50%; text-align: right;"><a href="{{ page.next_sibling.url }}">----></a></td>
+</tr></table>
 </div>
 {% endblock %}

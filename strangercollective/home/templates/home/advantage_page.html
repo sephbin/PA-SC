@@ -24,16 +24,16 @@
     <a href="/cms/pages/{{ page.id }}/edit/">Edit</a>
     {% if page.exotic %} E {% endif %}
     {% if page.physical %} P {% endif %}
-    <p>{{ page.body_progress }}</p>
+    <p>{{ page.body_progress | richtext }}</p>
     
 
     {% if page.special_limitations != "<p></p>" %}
     <h2> Special Limitations </h2>
-    <p>{{ page.limits_dyn }}</p>
+    <p>{{ page.limits_dyn | richtext }}</p>
     {% endif %}
     {% if page.special_enhancements != "<p></p>" %}
     <h2> Special Enhancements </h2>
-    <p>{{ page.enhance_dyn }}</p>
+    <p>{{ page.enhance_dyn | richtext }}</p>
     {% endif %}
 </td></tr>
     </table>

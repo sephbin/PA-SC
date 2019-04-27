@@ -29,11 +29,11 @@
 
     {% if page.special_limitations != "<p></p>" %}
     <h2> Special Limitations </h2>
-    <p>{{ page.special_limitations|richtext }}</p>
+    <p>{{ page.limits_dyn }}</p>
     {% endif %}
     {% if page.special_enhancements != "<p></p>" %}
     <h2> Special Enhancements </h2>
-    <p>{{ page.special_enhancements|richtext }}</p>
+    <p>{{ page.enhance_dyn }}</p>
     {% endif %}
 </td></tr>
     </table>

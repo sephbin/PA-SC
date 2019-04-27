@@ -8,6 +8,34 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 from django.utils.safestring import mark_safe
 
+def dyn_text(origintext):
+	import json
+	import re
+	text = origintext.replace("</p><p>","</p><br/><p>")
+	text = text.replace("<p>","")
+	text = text.replace("</p>","")
+	text = text.split("<br/>")
+	outob = []
+	for t in text:
+		outtext = ""
+		try:
+			t = t.replace('&quot;','"')
+			t = t.replace('&lt;','<')
+			t = t.replace('&gt;','>')
+			t = t.replace('\n','<br>')
+			jsob = json.loads(t)
+			if jsob['type'] == "example":
+				text = jsob['text']
+				outtext = '<p class="example">%s</p>' % (text) 
+
+		except Exception as e:
+			outtext = "<p>%s</p>" % (t)
+
+		outtext = re.sub('^(.+?):','<b>\g<1>:</b>', outtext)
+		outtext = re.sub('(p\. [0-9]+?)\)','<a class=pagelink>\g<1></a>)', outtext)
+		outob.append(outtext)
+	rtext = "".join(outob)
+	return rtext
 
 class HomePage(Page):
 	body = RichTextField(blank=True)
@@ -94,35 +122,23 @@ class AdvantagePage(Page):
 	@property
 	def prev_sibling(self):
 		return self.get_prev_siblings().type(self.__class__).live().first()
+	
 	@mark_safe
 	def body_progress(self):
-		import json
-		import re
-		text = self.body
-		text = text.replace("</p><p>","</p><br/><p>")
-		text = text.replace("<p>","")
-		text = text.replace("</p>","")
-		text = text.split("<br/>")
-		outob = []
-		for t in text:
-			outtext = ""
-			try:
-				t = t.replace('&quot;','"')
-				t = t.replace('&lt;','<')
-				t = t.replace('&gt;','>')
-				t = t.replace('\n','<br>')
-				jsob = json.loads(t)
-				if jsob['type'] == "example":
-					text = jsob['text']
-					text = re.sub('^(.+?):','<b>\g<1>:</b>', text)
-					outtext = '<p style="color: Yellow;" class="example"><i>%s</i></p>' % (text) 
-
-			except Exception as e:
-				outtext = "<p>%s</p>" % (t)
-			outob.append(outtext)
-		rtext = "".join(outob)
-		return rtext
+		return dyn_text(self.body)
 	body_progress.allow_tags = True
+
+	@mark_safe
+	def limits_dyn(self):
+		return dyn_text(self.special_limitations)
+	limits_dyn.allow_tags = True
+
+	@mark_safe
+	def enhance_dyn(self):
+		return dyn_text(self.special_enhancements)
+	enhance_dyn.allow_tags = True
+
+
 	def save(self, *args, **kwargs):
 		import re
 		s = self.body

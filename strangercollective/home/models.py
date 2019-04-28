@@ -77,44 +77,28 @@ class BlogPage(Page):
 
 class AdvantageIndexPage(Page):
 	intro = RichTextField(blank=True)
+	content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
 
-	content_panels = Page.content_panels + [
-		FieldPanel('intro', classname="full")
-	]
+class DisadvantageIndexPage(Page):
+	intro = RichTextField(blank=True)
+	content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
+
+class SkillsIndexPage(Page):
+	intro = RichTextField(blank=True)
+	content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
 
 class AdvantagePage(Page):
 	body = RichTextField(blank=True)
 	points = RichTextField(blank=True)
 	special_limitations = RichTextField(blank=True)
 	special_enhancements = RichTextField(blank=True)
-	feed_image = models.ForeignKey(
-		'wagtailimages.Image',
-		null=True,
-		blank=True,
-		on_delete=models.SET_NULL,
-		related_name='+'
-	)
+	feed_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
 	exotic = models.BooleanField(default=False)
 	physical = models.BooleanField(default=False)
-
-
-
-	search_fields = Page.search_fields + [
-		index.SearchField('body'),
-	]
-
-	content_panels = Page.content_panels + [
-	MultiFieldPanel([FieldPanel('exotic'),FieldPanel('physical')], heading="Types", classname="collapsible collapsed"),
-	FieldPanel('points', classname="full"),
-	FieldPanel('body', classname="full"),
-	FieldPanel('special_limitations', classname="full"),
-	FieldPanel('special_enhancements', classname="full"),
-	]
-
-	promote_panels = [
-		MultiFieldPanel(Page.promote_panels, "Common page configuration"),
-		ImageChooserPanel('feed_image'),
-	]
+	search_fields = Page.search_fields + [index.SearchField('body'),]
+	content_panels = Page.content_panels + [MultiFieldPanel([FieldPanel('exotic'),FieldPanel('physical')], heading="Types", classname="collapsible collapsed"), FieldPanel('points', classname="full"), FieldPanel('body', classname="full"), FieldPanel('special_limitations', classname="full"), FieldPanel('special_enhancements', classname="full"), ]
+	promote_panels = [MultiFieldPanel(Page.promote_panels, "Common page configuration"), ImageChooserPanel('feed_image'), ]
+	
 	@property
 	def next_sibling(self):
 		return self.get_next_siblings().type(self.__class__).live().first()
@@ -138,13 +122,53 @@ class AdvantagePage(Page):
 		return dyn_text(self.special_enhancements)
 	enhance_dyn.allow_tags = True
 
+	def save(self, *args, **kwargs):
+		import re
+		s = self.body
+		replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
+		self.body = replaced
+		super(AdvantagePage, self).save(*args, **kwargs)
+
+class DisadvantagePage(Page):
+	body = RichTextField(blank=True)
+	points = RichTextField(blank=True)
+	special_limitations = RichTextField(blank=True)
+	special_enhancements = RichTextField(blank=True)
+	feed_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+	exotic = models.BooleanField(default=False)
+	physical = models.BooleanField(default=False)
+	search_fields = Page.search_fields + [index.SearchField('body'),]
+	content_panels = Page.content_panels + [MultiFieldPanel([FieldPanel('exotic'),FieldPanel('physical')], heading="Types", classname="collapsible collapsed"), FieldPanel('points', classname="full"), FieldPanel('body', classname="full"), FieldPanel('special_limitations', classname="full"), FieldPanel('special_enhancements', classname="full"), ]
+	promote_panels = [MultiFieldPanel(Page.promote_panels, "Common page configuration"), ImageChooserPanel('feed_image'), ]
+	
+	@property
+	def next_sibling(self):
+		return self.get_next_siblings().type(self.__class__).live().first()
+
+	@property
+	def prev_sibling(self):
+		return self.get_prev_siblings().type(self.__class__).live().first()
+	
+	@mark_safe
+	def body_progress(self):
+		return dyn_text(self.body)
+	body_progress.allow_tags = True
+
+	@mark_safe
+	def limits_dyn(self):
+		return dyn_text(self.special_limitations)
+	limits_dyn.allow_tags = True
+
+	@mark_safe
+	def enhance_dyn(self):
+		return dyn_text(self.special_enhancements)
+	enhance_dyn.allow_tags = True
 
 	def save(self, *args, **kwargs):
 		import re
 		s = self.body
 		replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
 		self.body = replaced
-
 		super(AdvantagePage, self).save(*args, **kwargs)
 
 

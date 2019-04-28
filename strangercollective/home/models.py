@@ -169,7 +169,7 @@ class DisadvantagePage(Page):
 		s = self.body
 		replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
 		self.body = replaced
-		super(AdvantagePage, self).save(*args, **kwargs)
+		super(DisadvantagePage, self).save(*args, **kwargs)
 
 
 

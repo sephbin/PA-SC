@@ -8,14 +8,18 @@ with open('wiki.xml') as fd:
 	for i in doc:
 		try:
 			text = i["revision"]["text"]["#text"]
-			if "{{Advantage Template}}" in text:
+			if "{{Disadvantage Template}}" in text:
 				text = text.split("|")
 				content = text[7]
 				content = content.replace("{{Indent}}","")
 				content = content.replace('<font size="3">',"|")
 				scontent = content.split("|")
 				apob = {}
-				apob["title"] = i["title"]
+				title = i["title"]
+				title = title.replace("Disadvantage: ","")
+
+				apob["title"] = title
+				print(title)
 				apob["main"] = scontent[0]
 				pts = text[5]
 				pts = pts.replace('<font size="3">',"")

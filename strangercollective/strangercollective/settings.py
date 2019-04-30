@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'redback',
     'corsheaders',
     'api',
+    'jorm',
 
 ]
 

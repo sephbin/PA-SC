@@ -13,7 +13,7 @@ def temp(request):
 	pages = DisadvantagePage.objects.all()
 	for t, p in zip(titles, pages):
 		log.append(t)
-		log.append("------")
+		log.append(p.title)
 		p.title = t
 		p.body = "<p>%s</p>"%(t)
 		p.save()

@@ -15,6 +15,7 @@ def temp(request):
 		log.append(t)
 		log.append("------")
 		p.title = t
+		p.body = "<p>%s</p>"%(t)
 		p.save()
 	# for j in jsob:
 	# 	newAd = AdvantagePage.objects.filter(title=j["title"])

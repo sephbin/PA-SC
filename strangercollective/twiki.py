@@ -11,6 +11,7 @@ with open('wiki.xml') as fd:
 			if "{{Disadvantage Template}}" in text:
 				text = text.split("|")
 				content = text[7]
+				content = content.replace("{{Indent}}Special Limitations","|Special Limitations")
 				content = content.replace("{{Indent}}","")
 				content = content.replace('<font size="3">',"|")
 				scontent = content.split("|")
@@ -19,7 +20,6 @@ with open('wiki.xml') as fd:
 				title = title.replace("Disadvantage: ","")
 
 				apob["title"] = title
-				print(title)
 				apob["main"] = scontent[0]
 				pts = text[5]
 				pts = pts.replace('<font size="3">',"")
@@ -29,9 +29,9 @@ with open('wiki.xml') as fd:
 				apob["points"] = pts
 				del scontent[0]
 				for s in scontent:
-					if "'Special Limitations'" in s:
+					if "Special Limitations\n\n" in s:
 						apob["special_limitations"] = s
-					if "'Special Enhancements'" in s:
+					if "Special Enhancements\n\n" in s:
 						apob["special_enhancements"] = s 
 				out.append(apob)
 		except: pass

@@ -8,6 +8,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
 from django.utils.safestring import mark_safe
 
+
 def dyn_text(origintext):
 	import json
 	import re
@@ -172,8 +173,21 @@ class DisadvantagePage(Page):
 		super(DisadvantagePage, self).save(*args, **kwargs)
 
 
+from wagtail.snippets.models import register_snippet
+from taggit.models import TaggedItemBase, Tag as TaggitTag
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from modelcluster.tags import ClusterTaggableManager
 
-class TestPage(Page):
+class PageTag(TaggedItemBase):
+    content_object = ParentalKey('DynamicPage', related_name='page_tags')
+
+@register_snippet
+class Tag(TaggitTag):
+    class Meta:
+        proxy = True
+
+class DynamicPage(Page):
+	tags = ClusterTaggableManager(through='home.PageTag', blank=True)
 	body = StreamField([
 		('heading', blocks.CharBlock(classname="full title")),
 		('paragraph', blocks.RichTextBlock()),
@@ -181,5 +195,6 @@ class TestPage(Page):
 	])
 	content_panels = Page.content_panels + [
 		StreamFieldPanel('body'),
+		FieldPanel('tags'),
 	]
 

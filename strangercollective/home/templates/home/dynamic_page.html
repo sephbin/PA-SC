@@ -1,0 +1,14 @@
+<style>
+	body{
+		background: #111;
+		color: #eee;
+	}
+</style>
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<h1>{{ page.title|richtext }}</h1>
+{{ page.body }}
+
+{% for tag in page.tags.all %}
+<a href="/asd/?tag={{tag.slug}}">{{tag}}</a>
+{% endfor %}

@@ -14,7 +14,7 @@
             <div style="background-image: url({{tmp_photo.url}})" class="box" onclick="goto('{% pageurl post %}')">
             {{ post.title }}<br>
             {{ post.url }}<br>
-            {{ pageurl post }}
+            {% pageurl post %}
             </div>
         <script> function goto(url){window.location.href = url } </script>
     {% endfor %}

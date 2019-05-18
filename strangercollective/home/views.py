@@ -35,6 +35,8 @@ def temp(request):
 		try:
 			dis = get_object_or_404(DisadvantagePage, title=dab['title'])
 			dis.body = dab['main']
+			try: dis.points = dab['points']
+			except: pass
 			try: dis.special_limitations = dab['special_limitations']
 			except: pass
 			rev = dis.save_revision()

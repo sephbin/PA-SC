@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.template.defaultfilters import slugify
 from django.contrib  import messages
 from .models import *
 # Create your views here.
@@ -36,6 +37,8 @@ def temp(request):
 			dis = get_object_or_404(DisadvantagePage, title=dab['title'])
 			dis.body = dab['main']
 			try: dis.points = dab['points']
+			except: pass
+			try: dis.slug = slugify(dab['title'])
 			except: pass
 			try: dis.special_limitations = dab['special_limitations']
 			except: pass

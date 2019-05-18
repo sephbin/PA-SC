@@ -12,7 +12,9 @@
     {% for post in page.get_children %}
         {% image post.feed_image width-400 as tmp_photo %}
             <div style="background-image: url({{tmp_photo.url}})" class="box" onclick="goto('{% pageurl post %}')">
-            {{ post.title }}
+            {{ post.title }}<br>
+            {% post.url %}<br>
+            {% pageurl post %}
             </div>
         <script> function goto(url){window.location.href = url } </script>
     {% endfor %}

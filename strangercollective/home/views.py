@@ -42,9 +42,10 @@ def temp(request):
 			except: pass
 			try: dis.special_limitations = dab['special_limitations']
 			except: pass
+			dis.save()
 			rev = dis.save_revision()
 			rev.publish()
-			dis.save()
+			
 		except Exception as e:
 			log.append(str(e))
 			log.append(dab["title"])

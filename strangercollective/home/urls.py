@@ -5,4 +5,5 @@ app_name = 'home'
 urlpatterns = [
     path(r'', views.home),
     path(r'temp', views.temp),
+    path(r'map', views.map),
 ]

@@ -39,6 +39,7 @@ urlpatterns = [
     path(r'cv/', include('cv.urls')),
     path(r'sc/', include('sc.urls'),name='sc'),
     path(r'api/', include('api.urls'),name='api'),
+    path(r'maps/', include('maps.urls'),name='maps'),
     path(r'', include('home.urls'),name='home'),
     re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
     

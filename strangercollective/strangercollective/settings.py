@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'jorm',
+    'maps',
 
 ]
 

@@ -21,7 +21,9 @@
     .leaflet-container {
     background-color:rgba(0,0,0,1);
 }
-
+.body{
+  background-color: rgb(255, 255, 255) !important;
+}
 .my-div-icon{
   color: lightgrey;
   font-weight: bold;
@@ -35,6 +37,8 @@
   left: 50%;
   top: 50%;
   transform: perspective(1px) translate(-50%, -50%);
+  transition: width .5s, height .5s, font-size .5s, border-radius .5s;
+  transition-timing-function: ease-out;
 }
 
 .z-3 > .content-inside{
@@ -44,12 +48,18 @@
 }
 
 .z-2 > .content-inside{
-  font-size: 70%;
+  font-size: 80%;
   width: 70%;
   height:70%;
   border-radius: 3px;
 }
 
+.z-1 > .content-inside{
+  font-size: 0%;
+  width: 20%;
+  height:20%;
+  border-radius: 0px;
+}
 
 table.content{
 width:100%;
@@ -73,7 +83,7 @@ td.content{
   L.tileLayer('/media/maps/Sydney Office/{z}/{y}/{x}.png', {
     zoomDelta: 0.1,
     maxZoom: 3,
-    minZoom: 2,
+    minZoom: 1,
     accessToken: 'your.mapbox.access.token'
 }).addTo(mymap);
 
@@ -94,16 +104,18 @@ td.content{
 //   [{% for c in p.coords %}[{{c.1}},{{c.0}}],{% endfor %}],
 //   {color: '{{p.color}}', stroke: false, fillOpacity: {{p.fillOpacity}}}).addTo(mymap);
 // {% endfor %}
+{% for p in people %}
 var myIcon = L.divIcon({className: 'my-div-icon z-'+mymap.getZoom(),
-  html: '<div class="content-inside"><table class="content"><tr><td class="content">AB</td></tr></table></div>',
+  html: '<div class="content-inside"><table class="content"><tr><td class="content">{{p.label}}</td></tr></table></div>',
   iconAnchor:   [13, 13],
 });
-var sol = L.latLng([ -87.75, 172.125 ]);
-L.marker(sol, {icon: myIcon, draggable:true, autoPan:true}).addTo(mymap).bindPopup(      'Sol').on('dragend', function(event) {
-    var mylatlng = [event.target._latlng.lat,event.target._latlng.lng];
-    
+var newMark = L.latLng([ {{p.coords.1}} , {{p.coords.0}} ]);
+L.marker(newMark, {icon: myIcon, draggable:true, autoPan:true}).addTo(mymap).bindPopup('{{p.label}}').on('dragend', function(event) {
+    var mylatlng = [event.target._latlng.lng,event.target._latlng.lat];
     console.log(mylatlng);
   });
+
+{% endfor %}
 
 // var imageUrl = '/media/icons/fm.svg',
 //     imageBounds = [[-100, 100], [-50, 250]];

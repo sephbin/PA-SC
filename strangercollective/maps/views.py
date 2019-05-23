@@ -5,9 +5,7 @@ from django.contrib  import messages
 from .models import *
 # Create your views here.
 
-def map(request):
-	people = [{"label":"AB","coords":[172.125,-87.75]},{"label":"AY","coords":[171.75, -95.625]}]
-	context = {"polygons":[
-	{"coords":[[100, -100], [100, -120], [80, -120], [80, -100]], "color": 'green', "stroke": False, "fillOpacity": 0.8, },
-	],"people":people}
+def map(request, whatmap):
+	people =	[{"label":"AB","coords":[172.125,-87.75]},{"label":"AY","coords":[171.75, -95.625]}]
+	context =	{"whatmap":whatmap}
 	return render(request, "maps/officemap.html", context)

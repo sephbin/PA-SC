@@ -3,8 +3,7 @@ from .models import *
 # Register your models here.
 
 class mapAdmin(admin.ModelAdmin):
-	readonly_fields = ('tfirst',)
-
+	pass
 
 
 admin.site.register(map,mapAdmin)

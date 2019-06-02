@@ -6,6 +6,10 @@ from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
 from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.snippets.models import register_snippet
+from taggit.models import TaggedItemBase, Tag as TaggitTag
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from modelcluster.tags import ClusterTaggableManager
 from django.utils.safestring import mark_safe
 
 
@@ -176,11 +180,55 @@ class DisadvantagePage(Page):
 		self.body = replaced
 		super(DisadvantagePage, self).save(*args, **kwargs)
 
+challenge_choices = (
+	('Easy','Easy'),
+	('Average','Average'),
+	('Hard','Hard'),
+	('Very Hard','Very Hard'),
+	('Varies','Varies'),
+)
 
-from wagtail.snippets.models import register_snippet
-from taggit.models import TaggedItemBase, Tag as TaggitTag
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.tags import ClusterTaggableManager
+class attribute(models.Model):
+	attribute_name = models.CharField(max_length=200)
+	def __str__(self):
+		return self.attribute_name
+
+class SkillsPage(Page):
+	feed_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+	body = RichTextField(blank=True)
+	attribute = models.ForeignKey('attribute', null=True, blank=True, on_delete=models.SET_NULL, related_name="skills")
+	challenge = models.CharField(max_length=200,choices=challenge_choices)
+	defaults = RichTextField(blank=True)
+	prerequisites = RichTextField(blank=True)
+
+
+	search_fields = Page.search_fields + [index.SearchField('body'),]
+	content_panels = Page.content_panels + [
+		MultiFieldPanel([FieldPanel('attribute'),FieldPanel('challenge')], heading="Attribute/Challenge", classname="collapsible collapsed"),
+		FieldPanel('defaults', classname="full"),
+		FieldPanel('prerequisites', classname="full"),
+		FieldPanel('body', classname="full"),
+		]
+	promote_panels = [MultiFieldPanel(Page.promote_panels, "Common page configuration"), ImageChooserPanel('feed_image'), ]
+	
+	@property
+	def next_sibling(self):
+		return self.get_next_siblings().type(self.__class__).live().first()
+
+	@property
+	def prev_sibling(self):
+		return self.get_prev_siblings().type(self.__class__).live().first()
+	
+	@mark_safe
+	def body_progress(self):
+		return dyn_text(self.body)
+	body_progress.allow_tags = True
+
+	def save(self, *args, **kwargs):
+		super(SkillsPage, self).save(*args, **kwargs)
+
+
+
 
 class PageTag(TaggedItemBase):
     content_object = ParentalKey('DynamicPage', related_name='page_tags')

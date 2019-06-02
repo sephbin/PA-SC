@@ -80,6 +80,7 @@ td.content{
      }).setView([-91.625, 113.75],3);
   L.tileLayer('/media/maps/{{whatmap}}/{z}/{y}/{x}.png', {
     edgeBufferTiles: 2,
+    zoomSnap: 0.1,
     zoomDelta: 0.1,
     maxZoom: 4,
     minZoom: 0,
@@ -103,13 +104,16 @@ td.content{
 //   [{% for c in p.coords %}[{{c.1}},{{c.0}}],{% endfor %}],
 //   {color: '{{p.color}}', stroke: false, fillOpacity: {{p.fillOpacity}}}).addTo(mymap);
 // {% endfor %}
-{% for p in people %}
-var myIcon = L.divIcon({className: 'my-div-icon z-'+mymap.getZoom(),
-  html: '<div class="content-inside"><table class="content"><tr><td class="content">{{p.label}}</td></tr></table></div>',
-  iconAnchor:   [13, 13],
+{% for m in markers %}
+var nIcon = L.icon({
+    iconUrl: '/media/icons/{{m.icon}}', 
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [19, 19], // point of the icon which will correspond to marker's location
 });
-var newMark = L.latLng([ {{p.coords.1}} , {{p.coords.0}} ]);
-L.marker(newMark, {icon: myIcon, draggable:true, autoPan:true}).addTo(mymap).bindPopup('{{p.label}}').on('dragend', function(event) {
+var newMark = L.latLng([ {{m.coords.1}} , {{m.coords.0}} ]);
+L.marker(newMark, {
+  icon: nIcon,
+  draggable:true, autoPan:true}).addTo(mymap).bindPopup('{{m.title}}').on('dragend', function(event) {
     var mylatlng = [event.target._latlng.lng,event.target._latlng.lat];
     console.log(mylatlng);
   });

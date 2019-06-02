@@ -1,32 +1,66 @@
 import xmltodict
 import json
-titlelist = ["Appendix Test", "Asbjorn", "Asbjørn", "Asherin Cosmology", "Axel Svärdstein", "Britvah", "Bull Ant", "Campaign Notes", "Charlie Moody", "Cleştarterra", "Daly", "Eidolon 1", "Emmett Blakely", "Eorith Magic", "Fell Deer", "Gurps Conversion", "Gurps Occupational Templates", "Gutz", "Gútz", "Iron Downs", "Kavenderblight", "Lindon", "Main Page", "Moody Island", "Nick", "Niko Zabanias", "Nodes", "Oceanic Magic", "Ramsbeard", "Resources: Image Links", "Sirquine Plains", "Svell Dwarves", "Test", "Test Test Test Test", "The Ivory Triangle", "Wasp Swarm", "Whop Wha Waa", "Widget:Google Spreadsheet", "Wolf Spider"]
+import re
+
+
+
 out = []
 with open('wiki.xml') as fd:
 	doc = xmltodict.parse(fd.read())
 	doc = json.loads(json.dumps(doc))
 	doc = doc["mediawiki"]["page"]
 	for i in doc:
-		if i["title"] in titlelist:
-			print("###",i["title"])
-			print(i["revision"]["text"]["#text"])
-			print("---------------------------------------------------------------------------------")
-			print("\n\n\n\n\n\n\n\n\n\n")
-		# try:
-		# 	text = i["revision"]["text"]["#text"]
-		# 	if "{{Disadvantage Template}}" in text:
-		# 		text = text.split("|")
-		# 		content = text[7]
-		# 		content = content.replace("{{Indent}}Special Limitations","|Special Limitations")
-		# 		content = content.replace("{{Indent}}","")
-		# 		content = content.replace('<font size="3">',"|")
-		# 		scontent = content.split("|")
-		# 		apob = {}
-		# 		title = i["title"]
-		# 		title = title.replace("Disadvantage: ","")
+		try:
+			text = i["revision"]["text"]["#text"]
+			if "{{Modifier Template}}" in text:
+				# text = text.split("|")
+				content = text
+				content = content.replace("\n\n","|")
+				content = content.replace("{{Indent}}Special Limitations","|Special Limitations")
+				content = content.replace(">Defaults:",">|Defaults:")
+				content = content.replace("</font>","|</font>")
+				content = content.replace(">Prerequisites:",">|Prerequisites:")
+				content = content.replace("<i>Modifiers:","<i>|Modifiers:")
+				content = content.replace("{{Indent}}","")
+				content = content.replace('<font size="3">',"|")
+				content = content.replace("</i>","|</i>")
+				scontent = content.split("|")
+				# print(scontent)
+				sco = []
+				for s in scontent:
+					a = "<" not in s
+					b = "{" not in s
+					c = '="' not in s
+					if a and b and c:
+						sco.append(s)
+				scontent = sco
+				apob = {}
+				title = i["title"]
+				title = title.replace("Skill: ","")
+				title = title.replace("Modifier: ","")
 
-		# 		apob["title"] = title
-		# 		apob["main"] = scontent[0]
+				apob["title"] = title
+				other = []
+				for t in scontent:
+					if re.search("^''", t):
+						t = t.replace("''", "")
+						apob["modifier"] = t
+				# 	elif re.search("^Prerequisite", t):
+				# 		t = t.replace("Prerequisites: ", "")
+				# 		t = t.replace("Prerequisites:", "")
+				# 		t = t.replace("Prerequisite: ", "")
+				# 		apob["prerequisites"] = t
+				# 	elif re.search("^''", t):
+				# 		t = t.replace("''", "")
+				# 		t = t.split("/")
+				# 		apob["attribute"] = t[0]
+				# 		apob["challenge"] = t[1]
+					else:
+						other.append(t)
+				other = sorted(other, key=len)
+				apob["body"] = other[-1]
+
+
 		# 		pts = text[5]
 		# 		pts = pts.replace('<font size="3">',"")
 		# 		pts = pts.replace('\'\'',"")
@@ -39,7 +73,7 @@ with open('wiki.xml') as fd:
 		# 				apob["special_limitations"] = s
 		# 			if "Special Enhancements\n\n" in s:
 		# 				apob["special_enhancements"] = s 
-		# 		out.append(apob)
-		# except: pass
+				out.append(apob)
+		except: pass
 
 print(json.dumps(out))

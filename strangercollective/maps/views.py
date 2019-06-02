@@ -6,6 +6,10 @@ from .models import *
 # Create your views here.
 
 def map(request, whatmap):
-	people =	[{"label":"AB","coords":[172.125,-87.75]},{"label":"AY","coords":[171.75, -95.625]}]
-	context =	{"whatmap":whatmap}
+	markers = [
+	{"title":"Large Logging Camp", "icon":"hatchet.svg", "coords":[ 143.25, -100.875 ]},
+	{"title":"Large Logging Camp", "icon":"hatchet.svg", "coords":[ 118, -81.25 ]},
+	{"title":"Large Logging Camp", "icon":"hatchet.svg", "coords":[ 86.25, -106.625 ]},
+	]
+	context =	{"whatmap":whatmap, "markers": markers}
 	return render(request, "maps/officemap.html", context)

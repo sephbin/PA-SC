@@ -32,14 +32,15 @@ def temp(request):
 		# 		log.append(dab["title"])
 
 		######################
-		mods = ["A","B"]
 		home = get_object_or_404(GenericIndexPage, title="Modifiers") # or better Page query
 		for s in mods:
-			mp = DynamicPage(title="test2")
-			raw_json = json.dumps([
-				{'type': 'paragraph', 'value': "test123"},
-				{'type': 'paragraph', 'value': "test456"}
-				])
+			mp = DynamicPage(title=s["title"])
+			c = []
+			try: c.append({'type': 'paragraph', 'value': s["modifer"]})
+			except: pass
+			try: c.append({'type': 'paragraph', 'value': s["body"]})
+			except: pass
+			raw_json = json.dumps(c)
 			mp.body = raw_json
 			home.add_child(instance=mp)
 			mp.save_revision().publish() 

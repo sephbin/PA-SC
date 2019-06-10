@@ -12,3 +12,9 @@
 {% for tag in page.tags.all %}
 <a href="/asd/?tag={{tag.slug}}">{{tag}}</a>
 {% endfor %}
+
+{% for child in page.get_children %}
+{% load wagtailcore_tags %}
+<h2>{{ child.specific.title }}</h2>
+{{ child.specific.body }}
+{% endfor %}

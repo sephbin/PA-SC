@@ -11,6 +11,7 @@ from taggit.models import TaggedItemBase, Tag as TaggitTag
 from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from django.utils.safestring import mark_safe
+from .blocks import *
 
 
 def dyn_text(origintext):
@@ -243,6 +244,8 @@ class DynamicPage(Page):
 	body = StreamField([
 		('heading', blocks.CharBlock(classname="full title")),
 		('paragraph', blocks.RichTextBlock()),
+		('test', TwoColumnBlock()),
+		('test2', ColumnBlock()),
 		('image', ImageChooserBlock()),
 	])
 	content_panels = Page.content_panels + [

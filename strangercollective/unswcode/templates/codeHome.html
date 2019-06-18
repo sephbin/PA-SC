@@ -4,28 +4,28 @@ y
 {% block content %}
 	<h3>{{user.profile.name}}</h3>
 	<table class="highlight" style="width:100%">
-		<tr><td>Assignment 1 - Cinema</td><td><a href="submit/CODE1240 AS1">Submit</a></td>{% if AS1 %}<td><a href="{{AS1.link}}">Link</a></td>{% endif %}<td>{{AS1.markjson.total}}%</td><td style="width:33%">{{AS1.markjson.comment.val}}</td></tr>
-		<tr><td>Assignment 2 - Residence</td><td><a href="submit/CODE1240 AS2">Submit</a></td>{% if AS2 %}<td><a href="{{AS2.link}}">Link</a></td>{% endif %}</tr>
-		<tr class="disabled"><td>Assignment 3 - Combined</td><td>Submit</td></tr>
+		<tr><td>Assignment 1 - Prop/Set</td><td><a href="submit/19CODE1240AS1">Submit</a></td>{% if AS1 %}<td><a href="{{AS1.link}}">Link</a></td>{% endif %}<td>{{AS1.markjson.total}}%</td><td style="width:33%">{{AS1.markjson.comment.val}}</td></tr>
+		<tr class="disabled"><td>Assignment 2 - Residence</td><td>
+			<!-- <a href="submit/CODE1240 AS2"> -->
+			<a>
+			Submit</a></td>{% if AS2 %}<td>
+			<!-- <a href="{{AS2.link}}"> -->
+			<a>
+			Link</a></td>{% endif %}</tr>
+		<tr class="disabled"><td>Assignment 3 - Combined Cinema</td><td>
+		<a>Submit</a>
+		</td></tr>
 		<tr class="disabled"><td>Assignment 4 - Checklist</td><td></td></tr>
 	</table>
 	<hr>
 	<h1>CODE 1240</h1>
-	<h4>Week 7 - Sep 5</h4>
-	<a href="https://github.com/Dan-Piker/Kangaroo-examples">Kangaroo Examples</a><br>
-	<a href="https://www.food4rhino.com/app/anemone">Anemone</a>
-	<h4>Week 6 - Aug 1</h4>
-	Sorry
-	<h4>Week 5 - Aug 1</h4>
-		<a href="http://www.strangercollective.com/code/lecture/3">LECTURE WEEK 5</a><br>
-	<h4>Week 4 - Aug 1</h4>
-	Sorry
-	<h4>Week 3 - Aug 1</h4>
-	Sorry
-	<h4>Week 2 - Aug 1</h4>
+	<!-- <h4>Week 5</h4> -->
+		<!-- <a href="http://www.strangercollective.com/code/lecture/3">LECTURE WEEK 5</a><br> -->
+	<h4>Week 3</h4>
 		<a href="http://www.strangercollective.com/code/lecture/2">LECTURE WEEK 2</a><br>
-	<h4>Week 1 - Jul 25</h4>
+	<h4>Week 1</h4>
 		<a href="https://drive.google.com/file/d/1rnEr6L_Bxs4gVhkcca95y3FxfMmyYEFj/view?usp=sharing">CODE 1240 Site Files</a><br>
+		<a href="https://drive.google.com/drive/folders/1AvyiG7Q9uOrIHi5P8IG9DUQ6Zym9aIt7?usp=sharing">CODE 1240 Survey Files and videos</a><br>
 		<a href="http://www.strangercollective.com/code/lecture/1">LECTURE WEEK 1</a><br>
-		<a href="https://drive.google.com/open?id=1bHhf3b7Mkez2hiBA0rcChWqmN-V7nCdI">TOPOLOGY MESH SCRIPT</a><br>
+		<!-- <a href="https://drive.google.com/open?id=1bHhf3b7Mkez2hiBA0rcChWqmN-V7nCdI">TOPOLOGY MESH SCRIPT</a><br> -->
 {% endblock %}

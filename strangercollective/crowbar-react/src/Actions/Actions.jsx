@@ -10,7 +10,7 @@ __TOGGLEMODAL__
 
 export const __action1__ = () => dispatch => {
     // fetch('http://www.strangercollective.com/rpg/characters/')
-		fetch('http://localhost:8000/rpg/campaigns/1/')
+		fetch('http://www.strangercollective.com/rpg/campaigns/1/')
   		.then(result => result.json())
   		.then(data => dispatch({
   			type: __ACTION1__,

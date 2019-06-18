@@ -1,0 +1,9 @@
+<div class="card">
+	{% include "crowbar/cardHeader.html" with cardTitle="Advantages" %}
+	<div class="card-content">
+		Text
+		{% for t in traits %}
+		-<br>
+		{% endfor %}
+	</div>
+</div>

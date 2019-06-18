@@ -17,7 +17,7 @@ const initialState = {
 		relpossession: [],
 		possessionTotals:{},
 	},
-	selectCharacter: 1,
+	selectCharacter: 0,
 	items: [],
 	characters: [{}],
 	possessions: [{}],

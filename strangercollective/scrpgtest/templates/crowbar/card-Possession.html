@@ -2,13 +2,17 @@
 	{% include "crowbar/cardHeader.html" with cardTitle=title %}
 	<div class="card-content">
 		<table>
-		{% for t in traits %}
+		{% for t in possessions %}
 		<tr>
+			<td no-wrap>{{t.ammount}} x </td>
 			<td wide>
-				{{t.name}}
+				{{t.possession.possession_name}}
 			</td>
 			<td>
-				[{{t.cost}}]
+				{{t.weight}}
+			</td>
+			<td>
+				{{t.cost}}
 			</td>
 		</tr>
 		{% endfor %}

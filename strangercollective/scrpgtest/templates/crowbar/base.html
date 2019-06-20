@@ -1,13 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
 	<style type="text/css">
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,700');
 :root {
   --nav_size: 2em;
   --nav_background: #222222;
-  --card_header: rgba(230,0,0,1);
+  --card_header_background: #ffca28;
+  --card_header_colour: #000000;
+  --card_content_background: #191919;
+  --card_content_color: #ddd;
 }
 body{
 	font-family: 'Roboto Mono', monospace;
@@ -21,6 +26,45 @@ body{
 	right: 0;
 	height: var(--nav_size);
 	background-color: var(--nav_background);
+}
+
+.top.logo{
+	position: fixed;
+	cursor: pointer;
+	top: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 20em;
+	height: 4em;
+	z-index: 1000;
+	text-align: center;
+	transition: top .4s;
+}
+
+.top.logo:hover{
+	top: 10px;
+}
+
+
+.top.logo > img{
+	position: absolute;
+	z-index: -10;
+	bottom: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	width:3em;
+	height:auto;
+	transition: bottom .5s;
+}
+.top.logo:hover > img{
+	bottom: 10px;
+}
+
+.logo-text{
+	font-family: 'Permanent Marker', cursive;
+	font-size:		200%;
+	font-weight:	bold;
+	color:			var(--card_header_background);
 }
 
 .left.layout{
@@ -56,7 +100,7 @@ body{
 		padding-left: .5em;
 		font-weight: 300;
 		opacity: .2;
-		color: #FFF;
+		color: var(--card_header_background);
 	    height: 100%;
 	    width:100%;
         vertical-align: middle;
@@ -108,7 +152,8 @@ body{
 	width: 40%;
 	left: 50%;
 	transform: translateX(-50%);
-	background: #FFF;
+	background: var(--card_content_background);
+	color: var(--card_content_color);
 	top: 0px;
 	bottom: 0px;
 	overflow-y: auto;
@@ -155,13 +200,15 @@ span.badge {
 /*CARDS*/
 
 .card {
-	background-color: white;
+	background-color: var(--card_content_background);
+	color: var(--card_content_color);
 	margin-bottom: 1em;
 }
 
 .card-header {
-	background-color: var(--card_header);
-	color: White;
+	background-color: var(--card_header_background);
+	color: var(--card_header_colour);
+
 	font-weight: 700;
 }
 .card-header-table {
@@ -195,35 +242,54 @@ span.badge {
 	border-bottom: none; 
 }
 
-
+[wide]{
+	width: 100%;
+}
+ [no-wrap]{
+ 	white-space: nowrap;
+ }
 
 	</style>
 </head>
 <body>
 <div class="top layout"> </div>
+<div class="top logo"><span class="logo-text">CROWBAR</span><br><img src="{% static 'crowbar/logo.svg' %}"> </div>
 <div class="right layout"> </div>
 <div class="left layout"> </div>
-<div class="bottom layout"> </div>
 <div class="content layout">
 	<div class="content wrapper">
 		<div class="left column">
 		<div class="column wrapper">
 		{% include "crowbar/card-Character.html"%}
 		{% include "crowbar/card-Attributes.html"%}
-		{% include "crowbar/card-Trait.html" with traits=instance.advantages.all %}
+		{% include "crowbar/card-Trait.html" with title="Advantages" traits=instance.reladvantage.all %}
+		{% include "crowbar/card-Trait.html" with title="Disadvantages" traits=instance.reldisadvantage.all %}
+		{% include "crowbar/card-Skill.html" with title="Skills" skills=instance.relskill.all %}
 		</div>
 		</div>
 
         <div class="center column">
         <div class="column wrapper">
+        	<table wide>
+        	</table>
         </div>
         </div>
         <div class="right column">
         <div class="column wrapper">
+		{% include "crowbar/card-Melee.html" with title="Melee Weapons" possessions=instance.relpossession.all %}
+		{% include "crowbar/card-Range.html" with title="Ranged Weapons" possessions=instance.relpossession.all %}
+		{% include "crowbar/card-Possession.html" with title="Possessions" possessions=instance.relpossession.all %}
         </div>
         </div>
 	</div>
 </div>
+<div class="bottom layout">
+      <table class="console">
+      <tr>
+      <td>Console:</td> <td wide>Loaded Character...</td>
+      </tr>
+      </table>
+  </div>
 
 </body>
 </html>

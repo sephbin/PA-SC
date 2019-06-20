@@ -1,0 +1,27 @@
+<div class="card">
+	{% include "crowbar/cardHeader.html" with cardTitle=title %}
+	<div class="card-content">
+		<table wide>
+		{% for p in possessions %}
+		{% if p.possession.rangeStats %}
+		<tr>
+			<td colspan="99">
+				<b>{{p.possession.possession_name}}</b>
+			</td>
+		</tr>
+		{% for ds in p.possession.rangeStats %}
+		<tr>
+			<td>
+			</td>
+			<td wide>
+				{{ds.damageStats.stType}}{{ds.damageStats.mod}} {{ds.damageStats.damType}}
+			</td>
+			<td> {{ds.parry}} </td>
+			<td> {{ds.reach}} </td>
+		</tr>
+		{% endfor %}
+		{% endif %}
+		{% endfor %}
+		</table>
+	</div>
+</div>

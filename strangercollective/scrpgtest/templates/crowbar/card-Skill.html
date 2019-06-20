@@ -2,10 +2,10 @@
 	{% include "crowbar/cardHeader.html" with cardTitle=title %}
 	<div class="card-content">
 		<table>
-		{% for t in traits %}
+		{% for t in skills %}
 		<tr>
 			<td wide>
-				{{t.name}}
+				{{t.relative_value}} - {{t.skill.skill_name}} ({{t.skill_challenge}}) {{t.relative_skill}}
 			</td>
 			<td>
 				[{{t.cost}}]

@@ -43,7 +43,7 @@ urlpatterns = [
     path(r'', include('home.urls'),name='home'),
     re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
     
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += [
     url(r'^api/v2/', api_router.urls),

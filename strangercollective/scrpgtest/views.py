@@ -22,12 +22,15 @@ class CampaignViewSet(viewsets.ModelViewSet):
     queryset = campaign.objects.all()
     serializer_class = CampaignSerializer
 
-def charPage(request, fname, lname):
-	instance = get_object_or_404(character, firstname=fname, lastname=lname)
-	context = {
-	"instance":instance
-	}
+def charPage(request, characterid):
+	instance = get_object_or_404(character, id=characterid)
+	context = {"instance":instance }
 	return render(request, "crowbar/base.html",context)
+
+def csCard(request, characterid, cardid):
+	instance = get_object_or_404(character, id=characterid)
+	context = {"instance":instance }
+	return render(request, "crowbar/"+cardid+".html",context)
 
 def newpos(request, characterid):
 	print("NEWPOS")

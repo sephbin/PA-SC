@@ -1,4 +1,7 @@
-<div class="card">
+<div class="card" id="card-Character" cardtype="Character">
 	{% include "crowbar/cardHeader.html" with cardTitle=instance.firstname cardCost=instance.cost %}
 	{% include "crowbar/cardContent.html" with cardContent=instance.occupation %}
+	<div class="card-content">
+		{{instance.status}}
+	</div>
 </div>

@@ -1,0 +1,17 @@
+<div class="card" id="card-Disadvantage" cardtype="Disadvantages">
+	{% include "crowbar/cardHeader.html" with cardTitle="Disadvantages" %}
+	<div class="card-content">
+		<table>
+		{% for t in instance.reldisadvantage.all %}
+		<tr>
+			<td wide>
+				<a class="link" link="{{t.disadvantage.url}}">{{t.name}}</a>
+			</td>
+			<td>
+				[{{t.cost}}]
+			</td>
+		</tr>
+		{% endfor %}
+		</table>
+	</div>
+</div>

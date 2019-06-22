@@ -3,6 +3,10 @@
 <html>
 <head>
 	<title></title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
+	<script src="{% static 'crowbar/js/contextMenu/jquery.contextMenu.js' %}"></script>
+	<script src="{% static 'crowbar/js/contextMenu/jquery.ui.position.js' %}"></script>
 	<style type="text/css">
 @import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:300,400,700');
@@ -20,6 +24,7 @@ body{
 }
 
 .top.layout{
+	z-index: 800;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -38,26 +43,6 @@ body{
 	height: 4em;
 	z-index: 1000;
 	text-align: center;
-	transition: top .4s;
-}
-
-.top.logo:hover{
-	top: 10px;
-}
-
-
-.top.logo > img{
-	position: absolute;
-	z-index: -10;
-	bottom: -40px;
-	left: 50%;
-	transform: translateX(-50%);
-	width:3em;
-	height:auto;
-	transition: bottom .5s;
-}
-.top.logo:hover > img{
-	bottom: 10px;
 }
 
 .logo-text{
@@ -65,9 +50,44 @@ body{
 	font-size:		200%;
 	font-weight:	bold;
 	color:			var(--card_header_background);
+	position: absolute;
+	top:0;
+	left: 50%;
+	transform: translateX(-50%);
+	transition-timing-function: ease-in;
+	transition: top .1s;
+}
+.top.logo:hover > .logo-text{
+	top: 55px;
 }
 
+.top.logo > .logo-image{
+	position: absolute;
+	z-index: -10;
+	bottom: -40px;
+	left: 50%;
+	transform: translateX(-50%);
+	width:3em;
+	height:auto;
+	transition-timing-function: ease-in;
+	transition: bottom .2s;
+}
+
+.top.logo > .logo-background{
+	position: absolute;
+	z-index: -20;
+	bottom: -50px;
+	left: 50%;
+	transform: translateX(-50%);
+	width:1200px;
+	height:auto;
+	transition-timing-function: ease-in;
+	transition: bottom .2s;
+}
+
+
 .left.layout{
+	z-index: 800;
 	position: fixed;
 	top: var(--nav_size);
 	left: 0;
@@ -77,6 +97,7 @@ body{
 }
 
 .right.layout{
+	z-index: 800;
 	position: fixed;
 	top: var(--nav_size);
 	bottom: 0;
@@ -87,6 +108,7 @@ body{
 
 
 .bottom.layout{
+	z-index: 800;
 	position: fixed; bottom:0;
 	bottom: 0;
 	left: var(--nav_size);
@@ -241,6 +263,18 @@ span.badge {
 .trait-table tr:last-child{
 	border-bottom: none; 
 }
+.button{
+width: var(--nav_size);
+height: var(--nav_size);
+background-size: 70%;
+background-repeat: no-repeat;
+background-position: center;
+cursor: pointer;
+}
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
 
 [wide]{
 	width: 100%;
@@ -248,23 +282,75 @@ span.badge {
  [no-wrap]{
  	white-space: nowrap;
  }
-
-	</style>
+/*CONTEXT MENU ITEMS*/
+.context-menu-list {
+    position: absolute;
+    display: inline-block;
+    min-width: 13em;
+    max-width: 26em;
+    padding: .25em 0;
+    margin: .3em;
+    font-family: inherit;
+    font-size: 12px;
+    list-style-type: none;
+    background: var(--card_header_background);
+    border: 1px solid #000;
+    box-shadow: 0 0px 10px rgba(0,0,0,1);
+}
+.context-menu-item{
+	background: none;
+}
+.context-menu-icon::before{
+	color: #000;
+	opacity: 0.8;
+}
+.context-menu-icon-new:before {
+  content: url({% static 'crowbar/CharacterList.svg' %}); }
+/*MODALS*/
+.modal{
+	position: fixed;
+	/*top: var(--nav_size);*/
+	/*bottom: var(--nav_size);*/
+	top: -100%;
+	bottom: 100%;
+	left: var(--nav_size);
+	right: var(--nav_size);
+	background: #111;
+	-moz-box-shadow:    inset 0 0 50px rgba(0,0,0,.5);
+	-webkit-box-shadow: inset 0 0 50px rgba(0,0,0,.5);
+	box-shadow:         inset 0 0 50px rgba(0,0,0,.5);
+	z-index: 500;
+	transition-timing-function: ease-in-out;
+	transition: top 1s, bottom 1s;
+	/*background-color: var(--card_content_background);*/
+	color: var(--card_content_color);
+}
+.modal.activated{
+	top: var(--nav_size);
+	bottom: var(--nav_size);
+}
+</style>
 </head>
-<body>
+<body id="{{instance.id}}">
 <div class="top layout"> </div>
-<div class="top logo"><span class="logo-text">CROWBAR</span><br><img src="{% static 'crowbar/Logo.svg' %}"> </div>
+<div class="top logo">
+	<!-- <img class="logo-background" src="{% static 'crowbar/TopBar.svg' %}"> -->
+	<span class="logo-text">CROWBAR</span><br>
+	<img class="logo-image" src="{% static 'crowbar/Logo.svg' %}">
+</div>
 <div class="right layout"> </div>
-<div class="left layout"> </div>
+<div class="left layout">
+	<div class="button" style="background-image: url('{% static 'crowbar/CharacterList.svg' %}')" title="B1"></div>
+</div>
 <div class="content layout">
 	<div class="content wrapper">
 		<div class="left column">
 		<div class="column wrapper">
 		{% include "crowbar/card-Character.html"%}
 		{% include "crowbar/card-Attributes.html"%}
-		{% include "crowbar/card-Trait.html" with title="Advantages" traits=instance.reladvantage.all %}
-		{% include "crowbar/card-Trait.html" with title="Disadvantages" traits=instance.reldisadvantage.all %}
-		{% include "crowbar/card-Skill.html" with title="Skills" skills=instance.relskill.all %}
+		{% include "crowbar/card-Advantage.html" %}
+		{% include "crowbar/card-Disadvantage.html" %}
+		{% include "crowbar/card-Skill.html" %}
 		</div>
 		</div>
 
@@ -276,9 +362,9 @@ span.badge {
         </div>
         <div class="right column">
         <div class="column wrapper">
-		{% include "crowbar/card-Melee.html" with title="Melee Weapons" possessions=instance.relpossession.all %}
-		{% include "crowbar/card-Range.html" with title="Ranged Weapons" possessions=instance.relpossession.all %}
-		{% include "crowbar/card-Possession.html" with title="Possessions" possessions=instance.relpossession.all %}
+		{% include "crowbar/card-Melee.html" %}
+		{% include "crowbar/card-Range.html" %}
+		{% include "crowbar/card-Possession.html" %}
         </div>
         </div>
 	</div>
@@ -291,5 +377,82 @@ span.badge {
       </table>
   </div>
 
+{% include "crowbar/modal-Advantage.html" %}
+{% include "crowbar/modal-Disadvantage.html" %}
+{% include "crowbar/modal-Skill.html" %}
+{% include "crowbar/modal-Possession.html" %}
 </body>
+<script type="text/javascript">
+	$("a.link").click(function(){
+	  	console.log("CLICK");
+		link = $(this).attr("link")
+	  	console.log(link);
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	console.log(result);
+			$(".center.column").find(".column.wrapper").html(result);
+		  })
+		  .fail(function(result){
+		  	$(".center.column").find(".column.wrapper").html('error');
+		  });
+	})
+
+	// $(".card").click(function(){
+	//   	console.log("CLICK");
+	// 	charid = $("body").attr("id")
+	// 	cardid = $(this).attr("id")
+	// 	link = "/rpg/card/"+charid+"/"+cardid
+	//   	console.log(link);
+	// 	$.ajax({
+	// 	  url: link,
+	// 	  cache: false
+	// 	})
+	// 	  .done(function( result ) {
+	// 	  	console.log("RESULT");
+	// 	  	console.log(result);
+	// 		$("#"+cardid).replaceWith(result);
+	// 	  })
+	// 	  .fail(function(result){
+	// 	  	console.log(result);
+	// 	  	$(".center.column").find(".column.wrapper").html('error');
+	// 	  });
+	// })
+
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	})
+	 $(function(){
+    $.contextMenu({
+        selector: '.card', 
+        build: function($trigger, e) {
+        	console.log($trigger)
+        	console.log(e)
+        	cardtype = $($trigger).attr("cardtype")
+            // this callback is executed every time the menu is to be shown
+            // its results are destroyed every time the menu is hidden
+            // e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
+            return {
+                callback: function(key, options) {
+                    // var m = "clicked: " + key;
+                    // window.console && console.log(m) || alert(m); 
+                },
+                items: {
+                    "edit": {
+                    	name: "Edit "+cardtype,
+                    	icon: "edit",
+                    	callback: function(itemKey, opt, e) {
+	                    $(".modal[modaltype="+cardtype+"]").addClass("activated");
+		                }
+                	},
+                }
+            };
+        }
+    });
+});
+</script>
 </html>

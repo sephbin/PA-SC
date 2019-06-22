@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.defaultfilters import slugify
+from django.apps import apps
 from django.contrib  import messages
 from .models import *
 import json
@@ -116,3 +117,18 @@ def map(request):
 	{"coords":[[100, -100], [100, -120], [80, -120], [80, -100]], "color": 'green', "stroke": False, "fillOpacity": 0.8, },
 	]}
 	return render(request, "home/rpgmacromap.html", context)
+
+def getPage(request,pageParent,pageSlug):
+	app_models = apps.get_app_config('home').get_models()
+	rPage = ""
+	for model in app_models:
+		obs = model.objects.all()
+		for ob in obs:
+			try:
+				pS = ob.slug
+				pP = ob.get_parent().slug
+				if pS == pageSlug and pP == pageParent:
+					rPage = ob
+			except: pass
+	html = rPage.serve(request).render()
+	return HttpResponse(html)

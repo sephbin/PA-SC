@@ -1,8 +1,8 @@
-<div class="card">
-	{% include "crowbar/cardHeader.html" with cardTitle=title %}
+<div class="card" id="card-Melee">
+	{% include "crowbar/cardHeader.html" with cardTitle="Melee" %}
 	<div class="card-content">
 		<table wide>
-		{% for p in possessions %}
+		{% for p in instance.relpossession.all %}
 		{% if p.possession.meleeStats %}
 		<tr>
 			<td colspan="99">

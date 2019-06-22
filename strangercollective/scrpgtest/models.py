@@ -33,6 +33,7 @@ class specialmodifier(models.Model):
 
 class advantage(models.Model):
     name = models.CharField(max_length = 120)
+    url = models.CharField(max_length = 999, null=True, blank=True)
     basecost = models.IntegerField()
     advchoices = (
         ('P', 'Physical'),
@@ -63,6 +64,7 @@ class advantage(models.Model):
 
 class disadvantage(models.Model):
     name = models.CharField(max_length = 120)
+    url = models.CharField(max_length = 999, null=True, blank=True)
     basecost = models.IntegerField()
     disadvchoices = (
         ('P', 'Physical'),
@@ -92,6 +94,7 @@ class disadvantage(models.Model):
 
 class skill(models.Model):
     skill_name = models.CharField(max_length=120)
+    url = models.CharField(max_length = 999, null=True, blank=True)
     skillchchoices = (
         ('E', 'Easy'),
         ('A', 'Average'),

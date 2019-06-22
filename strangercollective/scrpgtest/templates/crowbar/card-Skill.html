@@ -1,11 +1,11 @@
-<div class="card">
-	{% include "crowbar/cardHeader.html" with cardTitle=title %}
+<div class="card" id="card-Skill" cardtype="Skills">
+	{% include "crowbar/cardHeader.html" with cardTitle="Skills" %}
 	<div class="card-content">
 		<table>
-		{% for t in skills %}
+		{% for t in instance.relskill.all %}
 		<tr>
 			<td wide>
-				{{t.relative_value}} - {{t.skill.skill_name}} ({{t.skill_challenge}}) {{t.relative_skill}}
+				{{t.relative_value}} - <a class="link" link="{{t.skill.url}}">{{t.skill.skill_name}}</a> ({{t.skill_challenge}}) {{t.relative_skill}}
 			</td>
 			<td>
 				[{{t.cost}}]

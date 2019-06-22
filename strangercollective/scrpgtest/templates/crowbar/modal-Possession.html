@@ -1,6 +1,6 @@
-<div class="card" id="card-Possession" cardtype="Possessions">
-	{% include "crowbar/cardHeader.html" with cardTitle="Possessions" %}
-	<div class="card-content">
+<div class="modal" id="modal-Possession" modaltype="Possessions">
+	<div class="modal-content">
+		<a class="close-modal">CLOSE</a>
 		<table>
 		{% for t in instance.relpossession.all %}
 		<tr>

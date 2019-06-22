@@ -1,11 +1,11 @@
-<div class="card">
+<div class="card" id="card-Trait">
 	{% include "crowbar/cardHeader.html" with cardTitle=title %}
 	<div class="card-content">
 		<table>
 		{% for t in traits %}
 		<tr>
 			<td wide>
-				{{t.name}}
+				<a href="{{t.url}}">{{t.name}}</a>
 			</td>
 			<td>
 				[{{t.cost}}]

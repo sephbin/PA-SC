@@ -385,7 +385,7 @@ a {
 <script type="text/javascript">
 	$("a.link").click(function(){
 	  	console.log("CLICK");
-		link = $(this).attr("link")
+		link = "/getpage/"+$(this).attr("link")
 	  	console.log(link);
 		$.ajax({
 		  url: link,

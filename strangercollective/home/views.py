@@ -130,5 +130,8 @@ def getPage(request,pageParent,pageSlug):
 				if pS == pageSlug and pP == pageParent:
 					rPage = ob
 			except: pass
-	html = rPage.serve(request).render()
-	return HttpResponse(html)
+	# html = rPage.serve(request).render()
+	# print(dir(rPage.serve(request).render))
+	# print(rPage.serve(request).render.__doc__)
+	context = {"page": rPage}
+	return render(request, "home/advantage_page_simple.html", context)

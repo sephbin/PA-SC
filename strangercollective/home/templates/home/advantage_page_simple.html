@@ -1,0 +1,22 @@
+{% load wagtailcore_tags %}
+    <table>
+        <tr>
+            <td> <h1>{{ page.title }}</h1></td>
+            <td><h1>{{ page.points|richtext }}</h1></td>
+        </tr>
+        <tr><td colspan="2">
+    {% if page.exotic %} E {% endif %}
+    {% if page.physical %} P {% endif %}
+    <p>{{ page.body_progress | richtext }}</p>
+    
+
+    {% if page.special_limitations != "<p></p>" %}
+    <h2> Special Limitations </h2>
+    <p>{{ page.limits_dyn | richtext }}</p>
+    {% endif %}
+    {% if page.special_enhancements != "<p></p>" %}
+    <h2> Special Enhancements </h2>
+    <p>{{ page.enhance_dyn | richtext }}</p>
+    {% endif %}
+</td></tr>
+</table>

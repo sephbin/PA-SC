@@ -306,32 +306,11 @@ a {
 }
 .context-menu-icon-new:before {
   content: url({% static 'crowbar/CharacterList.svg' %}); }
-/*MODALS*/
-.modal{
-	position: fixed;
-	/*top: var(--nav_size);*/
-	/*bottom: var(--nav_size);*/
-	top: -100%;
-	bottom: 100%;
-	left: var(--nav_size);
-	right: var(--nav_size);
-	background: #111;
-	-moz-box-shadow:    inset 0 0 50px rgba(0,0,0,.5);
-	-webkit-box-shadow: inset 0 0 50px rgba(0,0,0,.5);
-	box-shadow:         inset 0 0 50px rgba(0,0,0,.5);
-	z-index: 500;
-	transition-timing-function: ease-in-out;
-	transition: top 1s, bottom 1s;
-	/*background-color: var(--card_content_background);*/
-	color: var(--card_content_color);
-}
-.modal.activated{
-	top: var(--nav_size);
-	bottom: var(--nav_size);
-}
+
+	{% include "crowbar/css-Modal.css"%}
 </style>
 </head>
-<body id="{{instance.id}}">
+<body charid="{{instance.id}}" campid="{{instance.campaign.id}}">
 <div class="top layout"> </div>
 <div class="top logo">
 	<!-- <img class="logo-background" src="{% static 'crowbar/TopBar.svg' %}"> -->
@@ -401,31 +380,24 @@ a {
 		  });
 	})
 
-	// $(".card").click(function(){
-	//   	console.log("CLICK");
-	// 	charid = $("body").attr("id")
-	// 	cardid = $(this).attr("id")
-	// 	link = "/rpg/card/"+charid+"/"+cardid
-	//   	console.log(link);
-	// 	$.ajax({
-	// 	  url: link,
-	// 	  cache: false
-	// 	})
-	// 	  .done(function( result ) {
-	// 	  	console.log("RESULT");
-	// 	  	console.log(result);
-	// 		$("#"+cardid).replaceWith(result);
-	// 	  })
-	// 	  .fail(function(result){
-	// 	  	console.log(result);
-	// 	  	$(".center.column").find(".column.wrapper").html('error');
-	// 	  });
-	// })
+	function getCard(cardid){
+		charid = $("body").attr("charid")
+		link = "/rpg/card/"+charid+"/"+cardid
+	  	console.log(link);
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+			$("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	}
 
-	$(".close-modal").click(function(){
-		console.log(this)
-		$(this).parents(".modal").removeClass("activated");
-	})
+
 	 $(function(){
     $.contextMenu({
         selector: '.card', 

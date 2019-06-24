@@ -13,7 +13,7 @@ app_name = 'scrpgtest'
 urlpatterns = [
 	path(r'character/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
-	path(r'api/newpos/<int:characterid>', views.newpos),
+	path(r'api/newpos/<int:characterid>/<int:possessionid>', views.newpos),
 	url(r'api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),

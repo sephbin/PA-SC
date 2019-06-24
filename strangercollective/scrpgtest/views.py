@@ -32,19 +32,26 @@ def csCard(request, characterid, cardid):
 	context = {"instance":instance }
 	return render(request, "crowbar/"+cardid+".html",context)
 
-def newpos(request, characterid):
-	print("NEWPOS")
-	try:
-		print(characterid)
-		instance = character.objects.get(id=characterid)
-		blankitem = possession.objects.get(possession_name="None")
-		q = rel_possession(ammount=1, character=instance, possession=blankitem)
+def newpos(request, characterid, possessionid):
+	instance = character.objects.get(id=characterid)
+	item = possession.objects.get(id=possessionid)
+	charpos = instance.relpossession.all()
+	new = True
+	for cp in charpos:
+		print(cp.possession)
+		print(item)
+		print(cp.possession == item)
+		if cp.possession == item:
+			cp.ammount += 1
+			cp.save()
+			new = False
+	if new:
+		q = rel_possession(ammount=1, character=instance, possession=item)
 		q.save()
-		serializer = CharacterSerializer(instance)
-		return JsonResponse(serializer.data)
-	except Exception as e:
-		print(e)
-		return JsonResponse({})
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	print(newinstance)
+	return render(request, "crowbar/modal-Possession.html", context)
 
 
 

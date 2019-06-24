@@ -14,6 +14,7 @@ urlpatterns = [
 	path(r'character/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
 	path(r'api/newpos/<int:characterid>/<int:possessionid>', views.newpos),
+	path(r'api/rempos/<int:characterid>/<int:possessionid>', views.rempos),
 	url(r'api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),

@@ -1,27 +1,41 @@
 <div class="modal {% if show %}activated{% endif %}" id="modal-Possession" modaltype="Possessions">
-	<a class="close-modal">CLOSE</a>
+	<div class="close-modal">X</div>
 	<div class="modal-content left">
 		<table>
-		{% for t in instance.relpossession.all %}
 		<tr>
+			<th colspan="2"></th>
+			<th tl-right>Wt</th>
+			<th tl-right>$</th>
+		</tr>
+		{% for t in instance.relpossession.all %}
+		{% if t.ammount > 0 %}
+		<tr id="{{t.possession.id}}">
 			<td no-wrap>{{t.ammount}} x </td>
 			<td wide>
 				{{t.possession.possession_name}}
 			</td>
-			<td>
-				{{t.weight}}
-			</td>
-			<td>
-				{{t.cost}}
-			</td>
+			<td tl-right> {{t.weight}} </td>
+			<td tl-right> {{t.cost}} </td>
+			<td class="delpos"> DEL </td>
 		</tr>
+		{% endif %}
 		{% endfor %}
+		<tr>
+			<th colspan="2" tl-right>Total</th>
+			<th tl-right>{{instance.possessionTotals.weight}}</th>
+			<th tl-right>{{instance.possessionTotals.cost}}</th>
+		</tr>
 		</table>
 	</div>
 	<div class="modal-content right">
 		<table>
+		<tr>
+			<th></th>
+			<th tl-right>Wt</th>
+			<th tl-right>$</th>
+		</tr>
 		{% for p in instance.campaign.possession.all %}
-				<tr class="newposlist" id="{{p.id}}">
+				<tr class="newposlist" id="{{p.id}}" ptr>
 					<td wide>{{p.possession_name}}</td>
 					<td>{{p.possession_weight}}</td>
 					<td>{{p.possession_cost}}</td>
@@ -38,6 +52,29 @@
 		charid = $("body").attr("charid")
 		possid = $(this).attr("id")
 		link = "/rpg/api/newpos/"+charid+"/"+possid
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	// console.log(result);
+		  	console.log($(this));
+		  	modal.replaceWith(result);
+		  	getCard("card-Possession");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+
+	$(".delpos").click(function(){
+		charid = $("body").attr("charid")
+		possid = $(this).parents("tr").attr("id")
+		link = "/rpg/api/rempos/"+charid+"/"+possid
 		modal = $(this).parents("div.modal")
 		$.ajax({
 		  url: link,

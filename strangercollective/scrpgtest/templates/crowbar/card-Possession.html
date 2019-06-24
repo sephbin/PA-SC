@@ -1,21 +1,28 @@
 <div class="card" id="card-Possession" cardtype="Possessions">
-	{% include "crowbar/cardHeader.html" with cardTitle="Possessions" %}
+	{% include "crowbar/cardHeader.html" with cardTitle="Possessions" extra="<th class='posval' tl-right>Wt</th><th class='posval' tl-right>$</th>" %}
 	<div class="card-content">
-		<table>
+		<table wide>
 		{% for t in instance.relpossession.all %}
+		{% if t.ammount > 0 %}
 		<tr>
-			<td no-wrap>{{t.ammount}} x </td>
-			<td wide>
+			<td thin no-wrap>{{t.ammount}} x </td>
+			<td mwide>
 				{{t.possession.possession_name}}
 			</td>
-			<td>
+			<td class='posval' tl-right>
 				{{t.weight}}
 			</td>
-			<td>
+			<td class='posval' tl-right>
 				{{t.cost}}
 			</td>
 		</tr>
+		{% endif %}
 		{% endfor %}
+		<tr>
+			<th colspan="2" tl-right>Total</th>
+			<th tl-right>{{instance.possessionTotals.weight}}</th>
+			<th tl-right>{{instance.possessionTotals.cost}}</th>
+		</tr>
 		</table>
 	</div>
 </div>

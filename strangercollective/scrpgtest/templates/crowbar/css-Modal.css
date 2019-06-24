@@ -41,8 +41,13 @@
 	padding-top: 3em;
 }
 .close-modal{
+	cursor: pointer;
 	position: absolute;
-	right: 0px
-	top: 0px;
+	right: 1em;
+	top: 1em;
 	z-index: 1000;
 }
+
+.delpos{
+	cursor: pointer;
+	}

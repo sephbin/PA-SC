@@ -230,7 +230,7 @@ span.badge {
 .card-header {
 	background-color: var(--card_header_background);
 	color: var(--card_header_colour);
-
+	padding-right: 1em;
 	font-weight: 700;
 }
 .card-header-table {
@@ -240,7 +240,7 @@ span.badge {
 .card-header-title{
 	font-size: 105%;
 	padding-left:.5em;
-	width: 100%;
+	max-width: 100%;
 }
 .card-header-cost{
 	padding-right:.5em;
@@ -276,12 +276,7 @@ a {
   text-decoration: inherit; /* no underline */
 }
 
-[wide]{
-	width: 100%;
-}
- [no-wrap]{
- 	white-space: nowrap;
- }
+
 /*CONTEXT MENU ITEMS*/
 .context-menu-list {
     position: absolute;
@@ -307,7 +302,12 @@ a {
 .context-menu-icon-new:before {
   content: url({% static 'crowbar/CharacterList.svg' %}); }
 
+  .posval{
+			width:2.5em;
+		}
+
 	{% include "crowbar/css-Modal.css"%}
+	{% include "crowbar/css-Flat.css"%}
 </style>
 </head>
 <body charid="{{instance.id}}" campid="{{instance.campaign.id}}">

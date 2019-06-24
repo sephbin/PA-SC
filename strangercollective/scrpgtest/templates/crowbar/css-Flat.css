@@ -1,0 +1,27 @@
+[mwide]{
+	max-width: 100%;
+}
+[wide]{
+	width: 100%;
+}
+
+[thin]{
+	width: 0;
+}
+
+[no-wrap]{
+	white-space: nowrap;
+}
+[tl-left]{
+	text-align: left;
+}
+[tl-right]{
+	text-align: right;
+}
+[ptr]{
+	cursor: pointer;
+	-webkit-user-select: none;  /* Chrome all / Safari all */
+	-moz-user-select: none;     /* Firefox all */
+	-ms-user-select: none;      /* IE 10+ */
+	user-select: none;
+}

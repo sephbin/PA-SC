@@ -38,9 +38,6 @@ def newpos(request, characterid, possessionid):
 	charpos = instance.relpossession.all()
 	new = True
 	for cp in charpos:
-		print(cp.possession)
-		print(item)
-		print(cp.possession == item)
 		if cp.possession == item:
 			cp.ammount += 1
 			cp.save()
@@ -50,7 +47,18 @@ def newpos(request, characterid, possessionid):
 		q.save()
 	newinstance = character.objects.get(id=characterid)
 	context = {"instance":newinstance, "show":True}
-	print(newinstance)
+	return render(request, "crowbar/modal-Possession.html", context)
+
+def rempos(request, characterid, possessionid):
+	instance = character.objects.get(id=characterid)
+	item = possession.objects.get(id=possessionid)
+	charpos = instance.relpossession.all()
+	for cp in charpos:
+		if cp.possession == item:
+			cp.ammount += -1
+			cp.save()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
 	return render(request, "crowbar/modal-Possession.html", context)
 
 

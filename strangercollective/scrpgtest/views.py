@@ -49,6 +49,35 @@ def newpos(request, characterid, possessionid):
 	context = {"instance":newinstance, "show":True}
 	return render(request, "crowbar/modal-Possession.html", context)
 
+
+def editskill(request, characterid, skillid, rank):
+	instance = rel_skill.objects.get(id=skillid)
+	instance.rank = int(rank)
+	instance.save()
+	newchar = character.objects.get(id=characterid)
+	context = {"instance":newchar, "show":True}
+	return render(request, "crowbar/modal-Skill.html", context)
+
+def remskill(request, characterid, skillid):
+	relskill = rel_skill.objects.get(id=skillid)
+	relskill.delete()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	return render(request, "crowbar/modal-Skill.html", context)
+
+def newskill(request, characterid, skillid):
+	instance = character.objects.get(id=characterid)
+	newskill = skill.objects.get(id=skillid)
+	new = rel_skill()
+	new.character = instance
+	new.skill = newskill
+	new.rank = 1
+	new.save()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	return render(request, "crowbar/modal-Skill.html", context)
+
+
 def rempos(request, characterid, possessionid):
 	instance = character.objects.get(id=characterid)
 	item = possession.objects.get(id=possessionid)
@@ -56,7 +85,10 @@ def rempos(request, characterid, possessionid):
 	for cp in charpos:
 		if cp.possession == item:
 			cp.ammount += -1
-			cp.save()
+			if cp.ammount == 0:
+				cp.delete()
+			else:
+				cp.save()
 	newinstance = character.objects.get(id=characterid)
 	context = {"instance":newinstance, "show":True}
 	return render(request, "crowbar/modal-Possession.html", context)

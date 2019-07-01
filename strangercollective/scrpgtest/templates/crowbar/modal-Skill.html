@@ -1,5 +1,115 @@
-<div class="modal" id="modal-Skill" modaltype="Skills">
-	<div class="modal-content">
-		<a class="close-modal">CLOSE</a>
+<div class="modal {% if show %}activated{% endif %}" id="modal-Skill" modaltype="Skills">
+	<div class="close-modal">X</div>
+	<div class="modal-content left">
+		<table>
+		{% for i in instance.relskill.all %}
+		<tr id="{{i.id}}">
+			<td wide>{{i.skill.skill_name}}</td>
+			<td><input id="{{i.id}}" style="width:4em;" class="skillrank" type="number" name="quantity" min="0" value="{{i.rank}}" autocomplete="off">
+			</td>
+			<td>({{i.skill_challenge}})</td>
+			<td>{{i.relative_skill}}</td>
+			<td>{{i.relative_value}}</td>
+			<td>[{{i.cost}}]</td>
+			<td class="delskill">DEL</td>
+		</tr>
+		{% endfor %}
+		</table>
 	</div>
+	<div class="modal-content right">
+		<table>
+		{% for i in instance.otherSkills %}
+		<tr id="{{i.id}}" >
+			<td class="newskill" wide>{{i.skill_name}}</td>
+			<td>{{i.skill_challenge}}</td>
+			<td>{{i.skill_attribute}}</td>
+		</tr>
+		{% endfor %}
+		</table>
+	</div>
+<script>
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	})
+	$("input.skillrank").change(function(){
+		charid = $("body").attr("charid")
+		skillid = $(this).attr("id")
+		rank = $(this).val()
+		// link = "/rpg/api/newpos/"+charid+"/"+possid
+		link = "/rpg/api/editskill/"+charid+"/"+skillid+"/"+rank
+		console.log(link)
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	modal.replaceWith(result);
+		  	getCard("card-Character");
+		  	getCard("card-Skill");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $("body").html(result.responseText);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+	$(".delskill").click(function(){
+		charid = $("body").attr("charid")
+		skillid = $(this).parents("tr").attr("id")
+		link = "/rpg/api/remskill/"+charid+"/"+skillid
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	// console.log(result);
+		  	console.log($(this));
+		  	modal.replaceWith(result);
+		  	getCard("card-Character");
+		  	getCard("card-Skill");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+	$(".newskill").click(function(){
+		charid = $("body").attr("charid")
+		skillid = $(this).parents("tr").attr("id")
+		console.log(charid,skillid)
+		link = "/rpg/api/newskill/"+charid+"/"+skillid
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	// console.log(result);
+		  	console.log($(this));
+		  	modal.replaceWith(result);
+		  	getCard("card-Character");
+		  	getCard("card-Skill");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	$("body").html(result.responseText);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+
+</script>
 </div>

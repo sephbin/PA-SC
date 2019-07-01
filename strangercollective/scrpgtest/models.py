@@ -93,6 +93,7 @@ class disadvantage(models.Model):
         return self.name
 
 class skill(models.Model):
+    campaign = models.ManyToManyField(campaign, related_name="skill")
     skill_name = models.CharField(max_length=120)
     url = models.CharField(max_length = 999, null=True, blank=True)
     skillchchoices = (
@@ -112,18 +113,29 @@ class skill(models.Model):
     skill_attribute = models.CharField(max_length=4, choices=skillatchoices, null=True, blank=True)
     skill_description = models.TextField(max_length = 9999, blank=True, null=True)
     skill_defaults = models.TextField(max_length = 9999, blank=True, null=True)
+    class Meta:
+        ordering = ['skill_name']
     def __str__(self):
         return self.skill_name
+
+class possession_category(models.Model):
+    possession_category_name = models.CharField(max_length=256)
+    def __str__(self):
+        return self.possession_category_name
+
 class possession(models.Model):
     campaign = models.ManyToManyField(campaign, related_name="possession")
     possession_name = models.CharField(max_length=120)
     possession_description = models.TextField(max_length = 9999, blank=True, null=True)
     possession_weight = models.IntegerField(default=0)
     possession_cost = models.IntegerField(default=0)
+    possession_category = models.ManyToManyField(possession_category, related_name="possession")
     ####WEAPONS ARMOURS ETC ####
     meleeStatsText = models.TextField(max_length = 9999, blank=True, null=True)
     rangeStatsText = models.TextField(max_length = 9999, blank=True, null=True)
     armourStatsText = models.TextField(max_length = 9999, blank=True, null=True)
+    class Meta:
+        ordering = ['possession_name']
     def __str__(self):
         return self.possession_name
     def meleeStats(self):
@@ -186,6 +198,15 @@ class character(models.Model):
         lookup = {"1":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"2":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"3":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"4":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"5":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"6":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"7":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"8":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"9":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":-1}},"10":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":0}},"11":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":1}},"12":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":2}},"13":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":-1}},"14":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":0}},"15":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":1}},"16":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":2}},"17":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":-1}},"18":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":0}},"19":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":1}},"20":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":2}}}
         damkey = str(self.st)
         return(lookup[damkey])
+    def otherSkills(self):
+        allSkills = self.campaign.skill.all()
+        allCharSkills = self.relskill.all()
+        allSkills = list(map(lambda x: x, allSkills))
+        allCharSkills = list(map(lambda x: x.skill, allCharSkills))
+        for cs in allCharSkills:
+            try:    allSkills.remove(cs)
+            except: pass
+        return(allSkills)
     def possessionTotals(self):
         cost = 0
         weight = 0
@@ -329,9 +350,11 @@ class rel_skill(models.Model):
     character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='relskill')
     skill =  models.ForeignKey(skill, on_delete=models.CASCADE, related_name='relskill')
     rank = models.IntegerField(null=True, blank=True,)
+    class Meta:
+        ordering = ['skill']
     def cost(self):
         if self.rank:
-            if self.rank < 3:
+            if self.rank <= 2:
                 return self.rank
             else:
                 return (self.rank-2)*4
@@ -343,7 +366,7 @@ class rel_skill(models.Model):
         val = 0
         if self.rank:
               val = self.rank
-        lookup = {"E":0,"A":-1,"H":-2,"VH":-3}
+        lookup = {"E":-1,"A":-2,"H":-3,"VH":-4}
         rel = val+lookup[self.skill.skill_challenge]
         atr = self.skill.skill_attribute
         operator = ""
@@ -352,13 +375,13 @@ class rel_skill(models.Model):
         if rel != 0:
             return atr.upper()+operator+str(rel)
         else:
-            return atr
+            return atr.upper()
     def relative_value(self):
         try:
             val = 0
             if self.rank:
                   val = self.rank
-            lookup = {"E":0,"A":-1,"H":-2,"VH":-3}
+            lookup = {"E":-1,"A":-2,"H":-3,"VH":-4}
             rel = val+lookup[self.skill.skill_challenge]
             atr = getattr(self.character,self.skill.skill_attribute)
             tef = 0

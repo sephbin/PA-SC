@@ -46,6 +46,9 @@ class characterModelAdmin(admin.ModelAdmin):
 admin.site.register(character, characterModelAdmin)
 
 class possessionModelAdmin(admin.ModelAdmin):
+	filter_horizontal = ('campaign','possession_category',) 
+
+class skillModelAdmin(admin.ModelAdmin):
 	filter_horizontal = ('campaign',) 
 
 
@@ -66,9 +69,11 @@ admin.site.register(rel_advantage,listAdmin)
 admin.site.register(advantage,advantageAdmin)
 admin.site.register(disadvantage,advantageAdmin)
 admin.site.register(modifier,listAdmin)
-admin.site.register(skill,listAdmin)
+admin.site.register(skill,skillModelAdmin)
 admin.site.register(language,listAdmin)
 admin.site.register(possession,possessionModelAdmin)
 admin.site.register(specialmodifier,listAdmin)
 admin.site.register(modPackage,modPackageAdmin)
 admin.site.register(rel_possession,listAdmin)
+admin.site.register(possession_category)
+admin.site.register(rel_skill)

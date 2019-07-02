@@ -226,7 +226,7 @@ class character(models.Model):
         "willCost":(self.will-self.iq)*5,
         "perCost":(self.per-self.iq)*5,
         "fpCost":(self.fp-self.ht)*3,
-        "bsCost":((self.bs*4)-(self.ht+self.dx))*5,
+        "bsCost":int(((self.bs*4)-(self.ht+self.dx))*5),
         "bmCost":((self.bm)-math.floor((self.ht+self.dx)/4))*5,
         }
         for a in attr:
@@ -238,10 +238,14 @@ class character(models.Model):
                     tally += t.cost()
                 except:
                     pass
-        return tally
+        costs = {
+        "total": tally,
+        "attributes": attr,
+        }
+        return costs
     def save(self, *args, **kwargs):
         super(character, self).save(*args, **kwargs)
-        payload = {'value1': self.firstname+" "+self.lastname+" ["+str(self.cost())+"]", 'value2': 'http://www.strangercollective.com/rpg/'+str(self.id)}
+        payload = {'value1': self.firstname+" "+self.lastname+" ["+str(self.cost()["total"])+"]", 'value2': 'http://www.strangercollective.com/rpg/'+str(self.id)}
         try:
             r = requests.post("https://maker.ifttt.com/trigger/crowbarcharacteredit/with/key/bhFn8UCEstaDR_dRNGLoBd", data=payload)
         except:

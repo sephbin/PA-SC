@@ -32,6 +32,14 @@ def csCard(request, characterid, cardid):
 	context = {"instance":instance }
 	return render(request, "crowbar/"+cardid+".html",context)
 
+def editattr(request, characterid, attrid, attrval):
+	instance = character.objects.get(id=characterid)
+	instance.__setattr__(attrid, float(attrval))
+	instance.save()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	return render(request, "crowbar/modal-Attributes.html", context)
+
 def newpos(request, characterid, possessionid):
 	instance = character.objects.get(id=characterid)
 	item = possession.objects.get(id=possessionid)

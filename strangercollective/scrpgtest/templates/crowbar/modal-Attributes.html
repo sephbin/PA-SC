@@ -1,0 +1,67 @@
+<div class="modal {% if show %}activated{% endif %}" id="modal-Attributes" modaltype="Attributes">
+	<div class="close-modal">X</div>
+	<div class="modal-content left">
+			<div class="card-content">
+			<table style="width:100%">
+			<tr style="height:2em, textAlign:center">
+			<td><b>ST</b></td> <td>		<input	class="attributerank"	id="st"		value="{{instance.st}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.stCost}}]</td>
+			<td><b>HP</b></td> <td>		<input	class="attributerank"	id="hp"		value="{{instance.hp}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.hpCost}}]</td>
+			<td><b>SM</b></td> <td>		<input	class="attributerank"	id="sm"		value="{{instance.sm}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.smCost}}]</td>
+			</tr>
+			<tr style="height:2em, textAlign:center">
+			<td><b>DX</b></td><td>		<input	class="attributerank"	id="dx"		value="{{instance.dx}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.dxCost}}]</td>
+			<td><b>Per</b></td><td>		<input	class="attributerank"	id="per"	value="{{instance.per}}"	type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.perCost}}]</td>
+			<td><b>BS</b></td><td>		<input	class="attributerank"	id="bs"		value="{{instance.bs}}"		type="number"	autocomplete="off" step="0.25" /></td><td>[{{instance.cost.attributes.bsCost}}]</td>
+			</tr>
+			<tr style="height:2em, textAlign:center">
+			<td><b>IQ</b></td><td>		<input	class="attributerank"	id="iq"		value="{{instance.iq}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.iqCost}}]</td>
+			<td><b>Will</b></td><td>	<input	class="attributerank"	id="will"	value="{{instance.will}}"	type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.willCost}}]</td>
+			<td><b>BM</b></td><td>		<input	class="attributerank"	id="bm"		value="{{instance.bm}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.bmCost}}]</td>
+			</tr>
+			<tr style="height:2em, textAlign:center">
+			<td><b>HT</b></td><td>		<input	class="attributerank"	id="ht"		value="{{instance.ht}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.htCost}}]</td>
+			<td><b>FP</b></td><td>		<input	class="attributerank"	id="fp"		value="{{instance.fp}}"		type="number"	autocomplete="off"/></td><td>[{{instance.cost.attributes.fpCost}}]</td>
+			</tr>
+			</table>
+			</div>
+	</div>
+	<div class="modal-content right">
+	</div>
+<script>
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	})
+	$("input.attributerank").change(function(){
+		charid = $("body").attr("charid")
+		attrid = $(this).attr("id")
+		rank = $(this).val()
+		// link = "/rpg/api/newpos/"+charid+"/"+possid
+		link = "/rpg/api/editattr/"+charid+"/"+attrid+"/"+rank
+		console.log(link)
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	modal.replaceWith(result);
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $("body").html(result.responseText);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  })
+		    .always(function() {
+		    getCard("card-Character");
+		  	getCard("card-Attributes");
+		  	getCard("card-Skill");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+		  });
+	});
+
+
+</script>
+</div>

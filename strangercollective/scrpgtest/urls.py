@@ -13,6 +13,7 @@ app_name = 'scrpgtest'
 urlpatterns = [
 	path(r'character/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
+	path(r'api/editattr/<int:characterid>/<str:attrid>/<str:attrval>', views.editattr),
 	path(r'api/newpos/<int:characterid>/<int:possessionid>', views.newpos),
 	path(r'api/rempos/<int:characterid>/<int:possessionid>', views.rempos),
 	path(r'api/editskill/<int:characterid>/<int:skillid>/<int:rank>', views.editskill),

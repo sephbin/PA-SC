@@ -2,20 +2,28 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 
-class modInline(admin.StackedInline):
-	model = modifier
+# class modInline(admin.StackedInline):
+	# model = modifier
 	# fields = ('name','description','modifier')
-	extra = 0 # how many rows to show
+	# extra = 0 # how many rows to show
 
 class advInline(admin.TabularInline):
 	model = rel_advantage
-	readonly_fields = ('cost','mods',)
-	fields = ('advantage','rank','cost','modifiers','mods')
+	readonly_fields = ('cost',
+		# 'mods',
+		)
+	fields = ('advantage','rank','cost',
+		# 'modifiers','mods'
+		)
 	extra = 0 # how many rows to show
 class disadvInline(admin.TabularInline):
 	model = rel_disadvantage
-	readonly_fields = ('cost','mods',)
-	fields = ('disadvantage','rank','cost','modifiers','mods')
+	readonly_fields = ('cost',
+		# 'mods',
+		)
+	fields = ('disadvantage','rank','cost',
+		# 'modifiers','mods'
+		)
 	extra = 0 # how many rows to 
 class skillInline(admin.TabularInline):
 	model = rel_skill
@@ -53,8 +61,8 @@ class skillModelAdmin(admin.ModelAdmin):
 
 
 class modPackageAdmin(admin.ModelAdmin):
-	inlines = (modInline,)
-	# pass
+	# inlines = (modInline,)
+	pass
 
 class listAdmin(admin.ModelAdmin):
 	pass

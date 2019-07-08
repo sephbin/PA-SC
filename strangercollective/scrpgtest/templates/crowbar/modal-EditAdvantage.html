@@ -1,0 +1,14 @@
+	<div class="close-modal">X</div>
+	<div class="modal-content left">
+		EDIT ADVANTAGE
+		{{instance.advantage.name}}
+		{{instance.cost}}
+	</div>
+	<div class="modal-content right">
+	</div>
+<script>
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	});
+</script>

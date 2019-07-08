@@ -1,0 +1,13 @@
+<div class="modal {% if show %}activated{% endif %}" id="modal-Temporary" modaltype="Temporary">
+	<div class="close-modal">X</div>
+	<div class="modal-content left">
+	</div>
+	<div class="modal-content right">
+	</div>
+<script>
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	});
+</script>
+</div>

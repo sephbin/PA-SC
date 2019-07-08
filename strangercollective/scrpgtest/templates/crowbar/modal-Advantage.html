@@ -1,5 +1,102 @@
-<div class="modal" id="modal-Advantage" modaltype="Advantages">
-	<div class="modal-content">
-		<a class="close-modal">CLOSE</a>
+<div class="modal {% if show %}activated{% endif %}" id="modal-Advantage" modaltype="Advantages">
+	<div class="close-modal">X</div>
+	<div class="modal-content left">
+		<table>
+	{% for t in instance.reladvantage.all %}
+	<tr id={{t.id}}>
+		<td wide>
+			<a class="link" link="{{t.advantage.url}}">{{t.name}}</a>
+		</td>
+		<td>
+			[{{t.cost}}]
+		</td>
+		<td class="ediadvantage">EDIT</td>
+		<td class="deladvantage">DEL</td>
+	</tr>
+	{% endfor %}
+	</table>
 	</div>
+	<div class="modal-content right">
+		<table>
+		{% for a in instance.campaign.advantage.all %}
+		<tr id="{{a.id}}" >
+			<td class="newadvantage" wide>{{a.name}}</td>
+		</tr>
+		{% endfor %}
+		</table>
+	</div>
+<script>
+	$(".close-modal").click(function(){
+		console.log(this)
+		$(this).parents(".modal").removeClass("activated");
+	})
+	$(".newadvantage").click(function(){
+		charid = $("body").attr("charid")
+		traitid = $(this).parents("tr").attr("id")
+		console.log(charid,traitid)
+		link = "/rpg/api/newadvantage/"+charid+"/"+traitid
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	// console.log(result);
+		  	console.log($(this));
+		  	modal.replaceWith(result);
+		  	getCard("card-Character");
+		  	getCard("card-Advantage");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	$("body").html(result.responseText);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+	$(".deladvantage").click(function(){
+		charid = $("body").attr("charid")
+		advid = $(this).parents("tr").attr("id")
+		link = "/rpg/api/remadvantage/"+charid+"/"+advid
+		modal = $(this).parents("div.modal")
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+		  	console.log("RESULT");
+		  	// console.log(result);
+		  	console.log($(this));
+		  	modal.replaceWith(result);
+		  	getCard("card-Character");
+		  	getCard("card-Advantage");
+		  	getCard("card-Melee");
+		  	getCard("card-Range");
+			// $("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+		  	console.log(result);
+		  	// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	});
+	$(".ediadvantage").click(function(){
+		charid = $("body").attr("charid")
+		advid = $(this).parents("tr").attr("id")
+		link = "/rpg/api/ediadvantagemodal/"+charid+"/"+advid
+		// modal = $(this).parents("div.modal")
+		$.ajax({url: link, cache: false })
+		.done(function(result){
+		$("#modal-Temporary").html(result)
+		$(".modal[modaltype=Temporary]").addClass("activated");
+		})
+		.fail(function(result){
+
+		})
+		.always(function(result){
+		});
+	});
+</script>
 </div>

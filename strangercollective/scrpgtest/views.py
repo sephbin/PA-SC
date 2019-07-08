@@ -85,6 +85,28 @@ def newskill(request, characterid, skillid):
 	context = {"instance":newinstance, "show":True}
 	return render(request, "crowbar/modal-Skill.html", context)
 
+def newadvantage(request, characterid, traitid):
+	instance = character.objects.get(id=characterid)
+	newadvantage = advantage.objects.get(id=traitid)
+	new = rel_advantage()
+	new.character = instance
+	new.advantage = newadvantage
+	new.save()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	return render(request, "crowbar/modal-Advantage.html", context)
+
+def remadvantage(request, characterid, traitid):
+	reladv = rel_advantage.objects.get(id=traitid)
+	reladv.delete()
+	newinstance = character.objects.get(id=characterid)
+	context = {"instance":newinstance, "show":True}
+	return render(request, "crowbar/modal-Advantage.html", context)
+
+def ediadvantagemodal(request, characterid, traitid):
+	reladv = rel_advantage.objects.get(id=traitid)
+	context = {"instance": reladv}
+	return render(request, "crowbar/modal-EditAdvantage.html", context)
 
 def rempos(request, characterid, possessionid):
 	instance = character.objects.get(id=characterid)

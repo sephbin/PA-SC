@@ -32,6 +32,7 @@ class specialmodifier(models.Model):
 
 
 class advantage(models.Model):
+    campaign = models.ManyToManyField(campaign, related_name="advantage")
     name = models.CharField(max_length = 120)
     url = models.CharField(max_length = 999, null=True, blank=True)
     basecost = models.IntegerField()
@@ -63,6 +64,7 @@ class advantage(models.Model):
         return self.name
 
 class disadvantage(models.Model):
+    campaign = models.ManyToManyField(campaign, related_name="disadvantage")
     name = models.CharField(max_length = 120)
     url = models.CharField(max_length = 999, null=True, blank=True)
     basecost = models.IntegerField()
@@ -255,7 +257,7 @@ class character(models.Model):
 class modPackage(models.Model):
     # relAdv = models.ForeignKey(rel_advantage, on_delete=models.CASCADE)
     # packageName = models.CharField(max_length = 120)
-    # modifiers = models.ForeignKey(modifier, on_delete=models.CASCADE,null=True,blank=True,)
+    modifiers = models.ManyToManyField("modifier", blank=True,)
     def __str__(self):
         mods = self.modifier_set.all()
         txt = []
@@ -265,7 +267,7 @@ class modPackage(models.Model):
         return txt
 
 class modifier(models.Model):
-    modPackage = models.ForeignKey(modPackage, on_delete=models.CASCADE)
+    # modPackage = models.ForeignKey(modPackage, on_delete=models.CASCADE)
     name = models.CharField(max_length = 120)
     description = models.CharField(max_length = 120)
     modifier = models.IntegerField()
@@ -275,11 +277,11 @@ class modifier(models.Model):
 class rel_advantage(models.Model):
     character = models.ForeignKey(character, on_delete=models.CASCADE, related_name='reladvantage')
     advantage = models.ForeignKey(advantage, on_delete=models.CASCADE, related_name='reladvantage')
-    modifiers = models.ForeignKey(modPackage, on_delete=models.CASCADE,null=True,blank=True,)
+    modifiers = models.ForeignKey(modPackage, on_delete=models.CASCADE, null=True, blank=True,)
     # modifiers = models.ManyToManyField(modifier, blank=True,)
     rank = models.IntegerField(null=True, blank=True,)
-    def mods(self):
-        return self.modifiers
+    # def mods(self):
+        # return self.modifiers
     def cost(self):
         cost = self.advantage.basecost
         if self.rank:
@@ -318,11 +320,11 @@ class rel_advantage(models.Model):
 class rel_disadvantage(models.Model):
     character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='reldisadvantage')
     disadvantage =  models.ForeignKey(disadvantage, on_delete=models.CASCADE, related_name='reldisadvantage')
-    modifiers = models.ForeignKey(modPackage, on_delete=models.CASCADE,null=True,blank=True,)
+    # modifiers = models.ForeignKey(modPackage, on_delete=models.CASCADE,null=True,blank=True,)
     # modifiers = models.ManyToManyField(modifier, blank=True,)
     rank = models.IntegerField(null=True, blank=True,)
-    def mods(self):
-        return self.modifiers
+    # def mods(self):
+        # return self.modifiers
     def cost(self):
         cost = self.disadvantage.basecost
         if self.rank:

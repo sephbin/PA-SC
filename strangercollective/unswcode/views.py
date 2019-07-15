@@ -34,7 +34,7 @@ def lecture2(request):
 @login_required(login_url="/sc/login/")
 def codeHome(request):
 	subs1 = submission.objects.filter(user=request.user, assignment="19CODE1240AS1")
-	subs2 = submission.objects.filter(user=request.user, assignment="19CODE1240AS1")
+	subs2 = submission.objects.filter(user=request.user, assignment="19CODE1240AS2")
 	context = {
 	"author":"Andrew Butler",
 	"user":request.user,

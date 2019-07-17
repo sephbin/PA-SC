@@ -32,3 +32,13 @@ def create_user_profile(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
 	instance.profile.save()
+
+class testresult(models.Model):
+	test = models.CharField(max_length=256)
+	identifier = models.CharField(max_length=256)
+	ip = models.CharField(max_length=256)
+	pcusername = models.CharField(max_length=256)
+	question = models.TextField(max_length=256)
+	notes = models.TextField(max_length=1000)
+	date = models.DateTimeField(auto_now=True)
+	score = models.IntegerField(default=0)

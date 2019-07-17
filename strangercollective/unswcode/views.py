@@ -1,10 +1,11 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.csrf import csrf_exempt
 # from .forms import PostForm
 from .models import *
 from django.contrib  import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-import json
+import json, sys, os
 # Create your views here.
 
 def teacher_check(user):
@@ -96,3 +97,47 @@ def marking(request, ass_no):
 			c.mark = {}
 	context = {"subs":cleanlist}
 	return render(request, ass_no+".html", context)
+
+
+@csrf_exempt
+def submit_test_question(request):
+	'''
+	test = models.CharField(max_length=256)
+	identifier = models.CharField(max_length=256)
+	question = models.TextField(max_length=256)
+	notes = models.TextField(max_length=1000)
+	date = models.DateTimeField(auto_now=True)
+	score = models.IntegerField(default=0)
+	'''
+	
+	jsob = {
+	"test": "Grasshopper Test v0.8",
+	"identifier": "Example",
+	"question": "Challenge 01",
+	"notes": "CORRECT",
+	"score": 1,
+	}
+	log = []
+	if request.method == "POST":
+		try:
+			data = request.POST["data"]
+			r = json.loads(data)
+			obj, created = testresult.objects.update_or_create(
+			test=r["test"],
+			identifier=r["identifier"],
+			ip=r["ip"],
+			pcusername=r["pcusername"],
+			question=r["question"],
+			defaults=r,
+			)
+
+
+			return JsonResponse({"created":created})
+		except Exception as e:
+			exc_type, exc_obj, exc_tb = sys.exc_info()
+			other = sys.exc_info()[0].__name__
+			fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+			errorType = str(exc_type)
+			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
+	else:
+		return JsonResponse(jsob)

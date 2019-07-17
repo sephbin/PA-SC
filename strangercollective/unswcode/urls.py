@@ -9,4 +9,5 @@ urlpatterns = [
     path(r'view/<int:ass_id>', views.viewmark),
     path(r'marking/<str:ass_no>', views.marking),
     path(r'submitPost/', views.submitPost),
+    path(r'submit_test_question/', views.submit_test_question),
 ]

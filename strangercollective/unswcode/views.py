@@ -76,7 +76,8 @@ def marking(request, ass_no):
 					try:
 						total += float(postData[s][m]['val'])*float(postData[s][m]['weight'])
 					except:
-						pass
+						try:	total += 100*int(m)
+						except: pass
 				postData[s]["total"] =  total
 				sub.mark = json.dumps(postData[s])
 				sub.save()

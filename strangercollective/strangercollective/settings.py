@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'api',
     'jorm',
     'maps',
+    'huginn',
 
 ]
 
@@ -162,7 +163,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(REPOSITORY_ROOT, 'media/')
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
+    'http://localhost:3000',
 )
 CORS_ALLOW_METHODS = (
     'GET',

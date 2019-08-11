@@ -1,4 +1,3 @@
-source virtualenvwrapper.sh
 workon DJANGO2
 git pull
 python manage.py makemigrations

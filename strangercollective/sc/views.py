@@ -43,4 +43,4 @@ def logout_view(request):
 
 def updatewebsite(request):
 	subprocess.call('/home/sephbin/PA-SC/strangercollective/auto.sh')
-		return HttpResponse("UPDATED")
+	return HttpResponse("UPDATED")

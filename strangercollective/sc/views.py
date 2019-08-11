@@ -40,3 +40,7 @@ def logout_view(request):
 	if request.method == "POST":
 		logout(request)
 		return HttpResponseRedirect("/")
+
+def updatewebsite(request):
+	subprocess.call('/home/sephbin/PA-SC/strangercollective/auto.sh')
+		return HttpResponse("UPDATED")

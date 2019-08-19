@@ -196,6 +196,8 @@ class character(models.Model):
 
     def __str__(self):
         return self.firstname+" "+self.lastname
+    def displayname(self):
+        return self.firstname+" "+self.lastname
     def damage(self):
         lookup = {"1":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"2":{"Thrust":{"die":1,"mod":-6},"Swing":{"die":1,"mod":-5}},"3":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"4":{"Thrust":{"die":1,"mod":-5},"Swing":{"die":1,"mod":-4}},"5":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"6":{"Thrust":{"die":1,"mod":-4},"Swing":{"die":1,"mod":-3}},"7":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"8":{"Thrust":{"die":1,"mod":-3},"Swing":{"die":1,"mod":-2}},"9":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":-1}},"10":{"Thrust":{"die":1,"mod":-2},"Swing":{"die":1,"mod":0}},"11":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":1}},"12":{"Thrust":{"die":1,"mod":-1},"Swing":{"die":1,"mod":2}},"13":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":-1}},"14":{"Thrust":{"die":1,"mod":0},"Swing":{"die":2,"mod":0}},"15":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":1}},"16":{"Thrust":{"die":1,"mod":1},"Swing":{"die":2,"mod":2}},"17":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":-1}},"18":{"Thrust":{"die":1,"mod":2},"Swing":{"die":3,"mod":0}},"19":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":1}},"20":{"Thrust":{"die":2,"mod":-1},"Swing":{"die":3,"mod":2}}}
         damkey = str(self.st)

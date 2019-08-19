@@ -61,7 +61,7 @@ def viewmark(request, ass_id):
 	sub = get_object_or_404(submission, id=ass_id)
 	return HttpResponse(sub.mark)	
 
-# @user_passes_test(teacher_check)
+@user_passes_test(teacher_check)
 def marking(request, ass_no):
 	if request.method == "POST":
 		postData = json.loads(request.POST["data"])

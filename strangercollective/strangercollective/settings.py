@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'jorm',
     'maps',
     'huginn',
+    'changeling',
 
 ]
 

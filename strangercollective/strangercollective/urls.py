@@ -41,6 +41,7 @@ urlpatterns = [
     path(r'api/', include('api.urls'),name='api'),
     path(r'maps/', include('maps.urls'),name='maps'),
     path(r'huginn/', include('huginn.urls'),name='huginn'),
+    path(r'changeling/', include('changeling.urls')),
     path(r'', include('home.urls'),name='home'),
     re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
     

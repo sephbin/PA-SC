@@ -3,35 +3,32 @@
 <html>
 <head>
 	<title></title>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-
-	<script src="{% static 'changeling/flipclock.js' %}"></script>
-	<link rel="stylesheet" href="{% static 'changeling/flipclock.css' %}" />
-	<!-- <link rel="stylesheet" href="{% static 'changeling/changes.css' %}" /> -->
 	<style type="text/css">
-.flip-clock-wrapper *{
-  /*position: relative;*/
-  /*float: left;*/
-  /*margin: 5px;*/
-  /*width: 60px;*/
-  /*height: 90px;*/
-  /*font-size: 200px !important;*/
-  /*font-weight: bold;*/
-  /*line-height: 87px;*/
-  /*border-radius: 6px;*/
-  /*background: #000;*/
-}
+		body{
+			background-color: #222;
+		}
 	</style>
+
 </head>
 <body>
-<div class="clock"></div>
-
-<script type="text/javascript">
-	var clock = $('.clock').FlipClock({
-		clockFace: 'TwelveHourClock',
-		showSeconds: false
-	});
-</script>
-
+<object data="{% static 'changeling/station-clock.svg' %}" type="image/svg+xml"
+        width="auto" height="900px">
+        <param name="dial"               value="din 41091.1"/>
+  <param name="hourHand"           value="swiss"/>
+  <param name="minuteHand"         value="german"/>
+  <param name="secondHand"         value="swiss"/>
+  <param name="minuteHandBehavior" value="stepping"/>
+  <param name="secondHandBehavior" value="stepping"/>
+  <param name="secondHandStopToGo" value="undefined"/>
+  <param name="secondHandStopTime" value="1.5"/>
+  <param name="backgroundColor"    value="rgba(0,0,0,0)"/>
+  <param name="dialColor"          value="rgb(150,150,150)"/>
+  <param name="hourHandColor"      value="rgb(255,255,255)"/>
+  <param name="minuteHandColor"    value="rgb(255,255,255)"/>
+  <param name="secondHandColor"    value="rgb(200,20,20)"/>
+  <param name="axisCoverColor"     value="rgb(20,20,20)"/>
+  <param name="axisCoverRadius"    value="0"/>
+  <param name="updateInterval"     value="50"/>
+</object>
 </body>
 </html>

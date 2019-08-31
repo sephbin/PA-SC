@@ -1,0 +1,103 @@
+{% extends 'code/base.html' %}
+
+{% block title %}CODE 1240|AS 2{% endblock %}
+{% block extranav %}
+<li><button id="submitmarks" class="btn orange">Submit Marks</button></li>
+{% endblock extranav%}
+{% block content %}
+<style type="text/css">
+	table > tbody > tr:nth-child(2n+1) {
+    background-color: rgba(242,242,242,0.1);
+</style>
+<div class="col s12 m6">
+		<div style="z-index:100; position: fixed; left:0; top:0; right:0;" class="card black">
+		<div class="card-content white-text">
+			Console: <span id="console"></span>
+		</div>
+		</div>
+      <div class="card black">
+        <div class="card-content white-text">
+	{% csrf_token %}
+	<table class="highlight">
+		<colgroup></colgroup>
+		<colgroup></colgroup>
+		<colgroup></colgroup>
+		<colgroup></colgroup>
+		<colgroup></colgroup>
+		<colgroup style="background-color:rgba(255,255,255,0.1)"></colgroup>
+		<colgroup style="background-color:rgba(255,255,255,0.1)"></colgroup>
+		<colgroup style="background-color:rgba(255,255,255,0.1)"></colgroup>
+		<colgroup></colgroup>
+		<colgroup style="background-color:rgba(255,0,0,0.1)"></colgroup>
+		<tr>
+			<th></th>
+			<th></th>
+			<th colspan="1" style="text-align: center;">AB Marking</th>
+			<th colspan="1" style="text-align: center;">GC Marking</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<tr>
+			<th>Date</th>
+			<th>Name</th>
+			<th style="text-align: center; width:100px;">AB</th>
+			<th style="text-align: center; width:100px;">GC</th>
+			<th style="text-align: center; width:50%;">Comment</th>
+			<th>Total</th>
+		</tr>
+	{% for s in subs %}
+		<tr id="{{s.id}}">
+			<td>{{s.date.date}}</td>
+			<td><a href="{{s.link}}" target="_app">{{s.user}}</a></td>
+			<td><input weight="0.17" value="{{s.mark.2.val}}" style="width:100%; color:white; border: none; background:none; text-align: center;" class="mark" id="1" type="int" name="mark" title="Does the Grasshopper script display improvement in computational design techniques?" placeholder="##"></td>
+			<td><input weight="0.15" value="{{s.mark.3.val}}" style="width:100%; color:white; border: none; background:none; text-align: center;" class="mark" id="2" type="int" name="mark" title="Is the Grasshopper script well commented?" placeholder="##"></td>
+			<td><textarea rows="5" cols="50" style="resize: none; width:100%; color:white; border: none; background:none; text-align: center;" class="comment" id="comment" title="Comments" placeholder="--">{{s.mark.comment.val}}</textarea></td>
+			<td>{{s.mark.total}}</td>
+		</tr>
+	{% endfor %}
+	</table>
+</div></div></div>
+<script type="text/javascript">
+	$("input").select(function(){
+		title = $(this).attr("title")
+		$("#console").html(title);
+	});
+	$("input").click(function(){
+		title = $(this).attr("title")
+		$("#console").html(title);
+	});
+	$("input, textarea").change(function(){
+
+		rows = $('tr')
+		data = {}
+		$.each(rows,function(i,o){
+			id = $(o).attr("id");
+			data[id] = {};
+			marks = $(o).find('input.mark');
+			$.each(marks,function(mi,mo){
+				markid = $(mo).attr("id");
+				markval = $(mo).val();
+				markweight = $(mo).attr("weight");
+				data[id][markid] = {'val':markval,'weight':markweight};
+			});
+			data[id]["comment"] = {'val':$(o).find('textarea.comment').val()};
+		});
+		console.log(data)
+		$.ajax({
+			method: "POST",
+			url: "",
+			data: {"data":JSON.stringify(data),"csrfmiddlewaretoken":$('input[name=csrfmiddlewaretoken]').val()},
+			success: function(response) {
+				console.log(response);
+			},
+			complete: function(response){
+				console.log(response);
+				console.log('FINISH SAVE');
+			}
+			})
+			.done(function() {
+			// location.reload();
+		});
+		});
+</script>
+{% endblock %}

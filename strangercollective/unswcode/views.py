@@ -36,11 +36,13 @@ def lecture2(request):
 def codeHome(request):
 	subs1 = submission.objects.filter(user=request.user, assignment="19CODE1240AS1")
 	subs2 = submission.objects.filter(user=request.user, assignment="19CODE1240AS2")
+	subs3 = submission.objects.filter(user=request.user, assignment="19CODE1240AS3")
 	context = {
 	"author":"Andrew Butler",
 	"user":request.user,
 	"AS1":subs1.last(),
 	"AS2":subs2.last(),
+	"AS3":subs3.last(),
 	}
 	return render(request, "codeHome.html",context)
 

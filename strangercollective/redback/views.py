@@ -16,3 +16,6 @@ def index(request, id):
 
 	return render(request, "redback-index.html", context)
 
+def three(request):
+	context = {}
+	return render(request, "redback/three-example.html", context)

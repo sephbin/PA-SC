@@ -15,11 +15,11 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="{% static 'lecture/reveal.css' %}">
-		<link rel="stylesheet" href="{% static 'lecture/black.css' %}" id="theme">
+		<link rel="stylesheet" href="{% static 'lecture/css/reveal.css' %}">
+		<link rel="stylesheet" href="{% static 'lecture/css/theme/black.css' %}" id="theme">
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -160,8 +160,8 @@
 
 		</div>
 
-		<script src="{% static 'lecture/head.min.js' %}"></script>
-		<script src="{% static 'lecture/reveal.js' %}"></script>
+		<!-- <script src="{% static 'lecture/head.min.js' %}"></script> -->
+		<script src="{% static 'lecture/js/reveal.js' %}"></script>
 
 		<script>
 
@@ -173,17 +173,6 @@
 				center: true,
 
 				transition: 'fade', // none/fade/slide/convex/concave/zoom
-
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/search/search.js', async: true },
-					{ src: 'plugin/zoom-js/zoom.js', async: true },
-					{ src: 'plugin/notes/notes.js', async: true }
-				]
 			});
 
 		</script>

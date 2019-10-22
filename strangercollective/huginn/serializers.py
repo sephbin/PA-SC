@@ -2,15 +2,15 @@ from .models import *
 from rest_framework import serializers
 
 class RecursiveField(serializers.Serializer):
-    def to_representation(self, value):
-        serializer = self.parent.parent.__class__(value, context=self.context)
-        return serializer.data
+	def to_representation(self, value):
+		serializer = self.parent.parent.__class__(value, context=self.context)
+		return serializer.data
 
 class RecursiveTestField(serializers.Serializer):
-    def to_representation(self, value):
-        print("RecursiveTestField")
-        serializer = globals()['ParameterObSerializer'](value, context=self.context)
-        return serializer.data
+	def to_representation(self, value):
+		print("RecursiveTestField")
+		serializer = globals()['ParameterObSerializer'](value, context=self.context)
+		return serializer.data
 
 class FunctionObSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -18,7 +18,7 @@ class FunctionObSerializer(serializers.ModelSerializer):
 		fields = ('__all__')
 
 class MapSerializer(serializers.ModelSerializer):
-	function = FunctionObSerializer(read_only=True)
+	# function = FunctionObSerializer(read_only=True)
 	object_from = RecursiveTestField(read_only=True)
 	class Meta:
 		model = parameterMapThrough
@@ -38,3 +38,14 @@ class ParameterObSerializer(serializers.ModelSerializer):
 	def get_maps(self, obj):
 		qset = obj.object_to
 		return [MapSerializer(m).data for m in qset]
+
+
+class ParameterObSerializer_CU(serializers.ModelSerializer):
+	class Meta:
+		model = parameterOb
+		exclude = ('sourceParameter','created_at')
+
+class ParameterMapSerializer_CU(serializers.ModelSerializer):
+	class Meta:
+		model = parameterMapThrough
+		exclude = ('created_at',)

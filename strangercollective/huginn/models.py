@@ -16,7 +16,7 @@ class parameterOb(models.Model):
 	parentIdentity		=	models.CharField(max_length=255)
 	parameterVal		=	models.CharField(max_length=255)
 	parameterType		=	models.CharField(max_length=200)
-	data_store			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
+	data_text			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
 	sourceParameter		=	models.ManyToManyField('self', through= 'parameterMapThrough', through_fields=('object_to', 'object_from'), symmetrical=False)
 	def __str__(self):
 		return self.parameterIdentity
@@ -27,7 +27,7 @@ class parameterMapThrough(models.Model):
 	object_to			= models.ForeignKey('parameterOb', on_delete=models.CASCADE, related_name='through_to')
 	# function			= models.ForeignKey('functionOb', on_delete=models.CASCADE, related_name='maps')
 	function			= models.CharField(max_length=255)
-	data_store			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
+	data_text			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
 
 	def __str__(self):
 		return self.object_from.parameterIdentity +" -> "+self.object_to.parameterIdentity

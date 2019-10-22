@@ -11,7 +11,7 @@ class functionOb(models.Model):
 	functionIdentity	=	models.CharField(max_length=255)
 
 class parameterOb(models.Model):
-	created_at			=	models.DateTimeField(auto_now=True)
+	param_created_at			=	models.DateTimeField(auto_now=True)
 	parameterIdentity	=	models.CharField(max_length=255, unique=True)
 	parentIdentity		=	models.CharField(max_length=255)
 	parameterVal		=	models.CharField(max_length=255)
@@ -22,7 +22,7 @@ class parameterOb(models.Model):
 		return self.parameterIdentity
 
 class parameterMapThrough(models.Model):
-	created_at			= models.DateTimeField(auto_now=True)
+	map_created_at			= models.DateTimeField(auto_now=True)
 	object_from			= models.ForeignKey('parameterOb', on_delete=models.CASCADE, related_name='through_from')
 	object_to			= models.ForeignKey('parameterOb', on_delete=models.CASCADE, related_name='through_to')
 	# function			= models.ForeignKey('functionOb', on_delete=models.CASCADE, related_name='maps')

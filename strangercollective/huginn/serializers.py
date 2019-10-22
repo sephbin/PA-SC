@@ -43,9 +43,9 @@ class ParameterObSerializer(serializers.ModelSerializer):
 class ParameterObSerializer_CU(serializers.ModelSerializer):
 	class Meta:
 		model = parameterOb
-		exclude = ('sourceParameter','created_at')
+		exclude = ('sourceParameter','param_created_at')
 
 class ParameterMapSerializer_CU(serializers.ModelSerializer):
 	class Meta:
 		model = parameterMapThrough
-		exclude = ('created_at',)
+		exclude = ('map_created_at',)

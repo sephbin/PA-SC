@@ -12,7 +12,7 @@ class functionOb(models.Model):
 
 class parameterOb(models.Model):
 	created_at			=	models.DateTimeField(auto_now=True)
-	parameterIdentity	=	models.CharField(max_length=9999, unique=True)
+	parameterIdentity	=	models.CharField(max_length=255, unique=True)
 	parentIdentity		=	models.CharField(max_length=9999)
 	parameterVal		=	models.CharField(max_length=9999)
 	parameterType		=	models.CharField(max_length=200)

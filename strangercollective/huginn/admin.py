@@ -5,10 +5,10 @@ class parameterOb_Admin(admin.ModelAdmin):
 	# readonly_fields = ('mapTree',)
 	# fields = ('name','json_text','data',)
 	# inlines = [item_objectInline,]
-	model = parameterOb
+	model = parameterObject
 
 # Register your models here.
 admin.site.register(family)
 admin.site.register(functionOb)
-admin.site.register(parameterOb, parameterOb_Admin)
-admin.site.register(parameterMapThrough)
+admin.site.register(parameterObject, parameterOb_Admin)
+admin.site.register(parameterMapThroughObject)

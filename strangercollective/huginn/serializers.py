@@ -21,7 +21,7 @@ class MapSerializer(serializers.ModelSerializer):
 	# function = FunctionObSerializer(read_only=True)
 	object_from = RecursiveTestField(read_only=True)
 	class Meta:
-		model = parameterMapThrough
+		model = parameterMapThroughObject
 		# fields = ('__all__')
 		exclude = ('id', 'object_to')
 
@@ -32,7 +32,7 @@ class ParameterObSerializer(serializers.ModelSerializer):
 	# function = RecursiveField(many=True, read_only=True)
 	# cost = serializers.IntegerField()
 	class Meta:
-		model = parameterOb
+		model = parameterObject
 		fields = ('__all__')
 
 	def get_maps(self, obj):
@@ -42,10 +42,10 @@ class ParameterObSerializer(serializers.ModelSerializer):
 
 class ParameterObSerializer_CU(serializers.ModelSerializer):
 	class Meta:
-		model = parameterOb
+		model = parameterObject
 		exclude = ('sourceParameter','param_created_at')
 
 class ParameterMapSerializer_CU(serializers.ModelSerializer):
 	class Meta:
-		model = parameterMapThrough
+		model = parameterMapThroughObject
 		exclude = ('map_created_at',)

@@ -37,7 +37,7 @@ def getPayload(request):
 	return d
 
 class ParameterViewSet(viewsets.ModelViewSet):
-    queryset = parameterOb.objects.all()
+    queryset = parameterObject.objects.all()
     serializer_class = ParameterObSerializer
 
 
@@ -73,10 +73,10 @@ def create_update_map(request):
 	log = []
 	if request.method == "POST":
 		payload = getPayload(request)
-		payload["object_from"] = get_object_or_404(parameterOb, parameterIdentity=payload["object_from"])
-		payload["object_to"] = get_object_or_404(parameterOb, parameterIdentity=payload["object_to"])
+		payload["object_from"] = get_object_or_404(parameterObject, parameterIdentity=payload["object_from"])
+		payload["object_to"] = get_object_or_404(parameterObject, parameterIdentity=payload["object_to"])
 
-		object, created = parameterMapThrough.objects.update_or_create(
+		object, created = parameterMapThroughObject.objects.update_or_create(
 			object_from = payload["object_from"], object_to = payload["object_to"], function = payload["function"], defaults = payload)
 		if created:
 			log.append("Created %s" %(str(object)))

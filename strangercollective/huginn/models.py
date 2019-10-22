@@ -8,13 +8,13 @@ class family(models.Model):
 		return self.name
 
 class functionOb(models.Model):
-	functionIdentity	=	models.CharField(max_length=9999)
+	functionIdentity	=	models.CharField(max_length=255)
 
 class parameterOb(models.Model):
 	created_at			=	models.DateTimeField(auto_now=True)
 	parameterIdentity	=	models.CharField(max_length=255, unique=True)
-	parentIdentity		=	models.CharField(max_length=9999)
-	parameterVal		=	models.CharField(max_length=9999)
+	parentIdentity		=	models.CharField(max_length=255)
+	parameterVal		=	models.CharField(max_length=255)
 	parameterType		=	models.CharField(max_length=200)
 	data_store			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
 	sourceParameter		=	models.ManyToManyField('self', through= 'parameterMapThrough', through_fields=('object_to', 'object_from'), symmetrical=False)
@@ -26,7 +26,7 @@ class parameterMapThrough(models.Model):
 	object_from			= models.ForeignKey('parameterOb', on_delete=models.CASCADE, related_name='through_from')
 	object_to			= models.ForeignKey('parameterOb', on_delete=models.CASCADE, related_name='through_to')
 	# function			= models.ForeignKey('functionOb', on_delete=models.CASCADE, related_name='maps')
-	function			= models.CharField(max_length=9999)
+	function			= models.CharField(max_length=255)
 	data_store			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
 
 	def __str__(self):

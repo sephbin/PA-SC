@@ -52,7 +52,7 @@ def create_update_parameter(request):
 	if request.method == "POST":
 		payload = getPayload(request)
 		try:
-			existing = get_object_or_404(parameterOb, parameterIdentity=payload["parameterIdentity"])
+			existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
 			serializer = ParameterObSerializer_CU(existing, data=payload)
 			log.append("try worked")
 		except Exception as e:

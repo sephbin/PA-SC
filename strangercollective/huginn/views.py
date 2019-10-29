@@ -58,6 +58,7 @@ def create_update_parameter(request):
 		except Exception as e:
 			log.append(str(e))
 			serializer = ParameterObSerializer_CU(data=payload)
+		log.append(serializer.is_valid())
 		if serializer.is_valid():
 			savedObject = serializer.save()
 			log.append("created or updated %s" %(str(savedObject)))

@@ -11,7 +11,11 @@ class testresultAdmind(admin.ModelAdmin):
 	list_filter = ("test",)
 	search_fields = ["identifier","pcusername","ip",]
 
+class testQuestionAdmin(admin.ModelAdmin):
+	list_display = ("questionName", "questionText", "questionHint", "_archjson",)
+	list_editable = ("_archjson",)
+
 admin.site.register(profile, ListAdmin)
 admin.site.register(submission, ListAdmin)
 admin.site.register(testresult, testresultAdmind)
-admin.site.register(testquestion)
+admin.site.register(testquestion, testQuestionAdmin)

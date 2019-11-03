@@ -43,3 +43,17 @@ class testresult(models.Model):
 	notes = models.TextField(max_length=1000)
 	date = models.DateTimeField(auto_now=True)
 	score = models.IntegerField(default=0)
+
+class testquestion(models.Model):
+	questionName = models.CharField(max_length=200, unique=True)
+	questionText = models.TextField(max_length=1024, null=True, blank=False)
+	questionHint = models.TextField(max_length=1024, null=True, blank=False)
+	_archjson = models.TextField(max_length=9999)
+
+	def __str__(self):
+		return self.questionName
+	def archjson(self):
+		try:
+			return json.loads(self._archjson)
+		except:
+			return {}

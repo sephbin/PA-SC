@@ -14,3 +14,4 @@ class testresultAdmind(admin.ModelAdmin):
 admin.site.register(profile, ListAdmin)
 admin.site.register(submission, ListAdmin)
 admin.site.register(testresult, testresultAdmind)
+admin.site.register(testquestion)

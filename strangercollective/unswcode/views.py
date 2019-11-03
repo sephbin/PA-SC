@@ -104,6 +104,21 @@ def marking(request, ass_no):
 	return render(request, ass_no+".html", context)
 
 
+def get_test_question(request, question):
+	try:
+		tq = get_object_or_404(testquestion, questionName = question)
+		outob = {
+		"questionName"	:	tq.questionName,
+		"questionText"	:	tq.questionText,
+		"questionHint"	:	tq.questionHint,
+		"archjson"		:	tq.archjson(),
+		}
+		return JsonResponse(outob)
+	except:
+		return JsonResponse({})
+
+
+
 @csrf_exempt
 def submit_test_question(request):
 	'''
@@ -127,7 +142,7 @@ def submit_test_question(request):
 		try:
 			data = request.POST["data"]
 			r = json.loads(data)
-			created = True
+			created = True	
 			try:
 				obj = testresult(**r).save()
 			except:

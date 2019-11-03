@@ -46,8 +46,8 @@ class testresult(models.Model):
 
 class testquestion(models.Model):
 	questionName = models.CharField(max_length=200, unique=True)
-	questionText = models.TextField(max_length=1024, null=True, blank=False)
-	questionHint = models.TextField(max_length=1024, null=True, blank=False)
+	questionText = models.TextField(max_length=1024, null=True, blank=True)
+	questionHint = models.TextField(max_length=1024, null=True, blank=True)
 	_archjson = models.TextField(max_length=9999)
 
 	def __str__(self):

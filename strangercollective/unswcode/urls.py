@@ -10,4 +10,5 @@ urlpatterns = [
     path(r'marking/<str:ass_no>', views.marking),
     path(r'submitPost/', views.submitPost),
     path(r'submit_test_question/', views.submit_test_question),
+    path(r'get_test_question/<str:question>', views.get_test_question),
 ]

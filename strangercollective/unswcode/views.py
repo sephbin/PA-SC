@@ -127,14 +127,8 @@ def submit_test_question(request):
 		try:
 			data = request.POST["data"]
 			r = json.loads(data)
-			obj, created = testresult.objects.update_or_create(
-			test=r["test"],
-			identifier=r["identifier"],
-			ip=r["ip"],
-			pcusername=r["pcusername"],
-			question=r["question"],
-			defaults=r,
-			)
+			try:
+				obj = testresult(**r).save()
 
 
 			return JsonResponse({"created":created})

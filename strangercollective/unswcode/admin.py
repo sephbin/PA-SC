@@ -8,7 +8,8 @@ class ListAdmin(admin.ModelAdmin):
 
 class testresultAdmind(admin.ModelAdmin):
 	list_display = ("test", "identifier", "question", "notes", "date", "score", "ip", "pcusername",)
-	list_filter = ("test","identifier",)
+	list_filter = ("test",)
+	search_fields = ["identifier","pcusername","ip",]
 
 admin.site.register(profile, ListAdmin)
 admin.site.register(submission, ListAdmin)

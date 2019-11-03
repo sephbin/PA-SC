@@ -127,9 +127,11 @@ def submit_test_question(request):
 		try:
 			data = request.POST["data"]
 			r = json.loads(data)
+			created = True
 			try:
 				obj = testresult(**r).save()
-
+			except:
+				created = False
 
 			return JsonResponse({"created":created})
 		except Exception as e:

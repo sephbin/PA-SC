@@ -34,6 +34,27 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
 	instance.profile.save()
 
+class test(models.Model):
+	enabled = models.BooleanField()
+	testName = models.CharField(max_length=256)
+	testPassword = models.CharField(max_length=256)
+	timeLimit = models.IntegerField()
+
+class testStart(models.Model):
+	identifier = models.CharField(max_length=256)
+	test = models.ForeignKey(test, on_delete=models.CASCADE)
+	endTime = models.DateTimeField(null=True, blank=True)
+
+	def save(self, *args, **kwargs):
+		try:
+			if not self.endTime:
+				import datetime
+				self.endTime = datetime.datetime.now()+datetime.timedelta(hours=self.test.timeLimit)
+		except:	pass
+		super(testStart, self).save(*args, **kwargs)
+
+
+
 class testresult(models.Model):
 	test = models.CharField(max_length=256)
 	identifier = models.CharField(max_length=256)

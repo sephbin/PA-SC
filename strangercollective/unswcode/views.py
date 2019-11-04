@@ -103,6 +103,25 @@ def marking(request, ass_no):
 	context = {"subs":cleanlist}
 	return render(request, ass_no+".html", context)
 
+def start_test(request, testid, idi, password):
+	log = []
+	try:
+		testOb = get_object_or_404(test, testName = testid)
+		log.append("/testOb")
+		if testOb.enabled and testOb.testPassword == password:
+			log.append("/if")
+			nutestStart, created = testStart.objects.update_or_create(
+				test = testOb,
+				identifier = idi,
+				)
+			log.append("/up_or_create")
+			return JsonResponse({"start":True,"message":"Test started, you have until %s to finish"%(str(nutestStart.endTime))})
+		else:
+			return JsonResponse({"start":False,"message":"Test is either not enabled or the password is incorrect"})
+
+	except Exception as e:
+		return JsonResponse({"start":False, "log":log,"message":str(e)})
+
 
 def get_test_question(request, question):
 	try:
@@ -135,7 +154,7 @@ def submit_test_question(request):
 	"identifier": "Example",
 	"question": "Challenge 01",
 	"notes": "CORRECT",
-	"score": 1,
+	"score": 2,
 	}
 	log = []
 	if request.method == "POST":

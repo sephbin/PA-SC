@@ -176,3 +176,13 @@ def submit_test_question(request):
 			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
 	else:
 		return JsonResponse(jsob)
+
+def submit_test_question(request):
+	log = []
+	try:
+		tres = testresult.objects.all()
+		for tr in tres:
+			log.append(tr.date)
+		return JsonResponse({"log":log})
+	except Exception as e:
+		return JsonResponse({"log":log, "error":str(e)})

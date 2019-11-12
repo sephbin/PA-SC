@@ -178,11 +178,16 @@ def submit_test_question(request):
 		return JsonResponse(jsob)
 
 def changemarks(request):
+	import datetime
 	log = []
+	cutoff = datetime.datetime(2019,11,5, 7)
 	try:
 		tres = testresult.objects.all()
 		for tr in tres:
-			log.append(tr.date)
+			if tr.date < cutoff:
+				tr.score = 2
+				tr.save()
+				log.append(tr.date)
 		return JsonResponse({"log":log})
 	except Exception as e:
 		return JsonResponse({"log":log, "error":str(e)})

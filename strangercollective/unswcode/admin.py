@@ -8,7 +8,7 @@ class ListAdmin(admin.ModelAdmin):
 
 class testresultAdmind(admin.ModelAdmin):
 	list_display = ("test", "identifier", "question", "notes", "date", "score", "ip", "pcusername",)
-	list_filter = ("test",)
+	list_filter = ("test","identifier",)
 	search_fields = ["identifier","pcusername","ip",'notes',]
 
 class testQuestionAdmin(admin.ModelAdmin):

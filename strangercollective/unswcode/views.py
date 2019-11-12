@@ -181,10 +181,11 @@ def changemarks(request):
 	import datetime
 	import pytz
 	log = []
-	utc=pytz.UTC
-	cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 	try:
+		utc=pytz.UTC
+		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 		tres = testresult.objects.all()
+		tres = [tres[0]]
 		for tr in tres:
 			if tr.date < cutoff:
 				tr.score = 1

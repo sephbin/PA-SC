@@ -187,7 +187,7 @@ def changemarks(request):
 		tres = testresult.objects.all()
 		for tr in tres:
 			if tr.date < cutoff:
-				tr.score = 2
+				tr.score = 1
 				tr.save()
 				log.append(tr.date)
 		return JsonResponse({"log":log})

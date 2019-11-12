@@ -12,4 +12,5 @@ urlpatterns = [
     path(r'start_test/<str:testid>/<str:idi>/<str:password>/', views.start_test),
     path(r'submit_test_question/', views.submit_test_question),
     path(r'get_test_question/<str:question>', views.get_test_question),
+    path(r'function/changemarks', views.changemarks),
 ]

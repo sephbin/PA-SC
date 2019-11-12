@@ -177,7 +177,7 @@ def submit_test_question(request):
 	else:
 		return JsonResponse(jsob)
 
-def submit_test_question(request):
+def changemarks(request):
 	log = []
 	try:
 		tres = testresult.objects.all()

@@ -179,8 +179,10 @@ def submit_test_question(request):
 
 def changemarks(request):
 	import datetime
+	import pytz
 	log = []
-	cutoff = datetime.datetime(2019,11,5, 7)
+	utc=pytz.UTC
+	cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 	try:
 		tres = testresult.objects.all()
 		for tr in tres:

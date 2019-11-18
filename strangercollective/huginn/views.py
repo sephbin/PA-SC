@@ -50,9 +50,9 @@ def familygetscript(request, familyname, scripttype = "gh"):
 def create_update_parameter(request):
 	log = []
 	if request.method == "POST":
-		payload = getPayload(request)
+		payloads = getPayload(request)
 		try:
-			for p in payload:
+			for payload in payloads:
 				try:
 					existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
 					serializer = ParameterObSerializer_CU(existing, data=payload)

@@ -21,23 +21,27 @@ def getPayload(request, log = []):
 			try:
 				d = json.loads(str(request.body, encoding='utf-8'))
 				log.append(str("getPayload try worked"))
-				log.append(str(d))
+				log.append(d)
 			except:
 				d = dict(request.POST)
 				log.append(str("getPayload except"))
-				log.append(str(d))
+				log.append(d)
 		if request.method == "DELETE":
 			try:	d = json.loads(str(request.body, encoding='utf-8'))
 			except: pass
 	try:
 		d = json.loads(d["data"][0])
+		log.append(str("strip data"))
+		log.append(d)
 	except: pass
 	try:
 		for i in d:
 			i = json.loads(i)
-	except: pass
+	except Exception as e:
+		log.append(str("convlist error"))
+		log.append(str(e))
 	log.append(str("getPayload"))
-	log.append(str(d))
+	log.append(d)
 	return d
 
 class ParameterViewSet(viewsets.ModelViewSet):

@@ -32,6 +32,10 @@ def getPayload(request):
 	try:
 		d = json.loads(d["data"][0])
 	except: pass
+	try:
+		for i in d:
+			i = json.loads(i)
+	except: pass
 	print("getPayload")
 	print(d)
 	return d

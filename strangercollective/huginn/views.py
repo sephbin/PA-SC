@@ -54,6 +54,7 @@ def create_update_parameter(request):
 		try:
 			for payload in payloads:
 				try:
+					log.append(payload)
 					existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
 					serializer = ParameterObSerializer_CU(existing, data=payload)
 					log.append("try worked")

@@ -52,20 +52,23 @@ def create_update_parameter(request):
 	if request.method == "POST":
 		payload = getPayload(request)
 		try:
-			existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
-			serializer = ParameterObSerializer_CU(existing, data=payload)
-			log.append("try worked")
+			for p in payload:
+				try:
+					existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
+					serializer = ParameterObSerializer_CU(existing, data=payload)
+					log.append("try worked")
+				except Exception as e:
+					log.append(str(e))
+					serializer = ParameterObSerializer_CU(data=payload)
+				log.append(serializer.is_valid())
+				if serializer.is_valid():
+					savedObject = serializer.save()
+					log.append("created or updated %s" %(str(savedObject)))
 		except Exception as e:
 			log.append(str(e))
-			serializer = ParameterObSerializer_CU(data=payload)
-		log.append(serializer.is_valid())
-		if serializer.is_valid():
-			savedObject = serializer.save()
-			log.append("created or updated %s" %(str(savedObject)))
 		return JsonResponse({
 			"log":log,
-			"isValid": serializer.is_valid() 		
-			})
+		})
 	else:
 		return HttpResponse("NOT POST")
 

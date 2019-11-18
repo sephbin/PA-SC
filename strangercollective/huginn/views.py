@@ -7,7 +7,7 @@ from rest_framework import viewsets
 from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-def getPayload(request, log = None):
+def getPayload(request, log = []):
 	import json
 	d = {}
 	try:
@@ -54,7 +54,7 @@ def familygetscript(request, familyname, scripttype = "gh"):
 def create_update_parameter(request):
 	log = []
 	if request.method == "POST":
-		payloads = getPayload(request)
+		payloads = getPayload(request, log)
 		try:
 			for payload in payloads:
 				try:
@@ -81,7 +81,7 @@ def create_update_parameter(request):
 def create_update_map(request):
 	log = []
 	if request.method == "POST":
-		payload = getPayload(request)
+		payload = getPayload(request, log)
 		payload["object_from"] = get_object_or_404(parameterObject, parameterIdentity=payload["object_from"])
 		payload["object_to"] = get_object_or_404(parameterObject, parameterIdentity=payload["object_to"])
 

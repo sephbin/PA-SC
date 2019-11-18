@@ -13,35 +13,39 @@ def getPayload(request, log = []):
 	try:
 		d = json.loads(str(request.body, encoding='utf-8'))
 	except Exception as e:
-		log.append(str(e))
+		# print(str(e))
 		if request.method == "GET":
 			try:	d = dict(request.GET)
 			except: pass
 		if request.method == "POST":
 			try:
 				d = json.loads(str(request.body, encoding='utf-8'))
-				log.append(str("getPayload try worked"))
-				log.append(d)
+				# print(str("getPayload try worked"))
+				# print(d)
 			except:
 				d = dict(request.POST)
-				log.append(str("getPayload except"))
-				log.append(d)
+				# print(str("getPayload except"))
+				# print(d)
 		if request.method == "DELETE":
 			try:	d = json.loads(str(request.body, encoding='utf-8'))
 			except: pass
 	try:
 		d = json.loads(d["data"][0])
-		log.append(str("strip data"))
-		log.append(d)
+		print(str("strip data"))
+		print(d)
 	except: pass
 	try:
 		for i in d:
-			i = json.loads(i)
+			dind = d.index(i)
+			d[dind] = json.loads(i)
+			print("i")
+			# print(i)
 	except Exception as e:
-		log.append(str("convlist error"))
-		log.append(str(e))
-	log.append(str("getPayload"))
-	log.append(d)
+		# print(str("convlist error"))
+		# print(str(e))
+		pass
+	# print(str("getPayload"))
+	print(d)
 	return d
 
 class ParameterViewSet(viewsets.ModelViewSet):
@@ -56,25 +60,33 @@ def familygetscript(request, familyname, scripttype = "gh"):
 
 @csrf_exempt
 def create_update_parameter(request):
+	import json
 	log = []
 	if request.method == "POST":
 		payloads = getPayload(request, log)
 		try:
 			for payload in payloads:
+				if type(payload["parameterVal"]) == type({}):
+					payload["parameterVal"] = json.dumps(payload["parameterVal"])
 				try:
-					log.append(payload)
+					# print(payload)
+					log.append("try")
 					existing = get_object_or_404(parameterObject, parameterIdentity=payload["parameterIdentity"])
 					serializer = ParameterObSerializer_CU(existing, data=payload)
 					log.append("try worked")
 				except Exception as e:
 					log.append(str(e))
 					serializer = ParameterObSerializer_CU(data=payload)
+					log.append("except worked")
 				log.append(serializer.is_valid())
 				if serializer.is_valid():
 					savedObject = serializer.save()
 					log.append("created or updated %s" %(str(savedObject)))
+				else:
+					log.append(serializer.errors)
 		except Exception as e:
 			log.append(str(e))
+			pass
 		return JsonResponse({
 			"log":log,
 		})
@@ -92,6 +104,7 @@ def create_update_map(request):
 		object, created = parameterMapThroughObject.objects.update_or_create(
 			object_from = payload["object_from"], object_to = payload["object_to"], function = payload["function"], defaults = payload)
 		if created:
+
 			log.append("Created %s" %(str(object)))
 		else:
 			log.append("Updated %s" %(str(object)))

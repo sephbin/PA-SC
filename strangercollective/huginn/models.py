@@ -14,9 +14,9 @@ class parameterObject(models.Model):
 	param_created_at			=	models.DateTimeField(auto_now=True)
 	parameterIdentity	=	models.CharField(max_length=255, unique=True)
 	parentIdentity		=	models.CharField(max_length=255)
-	parameterVal		=	models.CharField(max_length=255)
+	parameterVal		=	models.CharField(max_length=65535)
 	parameterType		=	models.CharField(max_length=200)
-	data_text			=	models.TextField(max_length=200, default="[]", blank=True, null=True)
+	data_text			=	models.TextField(max_length=65535, default="[]", blank=True, null=True)
 	sourceParameter		=	models.ManyToManyField('self', through= 'parameterMapThroughObject', through_fields=('object_to', 'object_from'), symmetrical=False)
 	def __str__(self):
 		return self.parameterIdentity

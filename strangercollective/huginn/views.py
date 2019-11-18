@@ -7,25 +7,25 @@ from rest_framework import viewsets
 from .serializers import *
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-def getPayload(request):
+def getPayload(request, log = None):
 	import json
 	d = {}
 	try:
 		d = json.loads(str(request.body, encoding='utf-8'))
 	except Exception as e:
-		print(e)
+		log.append(str(e))
 		if request.method == "GET":
 			try:	d = dict(request.GET)
 			except: pass
 		if request.method == "POST":
 			try:
 				d = json.loads(str(request.body, encoding='utf-8'))
-				print("getPayload try worked")
-				print(d)
+				log.append(str("getPayload try worked"))
+				log.append(str(d))
 			except:
 				d = dict(request.POST)
-				print("getPayload except")
-				print(d)
+				log.append(str("getPayload except"))
+				log.append(str(d))
 		if request.method == "DELETE":
 			try:	d = json.loads(str(request.body, encoding='utf-8'))
 			except: pass
@@ -36,8 +36,8 @@ def getPayload(request):
 		for i in d:
 			i = json.loads(i)
 	except: pass
-	print("getPayload")
-	print(d)
+	log.append(str("getPayload"))
+	log.append(str(d))
 	return d
 
 class ParameterViewSet(viewsets.ModelViewSet):

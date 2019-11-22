@@ -12,60 +12,72 @@ import sys, os
 class map(models.Model):
 	map_name = models.CharField(max_length=255, unique=True)
 	image = models.ImageField()
-	tfirst = models.ImageField(blank=True)
+	maxZoom = models.IntegerField(default=0)
 
 	def __str__(self):
 		return str(self.map_name)
 
-	def save(self):
+	def splitImage(self):
 		#Opening the uploaded image
+		delim = "/"
+		if os.name == 'nt':
+			delim = "\\"
+		print("delim",delim)
 		im = Image.open(self.image)
 		w, h = im.size
-		print(w,h)
+		print("wh:",w,h)
 
 
 		fullRes = w
 		if h > w: fullRes = h
 		maxdiv = math.ceil(fullRes/256)
-		print(maxdiv)
+		print("maxdiv:",maxdiv)
 		maxzoom = 0
 		dyndiv = 1
 		while dyndiv*2 < maxdiv:
 			dyndiv = 2 ** maxzoom
 			maxzoom += 1
-		print(maxzoom)
+		# maxzoom += 0
+		print("maxzoom:",maxzoom)
+		self.maxZoom = maxzoom
 		zooms = list(range(maxzoom+1))
 		basepath = settings.MEDIA_ROOT+"\\maps"
 		basepath = basepath.replace("/","")
 		mapPath = basepath+"\\%s"%(self.map_name)
+		print("mappath",mapPath)
 		try:					os.mkdir(mapPath)
 		except Exception as e:	print(e)
 		for z in zooms:
 			revzooms = zooms[::-1]
 			scale = revzooms[zooms.index(z)]
+			# scale += 0
+			print("Scale",scale)
 			zpath = mapPath+"\\%s"%(str(z))
+			# zpath = zpath.replace("\\",delim)
 			try:					os.mkdir(zpath)
 			except Exception as e:	print(e)
 			ylist = list(range(2**z))
 			print(ylist)
 			for y in ylist:
 				tilepath = zpath+"\\%s"%(str(y))
-				try:					  os.mkdir(tilepath)
+				try:					os.mkdir(tilepath)
 				except Exception as e:	print(e)
 				xlist = list(range(2**z))
 				for x in xlist:
-					pass
-					# print("!!!!----------------------------!!!!")
-					nw = math.ceil(w/(2**scale))
-					nh = math.ceil(h/(2**scale))
-					scaled_image =  im.resize((nw,nh), Image.ANTIALIAS)
-					path = tilepath+"\\%s.png" %(str(x))
+					zscale = 2**scale
+					print("zscale", zscale)
+					nw = math.ceil(w/zscale)
+					nh = math.ceil(h/zscale)
 					x0, x1 = (x*265)+x, ((x+1)*265)+x
 					y0, y1 = (y*265)+y, ((y+1)*265)+y
-					temp = scaled_image.crop((x0, y0, x1, y1)) #x0 y0 x1 y1
-					temp.save(path, format='PNG', quality=100)
-		# output.seek(0)
-		# setattr(self, 'tfirst', InMemoryUploadedFile(output,'ImageField', "%s.jpg" %self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None))
+					if x0 <= nw and y0 <= nh:
+						scaled_image =  im.resize((nw,nh), Image.ANTIALIAS)
+						path = tilepath+"\\%s.png" %(str(x))
+						temp = scaled_image.crop((x0, y0, x1, y1)) #x0 y0 x1 y1
+						temp.save(path, format='PNG', quality=100)
+
+	def save(self):
+		self.splitImage()
 
 		super(map,self).save()
 

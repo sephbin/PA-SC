@@ -41,7 +41,7 @@ class map(models.Model):
 		print("maxzoom:",maxzoom)
 		self.maxZoom = maxzoom
 		zooms = list(range(maxzoom+1))
-		basepath = settings.MEDIA_ROOT+"\\maps"
+		basepath = settings.MEDIA_ROOT+"maps"
 		# basepath = basepath.replace("/","")
 		mapPath = basepath+"\\%s"%(self.map_name)
 		print("mappath",mapPath)

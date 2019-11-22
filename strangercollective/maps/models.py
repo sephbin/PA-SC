@@ -42,10 +42,10 @@ class map(models.Model):
 		self.maxZoom = maxzoom
 		zooms = list(range(maxzoom+1))
 		basepath = settings.MEDIA_ROOT+"\\maps"
-		basepath = basepath.replace("/","")
+		# basepath = basepath.replace("/","")
 		mapPath = basepath+"\\%s"%(self.map_name)
 		print("mappath",mapPath)
-		try:					os.mkdir(mapPath)
+		try:					os.mkdir(mapPath.replace("\\",delim))
 		except Exception as e:	print(e)
 		for z in zooms:
 			revzooms = zooms[::-1]
@@ -53,14 +53,14 @@ class map(models.Model):
 			# scale += 0
 			print("Scale",scale)
 			zpath = mapPath+"\\%s"%(str(z))
-			# zpath = zpath.replace("\\",delim)
+			zpath = zpath.replace("\\",delim)
 			try:					os.mkdir(zpath)
 			except Exception as e:	print(e)
 			ylist = list(range(2**z))
 			print(ylist)
 			for y in ylist:
 				tilepath = zpath+"\\%s"%(str(y))
-				try:					os.mkdir(tilepath)
+				try:					os.mkdir(tilepath.replace("\\",delim))
 				except Exception as e:	print(e)
 				xlist = list(range(2**z))
 				for x in xlist:
@@ -74,7 +74,7 @@ class map(models.Model):
 						scaled_image =  im.resize((nw,nh), Image.ANTIALIAS)
 						path = tilepath+"\\%s.png" %(str(x))
 						temp = scaled_image.crop((x0, y0, x1, y1)) #x0 y0 x1 y1
-						temp.save(path, format='PNG', quality=100)
+						temp.save(path.replace("\\",delim), format='PNG', quality=100)
 
 	def save(self):
 		self.splitImage()

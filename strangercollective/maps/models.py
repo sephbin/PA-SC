@@ -45,7 +45,7 @@ class map(models.Model):
 		# basepath = basepath.replace("/","")
 		mapPath = basepath+"\\%s"%(self.map_name)
 		print("mappath",mapPath)
-		try:					os.mkdir(mapPath.replace("\\",delim))
+		try:					os.makedirs(mapPath.replace("\\",delim))
 		except Exception as e:	print(e)
 		for z in zooms:
 			revzooms = zooms[::-1]

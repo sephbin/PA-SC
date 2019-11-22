@@ -4,5 +4,6 @@ from .models import *
 
 class mapAdmin(admin.ModelAdmin):
 	readonly_fields = ("splitImage",)
+	fields = ('map_name', 'image', 'maxZoom', 'splitImage',)
 
 admin.site.register(map,mapAdmin)

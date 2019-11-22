@@ -3,7 +3,6 @@ from .models import *
 # Register your models here.
 
 class mapAdmin(admin.ModelAdmin):
-	pass
-
+	readonly_fields = ("splitImage",)
 
 admin.site.register(map,mapAdmin)

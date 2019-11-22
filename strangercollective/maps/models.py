@@ -18,6 +18,7 @@ class map(models.Model):
 		return str(self.map_name)
 
 	def splitImage(self):
+		log=[]
 		#Opening the uploaded image
 		delim = "/"
 		if os.name == 'nt':
@@ -46,7 +47,7 @@ class map(models.Model):
 		mapPath = basepath+"\\%s"%(self.map_name)
 		print("mappath",mapPath)
 		try:					os.makedirs(mapPath.replace("\\",delim))
-		except Exception as e:	print(e)
+		except Exception as e:	log.append(str(e))
 		for z in zooms:
 			revzooms = zooms[::-1]
 			scale = revzooms[zooms.index(z)]
@@ -55,13 +56,13 @@ class map(models.Model):
 			zpath = mapPath+"\\%s"%(str(z))
 			zpath = zpath.replace("\\",delim)
 			try:					os.mkdir(zpath)
-			except Exception as e:	print(e)
+			except Exception as e:	log.append(str(e))
 			ylist = list(range(2**z))
 			print(ylist)
 			for y in ylist:
 				tilepath = zpath+"\\%s"%(str(y))
 				try:					os.mkdir(tilepath.replace("\\",delim))
-				except Exception as e:	print(e)
+				except Exception as e:	log.append(str(e))
 				xlist = list(range(2**z))
 				for x in xlist:
 					zscale = 2**scale
@@ -75,6 +76,7 @@ class map(models.Model):
 						path = tilepath+"\\%s.png" %(str(x))
 						temp = scaled_image.crop((x0, y0, x1, y1)) #x0 y0 x1 y1
 						temp.save(path.replace("\\",delim), format='PNG', quality=100)
+		return log
 
 	def save(self):
 		self.splitImage()

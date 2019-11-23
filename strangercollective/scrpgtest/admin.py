@@ -69,6 +69,12 @@ class listAdmin(admin.ModelAdmin):
 
 class advantageAdmin(admin.ModelAdmin):
 	list_display = ("__str__","basecost")
+
+class mapAdmin(admin.ModelAdmin):
+	fields = ('map_name', 'campaign', 'image', 'maxZoom')
+
+
+admin.site.register(map,mapAdmin)
 admin.site.register(campaign,listAdmin)
 admin.site.register(characterType,listAdmin)
 admin.site.register(race,listAdmin)

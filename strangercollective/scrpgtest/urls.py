@@ -11,6 +11,7 @@ router.register(r'campaigns', views.CampaignViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [
+	path(r'maps/<str:whatmap>', views.mapview),
 	path(r'character/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
 	path(r'api/editattr/<int:characterid>/<str:attrid>/<str:attrval>', views.editattr),

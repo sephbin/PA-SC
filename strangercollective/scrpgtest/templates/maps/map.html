@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MAP</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
+   integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+   integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+   crossorigin=""></script>
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/leaflet-edgebuffer@1.0.6/src/leaflet.edgebuffer.min.js"></script>
+   <style type="text/css">
+  #mapid { position:absolute;
+    top:0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px; }
+    .leaflet-container {
+    background-color:rgba(0,0,0,1);
+}
+.body{
+  background-color: rgb(255, 255, 255) !important;
+}
+.my-div-icon{
+  color: lightgrey;
+  font-weight: bold;
+  overflow: hidden;
+  width: 26px !important;
+  height: 26px !important;
+}
+.content-inside{
+  background: #222;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: perspective(1px) translate(-50%, -50%);
+  transition: width .5s, height .5s, font-size .5s, border-radius .5s;
+  transition-timing-function: ease-out;
+}
+
+.z-3 > .content-inside{
+  width: 100%;
+  height:100%;
+  border-radius: 6px;
+}
+
+.z-2 > .content-inside{
+  font-size: 80%;
+  width: 70%;
+  height:70%;
+  border-radius: 3px;
+}
+
+.z-1 > .content-inside{
+  font-size: 0%;
+  width: 20%;
+  height:20%;
+  border-radius: 0px;
+}
+
+table.content{
+width:100%;
+height:100%;
+border-collapse: collapse;
+position: relative;
+transform: translate(30,30);
+}
+td.content{
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<div id="mapid"></div>
+</body>
+<script type="text/javascript">
+  var mymap = L.map('mapid', {crs: L.CRS.Simple,
+    // minZoom: -5 // CRS SIMPLE
+     }).setView([-91.625, 113.75],3);
+  L.tileLayer('/media/maps/{{whatmap}}/{z}/{y}/{x}.png', {
+    edgeBufferTiles: 2,
+    zoomSnap: 0.1,
+    zoomDelta: 0.1,
+    maxZoom: {{map.maxZoom}},
+    minZoom: 0,
+    accessToken: 'your.mapbox.access.token'
+}).addTo(mymap);
+
+// var greenIcon = L.icon({
+//     iconUrl: '/media/icons/cb.svg', 
+//     // shadowUrl: 'leaf-shadow.png',
+
+//     iconSize:     [38, 38], // size of the icon
+//     // shadowSize:   [50, 64], // size of the shadow
+//     iconAnchor:   [19, 19], // point of the icon which will correspond to marker's location
+//     // shadowAnchor: [4, 62],  // the same for the shadow
+//     // popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+// });
+
+
+// {% for p in polygons %}
+// var polygon = L.polygon(
+//   [{% for c in p.coords %}[{{c.1}},{{c.0}}],{% endfor %}],
+//   {color: '{{p.color}}', stroke: false, fillOpacity: {{p.fillOpacity}}}).addTo(mymap);
+// {% endfor %}
+{% for m in markers %}
+var nIcon = L.icon({
+    iconUrl: '/media/icons/{{m.icon}}', 
+    iconSize:     [38, 38], // size of the icon
+    iconAnchor:   [19, 19], // point of the icon which will correspond to marker's location
+});
+var newMark = L.latLng([ {{m.coords.1}} , {{m.coords.0}} ]);
+L.marker(newMark, {
+  icon: nIcon,
+  draggable:true, autoPan:true}).addTo(mymap).bindPopup('{{m.title}}').on('dragend', function(event) {
+    var mylatlng = [event.target._latlng.lng,event.target._latlng.lat];
+    console.log(mylatlng);
+  });
+
+{% endfor %}
+
+// var imageUrl = '/media/icons/fm.svg',
+//     imageBounds = [[-100, 100], [-50, 250]];
+// L.imageOverlay(imageUrl, imageBounds).addTo(mymap);
+
+
+mymap.addEventListener('mousemove', function(ev) {
+   lat = ev.latlng.lat;
+   lng = ev.latlng.lng;
+});
+
+
+
+
+
+// document.getElementById("mapid").addEventListener("contextmenu", function (event) {
+//     // Prevent the browser's context menu from appearing
+//     event.preventDefault();
+
+//     // Add marker
+//     // L.marker([lat, lng], ....).addTo(map);
+//     alert(lng + ', ' + lat);
+
+//     return false; // To disable default popup.
+// });
+
+// var shelter1 = L.marker([-100, 100], {icon: greenIcon});
+
+// var shelterMarkers = new L.FeatureGroup();
+
+// shelterMarkers.addLayer(shelter1);
+
+mymap.on('zoomend', function() {
+zoom = mymap.getZoom();
+markers = $('.my-div-icon');
+$.each(markers,function(i,o){
+  $(o).addClass( "z-"+zoom );
+  try {$(o).removeClass( "z-"+(zoom-1) )}
+  catch(err) {};
+  try {$(o).removeClass( "z-"+(zoom+1) )}
+  catch(err) {};
+});
+//     if (mymap.getZoom() <3){
+//             mymap.removeLayer(shelterMarkers);
+//     }
+//     else {
+//             mymap.addLayer(shelterMarkers);
+//         }
+});
+</script>
+</html>

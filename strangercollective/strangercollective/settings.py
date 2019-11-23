@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'modelcluster',
     'wagtail.api.v2',
+    'background_task',
 
     'articles',
     'tests',

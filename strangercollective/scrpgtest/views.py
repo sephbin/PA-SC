@@ -1,9 +1,12 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, render
-from .models import *
 from django.contrib  import messages
 from django.views.decorators.csrf import csrf_exempt
+
 from rest_framework import viewsets
+
+from .models import *
 from .serializers import *
 # Create your views here.
 class CharacterViewSet(viewsets.ModelViewSet):
@@ -123,8 +126,30 @@ def rempos(request, characterid, possessionid):
 	context = {"instance":newinstance, "show":True}
 	return render(request, "crowbar/modal-Possession.html", context)
 
+# def teacher_check(user):
+# 	groups = user.groups.all()
+# 	groups = list(map(lambda x: x.name, groups))
+# 	test = "UNSW_TEACHER" in groups
+# 	return test
 
+@login_required(login_url="/rpg/login/")
+# @user_passes_test(teacher_check)
+def mapview(request, whatmap):
+	
+	themap = get_object_or_404(map, id=whatmap)
+	accessList = []
+	gms = themap.campaign.gameMaster.all()
+	players = themap.campaign.player.all()
+	for g in gms:		accessList.append(g)
+	for g in players:	accessList.append(g)
 
+	user = request.user
+	if user in accessList: 
+		markers = []
+		context =	{"whatmap":whatmap, "markers": markers, "map":themap}
+		return render(request, "maps/map.html", context)
+	else:
+		return JsonResponse({"error":"No map found!"})
 # def home(request):
 # 	instance = get_object_or_404(character, id=1)
 # 	context = {"instance":instance}

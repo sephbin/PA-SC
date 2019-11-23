@@ -25,6 +25,51 @@ class CampaignViewSet(viewsets.ModelViewSet):
     queryset = campaign.objects.all()
     serializer_class = CampaignSerializer
 
+def login_view(request):
+	from django.contrib.auth import login
+	from django.contrib.auth.forms import AuthenticationForm
+	if request.method == "POST":
+		form = AuthenticationForm(data=request.POST)
+		if form.is_valid():
+			#log in the user
+			user = form.get_user()
+			login(request,user)
+			if 'next' in request.POST:
+				return HttpResponseRedirect(request.POST.get("next"))
+			else:
+				return HttpResponseRedirect("/")
+		else:
+			return HttpResponseRedirect(request.POST.get("next"))
+	if request.method == "GET":
+		form = AuthenticationForm()
+	context = {'form':form, 'next':request.GET.get('next')}
+	return render(request,"crowbar/login.html",context)
+
+def signup_view(request):
+	from django.contrib.auth import login
+	from django.contrib.auth.forms import UserCreationForm
+	if request.method == "POST":
+		form = UserCreationForm(request.POST)
+		if form.is_valid():
+			user = form.save()
+			# log the user in
+			login(request,user)
+			if 'next' in request.POST:
+				return HttpResponseRedirect(request.POST.get("next"))
+			else:
+				return HttpResponseRedirect("/")
+		else:
+			context = {"form":form, "error": form._errors}
+			return render(request, "crowbar/signup.html", context)
+
+	else:
+		form = UserCreationForm()
+	context = {"form":form}
+	return render(request, "crowbar/signup.html", context)
+def logout_view(request):
+	from django.contrib.auth import logout
+	logout(request)
+	return HttpResponseRedirect("/rpg")
 def charPage(request, characterid):
 	instance = get_object_or_404(character, id=characterid)
 	context = {"instance":instance }

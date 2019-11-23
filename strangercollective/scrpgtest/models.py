@@ -45,7 +45,7 @@ def splitImage(ob_id):
 	while dyndiv*2 < maxdiv:
 		dyndiv = 2 ** maxzoom
 		maxzoom += 1
-	extra = 1
+	extra = 0
 	maxzoom += extra
 	# print("maxzoom:",maxzoom)
 	zooms = list(range(maxzoom+1))

@@ -47,7 +47,6 @@ def splitImage(ob_id):
 		maxzoom += 1
 	# maxzoom += 0
 	# print("maxzoom:",maxzoom)
-	ob.maxZoom = maxzoom
 	zooms = list(range(maxzoom+1))
 	basepath = settings.MEDIA_ROOT+"maps"
 	# basepath = basepath.replace("/","")
@@ -569,8 +568,20 @@ class map(models.Model):
 
 	def __str__(self):
 		return str(self.map_name)
-
+	def defineMaxZoom(self):
+		im = Image.open(self.image)
+		w, h = im.size
+		fullRes = w
+		if h > w: fullRes = h
+		maxdiv = math.ceil(fullRes/256)
+		maxzoom = 0
+		dyndiv = 1
+		while dyndiv*2 < maxdiv:
+			dyndiv = 2 ** maxzoom
+			maxzoom += 1
+		self.maxZoom = maxzoom
 	def save(self):
+		self.defineMaxZoom()
 		super(map,self).save()
 
 	class Meta:

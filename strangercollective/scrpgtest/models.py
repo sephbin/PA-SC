@@ -55,6 +55,7 @@ def splitImage(ob_id):
 	try:                    os.makedirs(mapPath.replace("\\",delim))
 	except Exception as e:  log.append(str(e))
 	for z in zooms:
+		print("zooms: ",z)
 		revzooms = zooms[::-1]
 		scale = revzooms[zooms.index(z)]
 		scale += 1

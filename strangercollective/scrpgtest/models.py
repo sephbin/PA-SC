@@ -58,7 +58,7 @@ def splitImage(ob_id):
 		print("zooms: ",z)
 		revzooms = zooms[::-1]
 		scale = revzooms[zooms.index(z)]
-		scale += 1
+		scale += -1
 		# print("Scale",scale)
 		zpath = mapPath+"\\%s"%(str(z))
 		zpath = zpath.replace("\\",delim)

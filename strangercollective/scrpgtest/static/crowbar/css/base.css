@@ -14,13 +14,14 @@ body{
 }
 
 .top.layout{
-	z-index: 800;
+	z-index: 900;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	height: var(--nav_size);
 	background-color: var(--nav_background);
+	text-align: right;
 }
 
 .top.logo{
@@ -260,6 +261,7 @@ background-size: 70%;
 background-repeat: no-repeat;
 background-position: center;
 cursor: pointer;
+display: inline-block;
 }
 a {
   color: inherit; /* blue colors for links too */

@@ -27,22 +27,55 @@ class CampaignViewSet(viewsets.ModelViewSet):
 
 def login_view(request):
 	from django.contrib.auth import login
-	from django.contrib.auth.forms import AuthenticationForm
+	from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+	print("LOGIN_VIEW")
 	if request.method == "POST":
-		form = AuthenticationForm(data=request.POST)
-		if form.is_valid():
-			#log in the user
-			user = form.get_user()
-			login(request,user)
-			if 'next' in request.POST:
-				return HttpResponseRedirect(request.POST.get("next"))
+		print(request.POST)
+		try:
+			request.POST["password"]
+			form = AuthenticationForm(data=request.POST)
+			if form.is_valid():
+				#log in the user
+				user = form.get_user()
+				login(request,user)
+				if 'next' in request.POST:
+					return HttpResponseRedirect(request.POST.get("next"))
+				else:
+					return HttpResponseRedirect("/rpg")
 			else:
-				return HttpResponseRedirect("/")
-		else:
-			return HttpResponseRedirect(request.POST.get("next"))
+				signup_form = UserCreationForm()
+				context = {
+							'first':'login',
+							'login_form':form,
+							'signup_form':signup_form,
+							'next':request.GET.get('next')}
+				return render(request, "crowbar/login.html", context)
+		except:
+			form = UserCreationForm(request.POST)
+			if form.is_valid():
+				user = form.save()
+				# log the user in
+				login(request,user)
+				if 'next' in request.POST:
+					return HttpResponseRedirect(request.POST.get("next"))
+				else:
+					return HttpResponseRedirect("/rpg")
+			else:
+				login_form = AuthenticationForm()
+				context = {
+							'first':'signup',
+							'login_form':login_form,
+							'signup_form':form,
+							'next':request.GET.get('next')}
+				return render(request, "crowbar/login.html", context)
 	if request.method == "GET":
-		form = AuthenticationForm()
-	context = {'form':form, 'next':request.GET.get('next')}
+		login_form = AuthenticationForm()
+		signup_form = UserCreationForm()
+	context = {
+				'first':'login',
+				'login_form':login_form,
+				'signup_form':signup_form,
+				'next':request.GET.get('next')}
 	return render(request,"crowbar/login.html",context)
 
 def signup_view(request):
@@ -59,8 +92,11 @@ def signup_view(request):
 			else:
 				return HttpResponseRedirect("/")
 		else:
-			context = {"form":form, "error": form._errors}
-			return render(request, "crowbar/signup.html", context)
+			for e in form.errors:
+				print(type(e))
+				# print(dir(e))
+			context = {"form":form}
+			return render(request, "crowbar/login.html", context)
 
 	else:
 		form = UserCreationForm()
@@ -176,6 +212,78 @@ def rempos(request, characterid, possessionid):
 # 	groups = list(map(lambda x: x.name, groups))
 # 	test = "UNSW_TEACHER" in groups
 # 	return test
+@login_required(login_url="/rpg/login/")
+# @user_passes_test(teacher_check)
+def home(request):
+	context = {}
+	return render(request, "crowbar/home.html", context)
+
+@login_required(login_url="/rpg/login/")
+def createCampaign(request):
+	from django.forms import ModelForm
+	class CampaignForm(ModelForm):
+		class Meta:
+			model = campaign
+			# fields = '__all__'
+			fields = ['name']
+	if request.method == "POST":
+		form = CampaignForm(data=request.POST)
+		if form.is_valid():
+			nuob = form.save(commit=False)
+			nuob.gameMaster.add(request.user)
+			nuob.save()
+			form.save_m2m()
+			return HttpResponseRedirect("/rpg")
+		else:
+			return JsonResponse({
+			"valid":form.is_valid(),
+				})
+	if request.method == "GET": 
+		form = CampaignForm()
+		context = {"form":form,
+		"model": "Campaign",
+		}
+		return render(request, "crowbar/createForm.html", context)
+
+@login_required(login_url="/rpg/login/")
+def createMap(request, whatCampaign):
+	from django.forms import ModelForm
+	class MapForm(ModelForm):
+		class Meta:
+			model = map
+			# fields = '__all__'
+			fields = ['map_name', 'image',]
+	
+	thecampaign = get_object_or_404(campaign, id=int(whatCampaign))
+	accessList = []
+	gms = thecampaign.gameMaster.all()
+	for g in gms:		accessList.append(g)
+
+	user = request.user
+	if user in accessList:
+		if request.method == "POST":
+			form = MapForm(request.POST, request.FILES)
+			if form.is_valid():
+				nuob = form.save(commit=False)
+				nuob.campaign = thecampaign
+				nuob.save()
+				form.save_m2m()
+				return HttpResponseRedirect("/rpg")
+			else:
+				return JsonResponse({
+				"valid":form.is_valid(),
+				"errors": form.errors,
+					})
+		if request.method == "GET": 
+			form = MapForm()
+			context = {"form":form,
+			"model": "Map",
+			}
+			return render(request, "crowbar/createForm.html", context)
+	else:
+		return JsonResponse({
+				"error":"No campaign matches the given query.",
+					})
 
 @login_required(login_url="/rpg/login/")
 # @user_passes_test(teacher_check)

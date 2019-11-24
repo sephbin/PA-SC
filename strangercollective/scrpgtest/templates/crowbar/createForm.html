@@ -1,0 +1,40 @@
+{% extends 'crowbar/base.html' %}
+{% load static %}
+{% load widget_tweaks %}	
+{% block title %}Crowbar Create {{model}}{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'crowbar/css/accounts.css' %}">
+
+<div class="login-page">
+<div class="form">
+	<h2>Create {{model}}</h2>
+<!-- <h1>Log In</h1> -->
+{% if form.is_multipart %}
+<form id="site-form" class="site-form register-form" action="" enctype="multipart/form-data" method="post">
+{% else %}
+<form id="site-form" class="site-form register-form" action="" method="post">
+{% endif %}
+
+	{% for field in form.visible_fields %}
+		{% render_field field placeholder=field.label %}
+		{% if field.errors%}
+			{% for error in field.errors %}
+			{{ error }}<br>
+			{% endfor %}
+			<br>
+		{% endif %}
+	{% endfor %}
+	{% csrf_token %}
+	{% if form.non_field_errors %}
+		<ul>
+		{% for error in form.non_field_errors %}
+		<li>{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	<button>create</button>
+</form>
+
+</div>
+</div>
+{% endblock %}

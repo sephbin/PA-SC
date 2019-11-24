@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'modelcluster',
     'wagtail.api.v2',
     'background_task',
+    'widget_tweaks',
 
     'articles',
     'tests',

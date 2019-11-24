@@ -1,0 +1,24 @@
+<div class="card" id="card-campaign-{{campaign.id}}" cardtype="campaign">
+	{% include "crowbar/cardHeader.html" with cardTitle=campaign.name %}
+	<div class="card-content">
+		<h3>Maps</h3>
+		<table>
+			{% for map in campaign.maps.all %}
+
+		<tr>
+			<td wide>
+				<a href="/rpg/maps/{{map.id}}">{{map}}</a>
+			</td>
+		</tr>
+		{% empty %}
+		<tr>
+			<td wide>
+				None...
+			</td>
+		</tr>
+
+		{% endfor %}
+		</table>
+		<a href="/rpg/createmap/{{campaign.id}}">+ Create Map</a>
+	</div>
+</div>

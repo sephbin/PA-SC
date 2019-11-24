@@ -563,8 +563,8 @@ class rel_language(models.Model):
 
 
 class map(models.Model):
-	map_name = models.CharField(max_length=255, unique=True)
-	campaign = models.ForeignKey(campaign, on_delete=models.SET_NULL, null=True)
+	map_name = models.CharField(max_length=255)
+	campaign = models.ForeignKey(campaign, on_delete=models.SET_NULL, null=True, related_name="maps")
 	image = models.ImageField()
 	maxZoom = models.IntegerField(default=0)
 

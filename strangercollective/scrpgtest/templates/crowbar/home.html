@@ -1,0 +1,13 @@
+{% extends 'crowbar/base.html' %}
+{% load static %}
+{% block title %}Crowbar{% endblock %}
+{% block leftcolumn %}
+
+{% for campaign in user.scrpgtest_gamemaster.all %}
+	{% include "crowbar/card-Campaign.html" with campaign=campaign %}
+{% endfor %}
+
+{% include "crowbar/columnbutton.html" with text="+ Create Campaign" link="/rpg/createcampaign/" %}
+
+
+{% endblock %}

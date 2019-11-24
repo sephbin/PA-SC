@@ -1,24 +1,79 @@
 {% extends 'crowbar/base.html' %}
 {% load static %}
+{% load widget_tweaks %}	
 {% block title %}Crowbar Login{% endblock %}
+{% block leftbuttons %}{%  endblock %}
+{% block rightbuttons %}{%  endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'crowbar/css/accounts.css' %}">
 
-<div class="LISLO-dialogue">
-<h1>Log In</h1>
-<form id="site-form" class="site-form" action="/rpg/login/" method="post">
+<div class="login-page">
+<div class="form">
+<!-- <h1>Log In</h1> -->
+<form id="site-form" class="site-form register-form" action="/rpg/login/" method="post"
+{% if first == "login" %}
+style="display: none;"
+{% endif %}
+>
+	{% for field in signup_form.visible_fields %}
+		{% render_field field placeholder=field.label %}
+		{% if field.errors%}
+			{% for error in field.errors %}
+			{{ error }}<br>
+			{% endfor %}
+			<br>
+		{% endif %}
+	{% endfor %}
 	{% csrf_token %}
-	<table center>
-	<tr><th><label for="id_username">Username:</label></th><td><input class="full" type="text" name="username" maxlength="254" required autofocus id="id_username" /></td></tr>
-	<tr><th><label for="id_password">Password:</label></th><td><input class="full" type="password" name="password" id="id_password" required /></td></tr>
-	</table>
 	{% if request.GET.next %}
 	<input type="hidden" name="next" value= "{{request.GET.next}}">
 	{% endif %}
-	<br>
-	<a href="javascript:{}" onclick="document.getElementById('site-form').submit();">Log In</a>
+	{% if form.non_field_errors %}
+		<ul>
+		{% for error in form.non_field_errors %}
+		<li>{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	<button>create</button>
+	<p class="message">Already registered? <a href="#">Sign In</a></p>
 </form>
 
-<a href="/rpg/signup/{% if request.GET.next %}?next={{request.GET.next}}{% endif %}">Sign Up</a>
+
+<form id="site-form" class="site-form login-form" action="/rpg/login/" method="post"
+{% if first == "signup" %}
+style="display: none;"
+{% endif %}
+>
+	{% for field in login_form.visible_fields %}
+		{% render_field field placeholder=field.label %}
+		{% if field.errors%}
+			{% for error in field.errors %}
+			{{ error }}<br>
+			{% endfor %}
+			<br>
+		{% endif %}
+	{% endfor %}
+	{% csrf_token %}
+	{% if request.GET.next %}
+	<input type="hidden" name="next" value= "{{request.GET.next}}">
+	{% endif %}
+	{% if form.non_field_errors %}
+		<ul>
+		{% for error in form.non_field_errors %}
+		<li>{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	<button>login</button>
+	<p class="message">Not registered? <a href="#">Create an account</a></p>
+</form>
+
 </div>
+</div>
+<script type="text/javascript">
+	$('.message a').click(function(){
+	$('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+});
+</script>
 {% endblock %}

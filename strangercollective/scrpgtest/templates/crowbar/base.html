@@ -12,34 +12,49 @@
 	<link rel="stylesheet" href="{% static 'crowbar/css/css-Flat.css' %}">
 </head>
 <body charid="{{instance.id}}" campid="{{instance.campaign.id}}">
-<div class="top layout"> </div>
+<div class="top layout">
+		{% include "crowbar/accountButton.html"%}
+</div>
+{% block toplogo %}
 <div class="top logo">
 	<!-- <img class="logo-background" src="{% static 'crowbar/TopBar.svg' %}"> -->
 	<span class="logo-text">CROWBAR</span><br>
 	<img class="logo-image" src="{% static 'crowbar/Logo.svg' %}">
 </div>
-<div class="right layout"> </div>
+{%  endblock %}
+<div class="right layout">
+	{% block rightbuttons %}
+	{%  endblock %}
+</div>
 <div class="left layout">
+	{% block leftbuttons %}
 	<div class="button" style="background-image: url('{% static 'crowbar/CharacterList.svg' %}')" title="B1"></div>
+	{%  endblock %}
 </div>
 <div class="content layout">
 	<div class="content wrapper">
 		{% block content %}
 		<div class="left column">
 		<div class="column wrapper">
+		{% block leftcolumn %}
 		<!-- {% include "crowbar/card-Character.html"%} -->
+		{% endblock %}
 		</div>
 		</div>
 
         <div class="center column">
         <div class="column wrapper">
+		{% block centercolumn %}
         	<table wide>
         	</table>
+		{% endblock %}
         </div>
         </div>
         <div class="right column">
         <div class="column wrapper">
+		{% block rightcolumn %}
 		<!-- {% include "crowbar/card-Melee.html" %} -->
+		{% endblock %}
         </div>
 		{% endblock %}
         </div>

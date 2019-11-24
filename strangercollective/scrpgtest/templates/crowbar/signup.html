@@ -1,5 +1,6 @@
 {% extends 'crowbar/base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 {% block title %}Crowbar Signup{% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'crowbar/css/accounts.css' %}">
@@ -9,29 +10,37 @@
 <form id="site-form" class="site-form" action="/rpg/signup/" method="post">
 {% csrf_token %}
 <table center>
-<tr>
-	<th right>Username:</th>
-	<td> <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username"> </td>
-	<!-- <td> <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span> </td> -->
-</tr>
-<tr>
-	<th right>Password:</th>
-	<td> <input type="password" name="password1" required="" id="id_password1"> </td>
-<!-- <td> <span class="helptext"><ul><li>Your password can't be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can't be a commonly used password.</li><li>Your password can't be entirely numeric.</li></ul></span> </td> -->
-</tr>
-<tr>
-	<th right>Confirmation:</th>
-	<td> <input type="password" name="password2" required="" id="id_password2"> </td>
-<!-- <td> <span class="helptext">Enter the same password as before, for verification.</span> </td> -->
-</tr>
-	{% if error %}
-	<tr>
-		<td colspan="99">
-			{{error}}
-		</td>
-	</tr>
-	{% endif %}
+	{% for field in form.visible_fields %}
+      <tr>
+        <td>
+          <!-- {{ field }} -->
+          {% render_field field placeholder=field.label %}
+          <!-- {{ field.help_text }} -->
+        </td>
+      </tr>
+		{% if field.errors%}
+			<tr>
+			<td>
+			{% for error in field.errors %}
+			{{ error }}<br>
+			{% endfor %}
+			</td>
+			</tr>
+		{% endif %}
+    {% endfor %}
 </table>
+
+
+
+
+
+{% if form.non_field_errors %}
+    <ul>
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 	
 	{% if request.GET.next %}
 	<input type="hidden" name="next" value= "{{request.GET.next}}">

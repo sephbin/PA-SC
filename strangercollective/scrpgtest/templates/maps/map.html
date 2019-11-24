@@ -1,7 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>MAP</title>
+{% extends 'crowbar/base.html' %}
+{% load static %}
+{% load widget_tweaks %}  
+{% block title %}Crowbar | {% endblock %}
+{% block toplogo %}{%  endblock %}
+{% block content %}
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
    integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
    crossorigin=""/>
@@ -18,9 +21,6 @@
     right: 0px; }
     .leaflet-container {
     background-color:rgba(0,0,0,1);
-}
-.body{
-  background-color: rgb(255, 255, 255) !important;
 }
 .my-div-icon{
   color: lightgrey;
@@ -59,25 +59,12 @@
   border-radius: 0px;
 }
 
-table.content{
-width:100%;
-height:100%;
-border-collapse: collapse;
-position: relative;
-transform: translate(30,30);
-}
-td.content{
-  text-align: center;
-}
 </style>
-</head>
-<body>
 <div id="mapid"></div>
-</body>
 <script type="text/javascript">
   var mymap = L.map('mapid', {crs: L.CRS.Simple,
     // minZoom: -5 // CRS SIMPLE
-     }).setView([-91.625, 113.75],3);
+     }).setView([0, 0],0);
   L.tileLayer('/media/maps/{{whatmap}}/{z}/{y}/{x}.png', {
     edgeBufferTiles: 2,
     zoomSnap: 0.1,
@@ -169,4 +156,4 @@ $.each(markers,function(i,o){
 //         }
 });
 </script>
-</html>
+{% endblock %}

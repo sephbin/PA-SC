@@ -11,10 +11,13 @@ router.register(r'campaigns', views.CampaignViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [
+	path(r'', views.home),
 	path('signup/', views.signup_view, name='rpg_signup'),
     path('login/', views.login_view, name='rpg_login'),
     path('logout/', views.logout_view, name='rpg_logout'),
 	path(r'maps/<str:whatmap>', views.mapview),
+	path(r'createcampaign/', views.createCampaign),
+	path(r'createmap/<str:whatCampaign>', views.createMap),
 	path(r'character/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
 	path(r'api/editattr/<int:characterid>/<str:attrid>/<str:attrval>', views.editattr),

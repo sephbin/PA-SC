@@ -565,7 +565,8 @@ class rel_language(models.Model):
 class map(models.Model):
 	map_name = models.CharField(max_length=255)
 	campaign = models.ForeignKey(campaign, on_delete=models.SET_NULL, null=True, related_name="maps")
-	image = models.ImageField()
+	externalHost = models.CharField(max_length=2000, blank=True, null=True)
+	image = models.ImageField(blank=True, null=True)
 	maxZoom = models.IntegerField(default=0)
 
 	def __str__(self):
@@ -583,7 +584,7 @@ class map(models.Model):
 			maxzoom += 1
 		self.maxZoom = maxzoom+1
 	def save(self):
-		self.defineMaxZoom()
+		# self.defineMaxZoom()
 		super(map,self).save()
 
 	class Meta:

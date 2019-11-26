@@ -230,9 +230,9 @@ def createCampaign(request):
 		form = CampaignForm(data=request.POST)
 		if form.is_valid():
 			nuob = form.save(commit=False)
-			nuob.gameMaster.add(request.user)
 			nuob.save()
 			form.save_m2m()
+			nuob.gameMaster.add(request.user)
 			return HttpResponseRedirect("/rpg")
 		else:
 			return JsonResponse({
@@ -248,11 +248,18 @@ def createCampaign(request):
 @login_required(login_url="/rpg/login/")
 def createMap(request, whatCampaign):
 	from django.forms import ModelForm
-	class MapForm(ModelForm):
-		class Meta:
-			model = map
-			# fields = '__all__'
-			fields = ['map_name', 'image',]
+	if request.user.username != "sephbin":
+		class MapForm(ModelForm):
+			class Meta:
+				model = map
+				# fields = '__all__'
+				fields = ['map_name', 'externalHost',]
+	else:
+		class MapForm(ModelForm):
+			class Meta:
+				model = map
+				# fields = '__all__'
+				fields = ['map_name', 'externalHost', 'image', 'maxZoom']
 	
 	thecampaign = get_object_or_404(campaign, id=int(whatCampaign))
 	accessList = []
@@ -303,6 +310,51 @@ def mapview(request, whatmap):
 		return render(request, "maps/map.html", context)
 	else:
 		return JsonResponse({"error":"No map found!"})
+
+def externaltile(request,mapid,Z,Y,X):
+	import math
+	log = []
+	themap = get_object_or_404(map, id=mapid)
+	murl = themap.externalHost
+	murlid = murl.split("/")[-1]
+	turl = "http://tile%s.gigapan.org/gigapans0/%s/tiles/" %(murlid[:3],murlid)
+	def gpntile(pos, lZ):
+		z1 = 0.5
+		tA = pos * z1
+		t0 = math.floor(tA)
+		t1 = (tA-t0)*2
+		# log.append(Z)
+		first = []
+		# log.append({"pos":pos, "z1":z1, "tA":tA, "t0":t0, "t1":t1, })
+		if lZ > 0:
+			first = gpntile(t0, lZ-1)
+		# log.append([z1,tA,t0,t1])
+		out = first+[t1]
+		return out
+	
+	zall = 2**Z
+	if X<zall and Y<zall:
+		x = gpntile(X,Z)
+		y = gpntile(Y,Z)
+		full = []
+		for xt, yt in zip(x,y):
+			full.append(str(int(xt+(2*yt))))
+		
+		del full[0]
+		print(full)
+		img = "".join(full)
+		img = "r"+img+".jpg"
+		p1 = ""
+		p2 = ""
+		print(len(full))
+		if len(full) > 2:
+			p1 = "r"+full[0]+full[1]+"/"
+		if len(full) > 5:
+			p2 = full[2]+full[3]+full[4]+"/"
+		url = turl+p1+p2+img
+		# return HttpResponse(url)
+		return HttpResponseRedirect(url)
+	
 # def home(request):
 # 	instance = get_object_or_404(character, id=1)
 # 	context = {"instance":instance}

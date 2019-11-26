@@ -65,7 +65,14 @@
   var mymap = L.map('mapid', {crs: L.CRS.Simple,
     // minZoom: -5 // CRS SIMPLE
      }).setView([0, 0],0);
-  L.tileLayer('/media/maps/{{whatmap}}/{z}/{y}/{x}.png', {
+  // L.tileLayer(, {
+  L.tileLayer(
+    {% if map.externalHost %}
+    '/rpg/functions/tiles/external/{{map.id}}/{z}/{y}/{x}'
+    {% else %}
+    '/media/maps/{{whatmap}}/{z}/{y}/{x}.png'
+    {% endif %}
+    ,{
     edgeBufferTiles: 2,
     zoomSnap: 0.1,
     zoomDelta: 0.1,

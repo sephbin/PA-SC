@@ -16,7 +16,8 @@
 {% endif %}
 
 	{% for field in form.visible_fields %}
-		{% render_field field placeholder=field.label %}
+		{{field.label}}
+		{% render_field field placeholder=field.help_text %}
 		{% if field.errors%}
 			{% for error in field.errors %}
 			{{ error }}<br>

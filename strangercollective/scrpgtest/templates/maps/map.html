@@ -64,7 +64,7 @@
 <script type="text/javascript">
   var mymap = L.map('mapid', {crs: L.CRS.Simple,
     // minZoom: -5 // CRS SIMPLE
-     }).setView([0, 0],0);
+     }).setView([-128, 128],{{map.startZoom}});
   // L.tileLayer(, {
   L.tileLayer(
     {% if map.externalHost %}
@@ -73,7 +73,7 @@
     '/media/maps/{{whatmap}}/{z}/{y}/{x}.png'
     {% endif %}
     ,{
-    edgeBufferTiles: 2,
+    edgeBufferTiles: 5,
     zoomSnap: 0.1,
     zoomDelta: 0.1,
     maxZoom: {{map.maxZoom}},

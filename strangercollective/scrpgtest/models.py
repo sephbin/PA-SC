@@ -563,27 +563,91 @@ class rel_language(models.Model):
 
 
 class map(models.Model):
-	map_name = models.CharField(max_length=255)
+	map_name = models.CharField(max_length=255,
+		verbose_name="Name",
+		help_text="")
 	campaign = models.ForeignKey(campaign, on_delete=models.SET_NULL, null=True, related_name="maps")
-	externalHost = models.CharField(max_length=2000, blank=True, null=True)
+	externalHost = models.CharField(max_length=2000, blank=True, null=True,
+		verbose_name="External Host",
+		help_text="Web address for where map is hosted")
 	image = models.ImageField(blank=True, null=True)
 	maxZoom = models.IntegerField(default=0)
+	startZoom = models.IntegerField(default=2)
+	_middle = models.CharField(max_length=255, null=True, blank=True)
 
 	def __str__(self):
 		return str(self.map_name)
 	def defineMaxZoom(self):
+		# import json
 		im = Image.open(self.image)
 		w, h = im.size
+
 		fullRes = w
 		if h > w: fullRes = h
-		maxdiv = math.ceil(fullRes/256)
+		# mid = [(fullRes/w*256),(fullRes/h*256)]
+		# self._middle = json.dumps(mid)
+		# maxdiv = math.ceil(fullRes/256)
 		maxzoom = 0
 		dyndiv = 1
 		while dyndiv*2 < maxdiv:
 			dyndiv = 2 ** maxzoom
 			maxzoom += 1
 		self.maxZoom = maxzoom+1
+	def gpntile(self, Z,Y,X):
+		import math
+		log = []
+		themap = self
+		murl = themap.externalHost
+		murlid = murl.split("/")[-1]
+		turl = "http://tile%s.gigapan.org/gigapans0/%s/tiles/" %(murlid[:3],murlid)
+		def parsetile(pos, lZ):
+			z1 = 0.5
+			tA = pos * z1
+			t0 = math.floor(tA)
+			t1 = (tA-t0)*2
+			# log.append(Z)
+			first = []
+			# log.append({"pos":pos, "z1":z1, "tA":tA, "t0":t0, "t1":t1, })
+			if lZ > 0:
+				first = parsetile(t0, lZ-1)
+			# log.append([z1,tA,t0,t1])
+			out = first+[t1]
+			return out
+		
+		zall = 2**Z
+		if X<zall and Y<zall:
+			x = parsetile(X,Z)
+			y = parsetile(Y,Z)
+			full = []
+			for xt, yt in zip(x,y):
+				full.append(str(int(xt+(2*yt))))
+			
+			del full[0]
+			img = "".join(full)
+			img = "r"+img+".jpg"
+			p1 = ""
+			p2 = ""
+			if len(full) > 2:
+				p1 = "r"+full[0]+full[1]+"/"
+			if len(full) > 5:
+				p2 = full[2]+full[3]+full[4]+"/"
+			url = turl+p1+p2+img
+			return url
+	
+
 	def save(self):
+		if self.externalHost:
+			import requests
+			zrange = range(20)
+			for zr in zrange:
+				url = self.gpntile(zr,0,0)
+				
+				if requests.get(url).status_code != 200:
+					break
+				else:
+					self.maxZoom = zr
+		import math
+		# self.startZoom = math.floor(self.maxZoom/2)
 		# self.defineMaxZoom()
 		super(map,self).save()
 

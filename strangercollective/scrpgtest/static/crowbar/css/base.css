@@ -297,3 +297,26 @@ a {
   .posval{
 			width:2.5em;
 		}
+
+.loading{
+	position: absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	background: rgba(0,0,0,0.9);
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 100;
+	transition: opacity .5s linear;
+}
+ .loading.hidden{
+ 	opacity: 0;
+ }
+
+ .hide {
+  display: none;
+}
+.hidden{
+	visibility: hidden;
+}

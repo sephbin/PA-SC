@@ -28,7 +28,7 @@
 </div>
 <div class="left layout">
 	{% block leftbuttons %}
-	<div class="button" style="background-image: url('{% static 'crowbar/CharacterList.svg' %}')" title="B1"></div>
+	<div class="button" href="/rpg" style="background-image: url('{% static 'crowbar/CharacterList.svg' %}')" title="Home"></div>
 	{%  endblock %}
 </div>
 <div class="content layout">
@@ -68,5 +68,17 @@
       </table>
   </div>
 
+<div class="loading hidden" style="background-image: url('{% static 'crowbar/Loading.svg' %}')">
+
+</div>
+
 </body>
+<script>
+	$('.button').click(function(){
+		href = $(this).attr('href');
+		if(href != undefined){
+			window.location.href = href;
+		}
+	});
+</script>
 </html>

@@ -64,6 +64,8 @@ class testresult(models.Model):
 	notes = models.TextField(max_length=1000)
 	date = models.DateTimeField(auto_now=True)
 	score = models.IntegerField(default=0)
+	class Meta:
+		ordering = ['test','identifier','question','date']
 
 class testquestion(models.Model):
 	questionName = models.CharField(max_length=200, unique=True)

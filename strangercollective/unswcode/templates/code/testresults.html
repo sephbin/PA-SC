@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		.good{
+			background: green;
+		}
+	</style>
+</head>
+<body>
+<table>
+
+{% for student, markobs in marks.items %}
+
+{% if forloop.first %}
+<tr>
+	<td> </td>
+	<td> </td>
+	{% for kmo, vmo in markobs.questions.items %}
+	<td>{{kmo}}</td>
+	{% endfor %}
+	<td>total</td>
+	<td>%</td>
+{% endif %}
+
+<tr>
+	<td>{{student}}</td>
+	<td>{{markobs.pc}}</td>
+
+
+	{% for kmo, vmo in markobs.questions.items %}
+	<td class="{% if vmo.score > 0 %}good{% endif %}">{{vmo.score}}</td>
+	{% endfor %}
+	<td>{{markobs.total}}</td>
+	<td>{{markobs.percent}}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>

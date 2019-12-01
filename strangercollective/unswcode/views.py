@@ -32,6 +32,7 @@ def lecture2(request):
 	"author":"Andrew Butler"
 	}
 	return render(request, "lecture_wk2.html",context)
+	
 
 @login_required(login_url="/sc/login/")
 def codeHome(request):
@@ -176,6 +177,52 @@ def submit_test_question(request):
 			return JsonResponse({"isError": True, "error":str(e), "errorType":errorType, "function":fname, "line":exc_tb.tb_lineno, "log":log})
 	else:
 		return JsonResponse(jsob)
+def marklist(request, testName):
+	import collections
+	# testOb = get_object_or_404(test, testName= testName)
+	trOb = testresult.objects.filter(test=testName)
+	aR  = {}
+	fullScore = 0
+	questionSet = []
+
+	for tr in trOb:
+		# print(tr.question)
+		questionSet.append(tr.question)
+
+	questionSet = list(set(questionSet))
+	questionSet.sort()
+	fullScore = len(questionSet)
+	
+	for tr in trOb:
+		try:
+			aR[tr.identifier]
+		except:
+			aR[tr.identifier] = {}
+			questionDict = collections.OrderedDict()
+			for k in questionSet:
+				questionDict[k] = {"obs":[],"score":0}
+			aR[tr.identifier]['questions'] = questionDict
+
+		aR[tr.identifier]['questions'][tr.question]["obs"].append(tr)
+		aR[tr.identifier]['pc']=tr.pcusername
+		if tr.score > 0:
+			print(tr.identifier,tr.question,tr.score)
+			aR[tr.identifier]['questions'][tr.question]["score"] = int(tr.score)
+
+	for st, marks in aR.items():
+		marks['total'] = 0
+		for q, data in marks['questions'].items():
+			marks['total'] += data['score']
+		marks['percent'] = round(marks['total']/fullScore*100,2)
+	context = {
+	"marks":aR,
+	}
+	print(context)
+	return render(request, "code/testresults.html",context)
+
+
+
+
 
 def changemarks(request):
 	import datetime
@@ -185,7 +232,7 @@ def changemarks(request):
 		utc=pytz.UTC
 		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 		tres = testresult.objects.filter(notes__icontains="CORRECT!"
-			, pcusername="Nimat"
+			# , pcusername="Nimat"
 			)
 		# tres = [tres[0]]
 		for tr in tres:

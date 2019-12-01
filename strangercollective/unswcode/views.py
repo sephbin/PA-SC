@@ -237,12 +237,15 @@ def changemarks(request):
 			# )
 		# tres = [tres[0]]
 		for tr in tres:
-			notes = tr.notes
-			notes = float(notes.split(" ")[-1])
-			questionOb = get_object_or_404(testquestion, questionName=tr.question)
-			if notes < questionOb.questionAccuracy:
-				tr.score = 1
-				tr.save()
+			try:
+				notes = tr.notes
+				notes = float(notes.split(" ")[-1])
+				questionOb = get_object_or_404(testquestion, questionName=tr.question)
+				if notes < questionOb.questionAccuracy:
+					tr.score = 1
+					tr.save()
+			except:
+				pass
 			# log.append([tr.date, tr.question])
 			# if tr.date < cutoff:
 				# log.append([tr.notes,tr.date])

@@ -191,7 +191,7 @@ def changemarks(request):
 			# if tr.date < cutoff:
 			tr.score = 0
 			if tr.notes == "CORRECT! Correct quantity of lines Model accuracy is correct":
-				tr.score = 2
+				tr.score = 1
 
 			tr.save()
 			log.append(tr.date)

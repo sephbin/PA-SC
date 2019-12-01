@@ -186,6 +186,8 @@ def changemarks(request):
 		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 		tres = testresult.objects.filter(notes__icontains="CORRECT")
 		# tres = [tres[0]]
+		log.append(utc)
+		log.append(tes[0].date)
 		for tr in tres:
 			# log.append(cutoff)
 			if tr.date < cutoff:

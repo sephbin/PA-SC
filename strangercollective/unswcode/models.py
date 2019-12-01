@@ -68,9 +68,10 @@ class testresult(models.Model):
 		ordering = ['test','identifier','question','date']
 
 class testquestion(models.Model):
-	questionName = models.CharField(max_length=200, unique=True)
-	questionText = models.TextField(max_length=1024, null=True, blank=True)
-	questionHint = models.TextField(max_length=1024, null=True, blank=True)
+	questionName		= models.CharField(max_length=200, unique=True)
+	questionText		= models.TextField(max_length=1024, null=True, blank=True)
+	questionHint		= models.TextField(max_length=1024, null=True, blank=True)
+	questionAccuracy	= models.IntegerField(default=1)
 	_archjson = models.TextField(max_length=65535, default="{}")
 
 	def __str__(self):

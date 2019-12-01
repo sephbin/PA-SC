@@ -232,7 +232,7 @@ def changemarks(request):
 		utc=pytz.UTC
 		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
 		# tres = testresult.objects.filter(notes__icontains="CORRECT!"
-		tres = testresult.objects.filter(question="3-05")
+		tres = testresult.objects.filter(test="19T3-CODE2121", notes__icontains="INCORRECT")
 			# , pcusername="Nimat"
 			# )
 		# tres = [tres[0]]

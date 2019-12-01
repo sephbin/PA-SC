@@ -206,7 +206,7 @@ def marklist(request, testName):
 		aR[tr.identifier]['questions'][tr.question]["obs"].append(tr)
 		aR[tr.identifier]['pc']=tr.pcusername
 		if tr.score > 0:
-			print(tr.identifier,tr.question,tr.score)
+			# print(tr.identifier,tr.question,tr.score)
 			aR[tr.identifier]['questions'][tr.question]["score"] = int(tr.score)
 
 	for st, marks in aR.items():

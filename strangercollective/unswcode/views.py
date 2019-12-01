@@ -238,11 +238,11 @@ def changemarks(request):
 		for tr in tres:
 			tr.score = 1
 			tr.save()
-			log.append([tr.date, tr.question])
-			if tr.date < cutoff:
-				log.append([tr.notes,tr.date])
-				tr.score = 2
-				tr.save()
+			# log.append([tr.date, tr.question])
+			# if tr.date < cutoff:
+				# log.append([tr.notes,tr.date])
+				# tr.score = 2
+				# tr.save()
 			# if tr.notes == "CORRECT! Correct quantity of lines Model accuracy is correct":
 				# tr.score = 1
 

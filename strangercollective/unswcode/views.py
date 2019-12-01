@@ -213,7 +213,7 @@ def marklist(request, testName):
 		marks['total'] = 0
 		for q, data in marks['questions'].items():
 			marks['total'] += data['score']
-		marks['percent'] = round(marks['total']/fullScore*100,2)
+		marks['percent'] = round((marks['total']/fullScore*50)+50,2)
 	context = {
 	"marks":aR,
 	}

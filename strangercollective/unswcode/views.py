@@ -231,13 +231,17 @@ def changemarks(request):
 	try:
 		utc=pytz.UTC
 		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
-		tres = testresult.objects.filter(notes__icontains="CORRECT!"
+		# tres = testresult.objects.filter(notes__icontains="CORRECT!"
+		tres = testresult.objects.filter(question="3-05")
 			# , pcusername="Nimat"
-			)
+			# )
 		# tres = [tres[0]]
 		for tr in tres:
-			tr.score = 1
-			tr.save()
+			notes = tr.notes
+			notes = float(notes.split(" ")[-1])
+			if notes < 160:
+				tr.score = 1
+				tr.save()
 			# log.append([tr.date, tr.question])
 			# if tr.date < cutoff:
 				# log.append([tr.notes,tr.date])

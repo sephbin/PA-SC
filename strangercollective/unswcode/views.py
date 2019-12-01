@@ -239,7 +239,8 @@ def changemarks(request):
 		for tr in tres:
 			notes = tr.notes
 			notes = float(notes.split(" ")[-1])
-			if notes < 160:
+			questionOb = get_object_or_404(testquestion, questionName=tr.question)
+			if notes < questionOb.questionAccuracy:
 				tr.score = 1
 				tr.save()
 			# log.append([tr.date, tr.question])

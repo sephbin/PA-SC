@@ -217,7 +217,6 @@ def marklist(request, testName):
 	context = {
 	"marks":aR,
 	}
-	print(context)
 	return render(request, "code/testresults.html",context)
 
 

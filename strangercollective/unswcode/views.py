@@ -188,7 +188,7 @@ def changemarks(request):
 		# tres = [tres[0]]
 		log.append(cutoff)
 		for tr in tres:
-			log.append(tr.date)
+			log.append([tr.date, tr.question])
 			if tr.date < cutoff:
 				log.append([tr.notes,tr.date])
 				tr.score = 2

@@ -184,17 +184,17 @@ def changemarks(request):
 	try:
 		utc=pytz.UTC
 		cutoff = utc.localize(datetime.datetime(2019,11,5, 7))
-		tres = testresult.objects.all()
+		tres = testresult.objects.filter(notes__icontains="CORRECT")
 		# tres = [tres[0]]
 		for tr in tres:
 			# log.append(cutoff)
 			# if tr.date < cutoff:
-			tr.score = 0
-			if tr.notes == "CORRECT! Correct quantity of lines Model accuracy is correct":
-				tr.score = 1
-
+			log.append([tr.note,tr.date])
+			tr.score = 1
 			tr.save()
-			log.append(tr.date)
+			# if tr.notes == "CORRECT! Correct quantity of lines Model accuracy is correct":
+				# tr.score = 1
+
 		return JsonResponse({"log":log})
 	except Exception as e:
 		return JsonResponse({"log":log, "error":str(e)})

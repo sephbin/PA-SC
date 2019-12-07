@@ -15,6 +15,7 @@ urlpatterns = [
 	path('signup/', views.signup_view, name='rpg_signup'),
     path('login/', views.login_view, name='rpg_login'),
     path('logout/', views.logout_view, name='rpg_logout'),
+	path(r'maps/<str:whatmap>/editpaths/', views.editmappaths),
 	path(r'maps/<str:whatmap>', views.mapview),
 	path(r'functions/tiles/external/<str:mapid>/<int:Z>/<int:Y>/<int:X>', views.externaltile),
 	path(r'createcampaign/', views.createCampaign),

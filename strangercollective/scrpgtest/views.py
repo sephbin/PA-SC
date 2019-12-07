@@ -300,8 +300,25 @@ def CRUDMap(request, whatCampaign, whatMap = None):
 				"error":"No campaign matches the given query.",
 					})
 
-@login_required(login_url="/rpg/login/")
 # @user_passes_test(teacher_check)
+
+# @login_required(login_url="/rpg/login/")
+@csrf_exempt
+def editmappaths(request, whatmap):
+	if request.method == "POST":
+		try:
+			import json
+			d = json.loads(request.POST["data"])
+			mapinstance = get_object_or_404(map, id=whatmap)
+			print(d)
+			print(mapinstance)
+			mapinstance._paths = json.dumps(d)
+			mapinstance.save()
+			return JsonResponse({"isError":False})
+		except:
+			return JsonResponse({"isError":True})
+
+@login_required(login_url="/rpg/login/")
 def mapview(request, whatmap):
 	
 	themap = get_object_or_404(map, id=whatmap)

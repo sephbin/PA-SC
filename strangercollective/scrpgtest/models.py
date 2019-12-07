@@ -574,7 +574,8 @@ class map(models.Model):
 	maxZoom = models.IntegerField(default=0)
 	startZoom = models.IntegerField(default=2)
 	_middle = models.CharField(max_length=255, null=True, blank=True)
-
+	_paths = models.CharField(max_length=9999,
+		default='{"type":"FeatureCollection","features":[]}')
 	def __str__(self):
 		return str(self.map_name)
 	def defineMaxZoom(self):
@@ -634,7 +635,13 @@ class map(models.Model):
 			url = turl+p1+p2+img
 			return url
 	
-
+	def paths(self):
+		try:
+			import json
+			return json.loads(self._paths)
+			# return self._paths
+		except:
+			return {}
 	def save(self):
 		if self.externalHost:
 			import requests

@@ -304,19 +304,20 @@ def CRUDMap(request, whatCampaign, whatMap = None):
 
 # @login_required(login_url="/rpg/login/")
 @csrf_exempt
-def editmappaths(request, whatmap):
+def editmappaths(request, whatlayer):
 	if request.method == "POST":
 		try:
 			import json
 			d = json.loads(request.POST["data"])
-			mapinstance = get_object_or_404(map, id=whatmap)
-			print(d)
-			print(mapinstance)
-			mapinstance._paths = json.dumps(d)
+			mapinstance = get_object_or_404(mapLayer, id=whatlayer)
+			paths = mapinstance.geoJSON()
+			newpath = d
+			paths.update(newpath)
+			mapinstance._geoJSON = json.dumps(paths)
 			mapinstance.save()
 			return JsonResponse({"isError":False})
-		except:
-			return JsonResponse({"isError":True})
+		except Exception as e:
+			return JsonResponse({"isError":True, "error":str(e)})
 
 @login_required(login_url="/rpg/login/")
 def mapview(request, whatmap):

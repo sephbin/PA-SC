@@ -661,6 +661,19 @@ class map(models.Model):
 	class Meta:
 		ordering = ['map_name']
 
+
+class mapLayer(models.Model):
+	parentMap = models.ForeignKey('map', on_delete=models.CASCADE, related_name="mapfeatures")
+	layerName = models.CharField(max_length=255, verbose_name="Name", help_text="")
+	_geoJSON = models.CharField(max_length=9999,
+		default='{"type":"FeatureCollection","features":[]}')
+	def geoJSON(self):
+		try:
+			import json
+			return json.loads(self._geoJSON)
+			# return self._paths
+		except:
+			return {}
 @receiver(post_save, sender=map)
 def queue_splitImage(sender, instance, created, **kwargs):
 	print(instance)

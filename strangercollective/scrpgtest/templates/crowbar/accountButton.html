@@ -66,4 +66,12 @@ toggle between hiding and showing the dropdown content */
 $('#dropdownbtn').click(function(){
 	$("#myDropdown").toggleClass("hide");
 });
+
+$('div:not(.dropdown-content,#dropdownbtn)').click(function(el){
+  console.log(this);
+  console.log(el);
+  console.log("NOT CLICKED");
+  $(".dropdown-content").addClass("hide");
+});
+
 </script>

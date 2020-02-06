@@ -7,8 +7,13 @@ class parameterOb_Admin(admin.ModelAdmin):
 	# inlines = [item_objectInline,]
 	model = parameterObject
 
+class testModel_Admin(admin.ModelAdmin):
+	list_display = ('pk','data',)
+
 # Register your models here.
 admin.site.register(family)
 admin.site.register(functionOb)
 admin.site.register(parameterObject, parameterOb_Admin)
 admin.site.register(parameterMapThroughObject)
+
+admin.site.register(testModel, testModel_Admin)

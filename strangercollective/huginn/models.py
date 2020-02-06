@@ -31,3 +31,32 @@ class parameterMapThroughObject(models.Model):
 
 	def __str__(self):
 		return self.object_from.parameterIdentity +" -> "+self.object_to.parameterIdentity
+
+class DataField(models.TextField):
+	def parseString(self, s):
+		import json
+		try:
+			# return "!-%s-!"%(s)
+			return json.loads(s)
+		except Exception as e:
+			return str(e)
+
+	def from_db_value(self, value, expression, connection):
+		if value is None:
+			return value
+		return self.parseString(value)
+
+	def to_python(self, value):
+		return self.parseString(value)
+	def get_db_prep_save(self, value, connection):
+		import json
+		print(value)
+		print(type(value))
+		try:
+			return json.dumps(value)
+		except Exception as e:
+			print(e)
+			return value
+
+class testModel(models.Model):
+	data = DataField(max_length=255, default="{}", blank=True, null=True)

@@ -1,5 +1,6 @@
 from django.db import models
 
+from django.db.models.signals import post_save, post_init, post_delete
 # Create your models here.
 class family(models.Model):
 	name = models.CharField(max_length = 120)
@@ -32,7 +33,13 @@ class parameterMapThroughObject(models.Model):
 	def __str__(self):
 		return self.object_from.parameterIdentity +" -> "+self.object_to.parameterIdentity
 
+
+
 class DataField(models.TextField):
+	# def __init__(self, *args, **kwargs):
+ #        # kwargs['primary_key'] = True
+ #        super().__init__(*args, **kwargs)
+
 	def parseString(self, s):
 		import json
 		try:
@@ -43,20 +50,51 @@ class DataField(models.TextField):
 
 	def from_db_value(self, value, expression, connection):
 		if value is None:
-			return value
+			return {}
 		return self.parseString(value)
 
 	def to_python(self, value):
 		return self.parseString(value)
 	def get_db_prep_save(self, value, connection):
 		import json
-		print(value)
-		print(type(value))
 		try:
 			return json.dumps(value)
 		except Exception as e:
 			print(e)
-			return value
+			return json.dumps({"error":str(e)})
+	
 
 class testModel(models.Model):
+	
+	previous_state = None
 	data = DataField(max_length=255, default="{}", blank=True, null=True)
+	# data.printStuff()
+	@property
+	def foo(self):
+		return "Hello"
+	
+	def delDataKeys(self, keys=[]):
+		for k in keys:
+			try:
+				del self.previous_state["data"][k]
+			except:	pass
+		self.save()
+
+	@staticmethod
+	def remember_state(sender, **kwargs):
+		instance = kwargs.get('instance')
+		remember = {
+			"data": instance.data,
+		}
+		instance.previous_state = remember
+
+
+	def save(self, *args, **kwargs):
+		try:
+			upd = self.previous_state["data"]
+			if upd != self.data:
+				upd.update(self.data)
+				self.data = upd
+		except Exception as e: pass
+		super(testModel, self).save(*args, **kwargs)
+post_init.connect(testModel.remember_state, sender=testModel)

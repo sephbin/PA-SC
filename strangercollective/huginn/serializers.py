@@ -49,3 +49,10 @@ class ParameterMapSerializer_CU(serializers.ModelSerializer):
 	class Meta:
 		model = parameterMapThroughObject
 		exclude = ('map_created_at',)
+
+
+class TestModelSerializer(serializers.ModelSerializer):
+	data = serializers.JSONField()
+	class Meta:
+		model = testModel
+		fields = ('__all__')

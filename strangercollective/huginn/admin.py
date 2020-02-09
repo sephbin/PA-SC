@@ -8,7 +8,8 @@ class parameterOb_Admin(admin.ModelAdmin):
 	model = parameterObject
 
 class testModel_Admin(admin.ModelAdmin):
-	list_display = ('pk','data',)
+	list_display = ('pk','data', 'foo',)
+	# list_filter = ('foo',)
 
 # Register your models here.
 admin.site.register(family)

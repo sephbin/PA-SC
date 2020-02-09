@@ -52,6 +52,10 @@ class ParameterViewSet(viewsets.ModelViewSet):
     queryset = parameterObject.objects.all()
     serializer_class = ParameterObSerializer
 
+class TestViewSet(viewsets.ModelViewSet):
+    queryset = testModel.objects.all()
+    serializer_class = TestModelSerializer
+
 
 def familygetscript(request, familyname, scripttype = "gh"):
 	instance = get_object_or_404(family, name=familyname)
@@ -114,3 +118,10 @@ def create_update_map(request):
 	else:
 		return HttpResponse("NOT POST")
 
+
+def test(request):
+	ob = get_object_or_404(testModel, id=1)
+	# ob.data = {"testC":"dict", "hello":"muse"}
+	ob.delDataKeys(["hello","testC"])
+	ob.save()
+	return JsonResponse(ob.data)

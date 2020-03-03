@@ -1,138 +1,241 @@
 {% load static %}
+{% load tz %}
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - geometries</title>
+		<title>three.js webgl - drag controls</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link type="text/css" rel="stylesheet" href="{% static 'three/main.css' %}">
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 		<style>
 			body {
-				color: #eee;
-				font-family:Monospace;
-				font-size:13px;
-				text-align:center;
-				background-color: #000;
-				margin: 0px;
-				padding: 0px;
-				overflow: hidden;
-			}
-			#info {
-				position: absolute;
-				top: 0px; width: 100%;
-				padding: 5px;
+				background-color: #f0f0f0;
+				color: #444;
 			}
 			a {
-				color: #0080ff;
+				color: #08f;
 			}
 		</style>
 	</head>
 	<body>
 
-		<div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - geometries</div>
+		<!-- <div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - drag controls
+		</div> -->
 
-		<!-- <script src="../build/three.js"></script> -->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.min.js"></script>
+		<script type="module">
 
-		<!-- <script src="https://threejs.org/examples/#webgl_geometries/js/Detector.js"></script> -->
-		<!-- <script src="https://threejs.org/examples/#webgl_geometries/js/libs/stats.min.js"></script> -->
+			import * as THREE from '{% static "three/build/three.module.js" %}';
+			THREE.Object3D.prototype.getObjectByUserDataProperty = function ( name, value ) {
 
-		<script>
-			// if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-			var camera, scene, renderer, stats;
+				if ( this.userData[ name ] === value ) return this;
+
+				for ( var i = 0, l = this.children.length; i < l; i ++ ) {
+
+				var child = this.children[ i ];
+				var object = child.getObjectByUserDataProperty( name, value );
+
+				if ( object !== undefined ) {
+
+				return object;
+
+				}
+
+				}
+
+				return undefined;
+
+			}
+
+			import { DragControls } from '{% static "three/jsm/controls/DragControls.js" %}';
+			// import { TrackballControls } from '{% static "three/jsm/controls/TrackballControls.js" %}';
+			import { OrbitControls } from '{% static "three/jsm/controls/PanControls.js" %}';
+			// import { SVGRenderer } from '{% static "three/jsm/renderers/SVGRenderer.js" %}';
+			var container;
+			var camera, scene, renderer, sceneControls;
+			var objects = [];
+			var lut = {};
 			init();
 			animate();
+			
 			function init() {
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.y = 400;
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				var frustumSize = 2000;
+				var aspect = window.innerWidth / window.innerHeight;
+				camera = new THREE.OrthographicCamera( frustumSize * aspect / - 2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 2000 );
+
+				// camera.position.set( - 200, 200, 200 );
+				// camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 5000 );
+				camera.position.z = 1000;
+
+
 				scene = new THREE.Scene();
-				var light, object;
-				var ambientLight = new THREE.AmbientLight( 0xcccccc, 0.4 );
-				scene.add( ambientLight );
-				var pointLight = new THREE.PointLight( 0xffffff, 0.8 );
-				camera.add( pointLight );
-				scene.add( camera );
-				var map = new THREE.TextureLoader().load( "{% static 'tests/tex.jpg' %}" );
-				map.wrapS = map.wrapT = THREE.RepeatWrapping;
-				map.anisotropy = 16;
-				var material = new THREE.MeshPhongMaterial( { map: map, side: THREE.DoubleSide } );
-				//
-				object = new THREE.Mesh( new THREE.SphereBufferGeometry( 75, 20, 10 ), material );
-				object.position.set( - 300, 0, 200 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.IcosahedronBufferGeometry( 75, 1 ), material );
-				object.position.set( - 100, 0, 200 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.OctahedronBufferGeometry( 75, 2 ), material );
-				object.position.set( 100, 0, 200 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.TetrahedronBufferGeometry( 75, 0 ), material );
-				object.position.set( 300, 0, 200 );
-				scene.add( object );
-				//
-				object = new THREE.Mesh( new THREE.PlaneBufferGeometry( 100, 100, 4, 4 ), material );
-				object.position.set( - 300, 0, 0 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.BoxBufferGeometry( 100, 100, 100, 4, 4, 4 ), material );
-				object.position.set( - 100, 0, 0 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.CircleBufferGeometry( 50, 20, 0, Math.PI * 2 ), material );
-				object.position.set( 100, 0, 0 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.RingBufferGeometry( 10, 50, 20, 5, 0, Math.PI * 2 ), material );
-				object.position.set( 300, 0, 0 );
-				scene.add( object );
-				//
-				object = new THREE.Mesh( new THREE.CylinderBufferGeometry( 25, 75, 100, 40, 5 ), material );
-				object.position.set( - 300, 0, - 200 );
-				scene.add( object );
-				var points = [];
-				for ( var i = 0; i < 50; i ++ ) {
-					points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * Math.sin( i * 0.1 ) * 15 + 50, ( i - 5 ) * 2 ) );
+				scene.background = new THREE.Color( 0x000 );
+
+				// scene.add( new THREE.AmbientLight( 0x505050 ) );
+
+				// var light = new THREE.SpotLight( 0xffffff, 1.5 );
+				// light.position.set( 0, 500, 2000 );
+				// light.angle = Math.PI / 9;
+
+				// light.castShadow = true;
+				// light.shadow.camera.near = 1000;
+				// light.shadow.camera.far = 4000;
+				// light.shadow.mapSize.width = 2048;
+				// light.shadow.mapSize.height = 2048;
+
+				// scene.add( light );
+
+				// var geometry = new THREE.BoxBufferGeometry( 80, 80, 80 );
+
+				
+				var createObjects = {{tokens|safe}};
+
+				for ( var i = 0; i < createObjects.length; i ++ ) {
+					var ob = createObjects[i]
+					var geometry = new THREE.PlaneBufferGeometry( 80, 80 );
+					var texture = new THREE.TextureLoader().load( '{% static "three/images/pnggrad8rgb.png" %}' );
+
+					var shader = new THREE.MeshBasicMaterial({
+						map: texture,
+						transparent: true,
+						// alphaMap: alpha,
+					})
+					
+					var object = new THREE.Mesh( geometry, shader);
+					// var group = new THREE.Group();
+					// group.add( cubeA );
+					// group.add( cubeB );
+
+					object.name = ob["id"]
+					object.userData = {"id":ob["id"]}
+					object.position.x = ob["position"]["x"];
+					object.position.y = ob["position"]["y"];
+					object.position.z = ob["position"]["z"];
+
+					// object.rotation.x = Math.random() * 2 * Math.PI;
+					// object.rotation.y = Math.random() * 2 * Math.PI;
+					// object.rotation.z = Math.random() * 2 * Math.PI;
+
+					// object.scale.x = Math.random() * 2 + 1;
+					// object.scale.y = Math.random() * 2 + 1;
+					// object.scale.z = Math.random() * 2 + 1;
+
+					object.castShadow = false;
+					object.receiveShadow = false;
+
+					scene.add( object );
+					// if (ob["control"]){
+						objects.push( object );
+					// }
+
 				}
-				object = new THREE.Mesh( new THREE.LatheBufferGeometry( points, 20 ), material );
-				object.position.set( - 100, 0, - 200 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.TorusBufferGeometry( 50, 20, 20, 20 ), material );
-				object.position.set( 100, 0, - 200 );
-				scene.add( object );
-				object = new THREE.Mesh( new THREE.TorusKnotBufferGeometry( 50, 10, 50, 20 ), material );
-				object.position.set( 300, 0, - 200 );
-				scene.add( object );
-				//
+				// renderer = new SVGRenderer();
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.body.appendChild( renderer.domElement );
+
+				renderer.shadowMap.enabled = true;
+				renderer.shadowMap.type = THREE.PCFShadowMap;
+
+				container.appendChild( renderer.domElement );
+
+				var controls = new DragControls( objects, camera, renderer.domElement );
+
+				controls.addEventListener( 'dragstart', function ( event ) {
+
+					// event.object.material.emissive.set( 0xaaaaaa );
+
+				} );
+
+				controls.addEventListener( 'dragend', function ( event ) {
+					var ob = event.object;
+					console.log(ob.userData.id);
+					console.log(ob.position.x,ob.position.y,ob.position.z);
+					$.ajax({
+						url: `/tests/tokenpos/${ob.userData.id}/${ob.position.x}/${ob.position.y}/${ob.position.z}/`
+						})
+					// event.object.material.emissive.set( 0x000000 );
+
+				} );
+				sceneControls = new OrbitControls( camera, renderer.domElement );
+
+				//sceneControls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+
+				sceneControls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+				sceneControls.dampingFactor = 0.05;
+
+				sceneControls.screenSpacePanning = true;
+
+				sceneControls.minDistance = 100;
+				sceneControls.maxDistance = 500;
+
+				// sceneControls.maxPolarAngle = Math.PI / 2;
 				// stats = new Stats();
-				// document.body.appendChild( stats.dom );
+				// container.appendChild( stats.dom );
+
 				//
+
 				window.addEventListener( 'resize', onWindowResize, false );
+
 			}
+
 			function onWindowResize() {
+
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
+
 				renderer.setSize( window.innerWidth, window.innerHeight );
+
 			}
+
 			//
+
 			function animate() {
+
 				requestAnimationFrame( animate );
+				sceneControls.update();
 				render();
-				stats.update();
+				// stats.update();
+
 			}
+
+			var prev = 0.0
+			var updated = '{{updated}}'
 			function render() {
-				var timer = Date.now() * 0.0001;
-				camera.position.x = Math.cos( timer ) * 800;
-				camera.position.z = Math.sin( timer ) * 800;
-				camera.lookAt( scene.position );
-				scene.traverse( function( object ) {
-					if ( object.isMesh === true ) {
-						object.rotation.x = timer * 5;
-						object.rotation.y = timer * 2.5;
-					}
-				} );
+				var time = Date.now() * 0.001;
+				if (time > prev+5){
+					prev = parseFloat(time);
+					$.ajax({
+						url: `/tests/updated/{{map.id}}/${updated}`
+						}).done(function(response) {
+						
+						if (response["updated"]){
+							// console.log(response);
+							updated = response["updatedtime"]
+							var edit = response["edit"]
+							for ( var i = 0; i < edit.length; i ++ ) {
+								var ob = edit[i];
+								var editob = scene.getObjectByName( ob["id"] );
+								editob.position.x = ob["position"]["x"];
+								editob.position.y = ob["position"]["y"];
+								editob.position.z = ob["position"]["z"];
+							}
+						}
+						});
+				}
 				renderer.render( scene, camera );
+
 			}
+
 		</script>
 
 	</body>
 </html>
+{% timezone "Etc/Greenwich" %}
+{% endtimezone %}

@@ -1,0 +1,218 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>reveal.js – The HTML Presentation Framework</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="{% static 'lecture/css/reveal.css' %}">
+		<link rel="stylesheet" href="{% static 'lecture/css/theme/black.css' %}" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<!-- <link rel="stylesheet" href="lib/css/zenburn.css"> -->
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	<style type="text/css">
+		.contain{
+			background-size: contain !important;
+		}
+		section[iframe]{
+			width: 100%;
+			height: 100%;
+		}
+		div.slides{
+			width:100% !important;
+			height:100% !important;
+		}
+		iframe {
+		width: calc(100% - 70px);
+		height: 100%
+		}
+	</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				
+<section>
+	<h2>ARCHIJSON</h2>
+	<h4>and things extracted from the web</h4>
+</section>
+<section><i>CSV and Excel</i></section>
+<section><i>CSV and Excel</i></section>
+<section><h3>JSON and GEOJSON</h3></section>
+<section iframe> <iframe src="https://jsonresume.org/schema/" frameborder="0"></iframe></section>
+<section iframe style="background: white"> <iframe src="https://themes.jsonresume.org/theme/flat" frameborder="0"></iframe></section>
+<section> <a href="http://geojson.io/" target="_extra">GEOJSON</a></section>
+<section><i>GH Example</i></section>
+<section class="contain" data-background="{% static 'lecture/2018/UTS/SA_Page_01.jpg' %}"></section>
+</section>
+
+<!-- <section class="contain" data-background="http://www.cgarchitect.com/content/portfolioitems/2017/05/137264/5930_tetrashed_nationalpark_exterior_17_reflection_large.jpg"></section> -->
+			</div>
+
+		</div>
+
+		<!-- <script src="{% static 'lecture/head.min.js' %}"></script> -->
+		<script src="{% static 'lecture/js/reveal.js' %}"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'fade', // none/fade/slide/convex/concave/zoom
+			});
+
+		</script>
+
+		<!-- Everything below this point is only used for the reveal.js demo page -->
+
+
+		<style>
+			/* Social sharing */
+			.share-reveal a {
+				display: inline-block;
+				height: 34px;
+				line-height: 32px;
+				padding: 0 10px;
+				color: #fff;
+				font-family: Helvetica, sans-serif;
+				text-decoration: none;
+				font-weight: bold;
+				font-size: 12px;
+				vertical-align: top;
+				text-transform: uppercase;
+				box-sizing: border-box;
+			}
+
+			.share-reveal .share-reveal-editor {
+				line-height: 30px;
+			}
+
+			.share-reveal svg {
+				vertical-align: middle;
+			}
+
+			.share-reveal a + a {
+				margin-left: 10px;
+			}
+
+			.share-reveal-editor {
+				border: 2px solid #fff;
+			}
+
+			.share-reveal-twitter,
+			.share-reveal-follow {
+				background-color: #00aced;
+			}
+
+			.share-reveal-facebook {
+				background-color: #4B71B8;
+			}
+
+			/* Advertising */
+			#carbonads {
+				width: 370px;
+				min-height: 100px;
+				font-size: 18px;
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				padding: 10px;
+
+				margin: 40px auto 0 auto;
+				font-size: 16px;
+				z-index: 10;
+				text-align: left;
+			}
+
+			#carbonads .carbon-img img {
+				float: left;
+				margin: 0 10px 0 0;
+				border: 0;
+				box-shadow: none;
+			}
+
+			#carbonads .carbon-poweredby {
+				display: block;
+				margin-top: 10px;
+				color: #aaa;
+			}
+		</style>
+
+		<script>
+		var _gaq = [['_setAccount', 'UA-15240703-1'], ['_trackPageview']];
+		(function(d, t) {
+		var g = d.createElement(t),
+			s = d.getElementsByTagName(t)[0];
+		g.async = true;
+		g.src = ('https:' == location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g, s);
+		})(document, 'script');
+		</script>
+
+		<script>
+			[].slice.call( document.querySelectorAll( '.share-reveal-facebook, .share-reveal-twitter' ) ).forEach( function( element ) {
+				element.addEventListener( 'click', function( event ) {
+					event.preventDefault();
+					var width = 500, height = 300;
+					var winTop = window.screenY + (window.screen.height / 2) - (height / 2);
+					var winLeft = window.screenX + (window.screen.width / 2) - (width / 2);
+					window.open(this.href, 'shre', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + width + ',height=' + height);
+				} );
+			} );
+
+			if( !navigator.userAgent.match( /(iphone|android)/gi ) && !!document.querySelector ) {
+				document.querySelector( '.share-reveal' ).style.display = 'block';
+				document.querySelector( '.fork-reveal' ).style.display = 'block';
+			}
+		</script>
+
+	</body>
+</html>
+
+<!--
+
+https://www.dezeen.com/2016/01/08/video-interview-virginia-lung-one-plus-partnership-exploded-cinema-movie/
+https://www.dezeen.com/2014/04/29/kineforum-misbar-open-air-cinema-in-jakarta-by-csutoras-liando/
+https://www.dezeen.com/2013/01/25/cinema-32-by-encore-heureux/
+https://www.dezeen.com/2012/10/23/centipede-cinema-by-colin-fournier-marysia-lewandowska-and-neon/
+https://www.dezeen.com/2012/05/28/cineteca-matadero-by-churtichagaquadra-salcedo/
+https://www.dezeen.com/2012/06/25/stairway-cinema-by-oh-no-sumo/
+https://www.dezeen.com/2014/11/30/movie-cine-times-cinema-hong-kong-black-white-one-plus-partnership-video-interview/
+
+
+
+
+
+
+http://dougandwolf.com/wordtest/
+ -->

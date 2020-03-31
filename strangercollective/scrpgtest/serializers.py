@@ -54,7 +54,12 @@ class RelSkillSerializer(serializers.ModelSerializer):
 class PossessionSerializer(serializers.ModelSerializer):
 		class Meta:
 			model = possession
-			fields = ('__all__')
+			# fields = ('__all__')
+			exclude= (
+				'meleeStatsText',
+				'rangeStatsText',
+				'armourStatsText',
+					)
 
 class RelPossessionSerializer(serializers.ModelSerializer):
 		possession = PossessionSerializer(read_only=True)
@@ -66,22 +71,34 @@ class RelPossessionSerializer(serializers.ModelSerializer):
 			model = rel_possession
 			fields = ('__all__')
 
+
 class CharacterSerializer(serializers.ModelSerializer):
 	race = raceSerializer(read_only=True)
 	status = statusSerializer(read_only=True)
-	characterType = characterTypeSerializer(read_only=True)
+	displayname = serializers.CharField()
+	cost = serializers.JSONField()
+	# characterType = characterTypeSerializer(read_only=True)
 	reladvantage = RelAdvantageSerializer(read_only=True, many=True)
 	reldisadvantage = RelDisadvantageSerializer(read_only=True, many=True)
 	relskill = RelSkillSerializer(read_only=True, many=True)
 	relpossession = RelPossessionSerializer(read_only=True, many=True)
-	possessionTotals = serializers.DictField()
-	damage = serializers.DictField()
-	cost = serializers.IntegerField()
+	possessionTotals = serializers.JSONField()
+	meleePossessions = RelPossessionSerializer(read_only=True, many=True)
+	rangePossessions = RelPossessionSerializer(read_only=True, many=True)
+	# damage = serializers.DictField()
+	# cost = serializers.IntegerField()
 	class Meta:
 		model = character
 		fields = ('__all__')
 
 		# fields = ('id', 'firstname', 'race', 'advantages')
+
+class CharacterSerializer_Updated(serializers.ModelSerializer):
+	class Meta:
+		model = character
+		fields = ('updated',)
+
+
 class CampaignSerializer(serializers.ModelSerializer):
 		character = CharacterSerializer(read_only=True, many=True)
 		possession = PossessionSerializer(read_only=True, many=True)

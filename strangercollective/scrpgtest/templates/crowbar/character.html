@@ -1,0 +1,187 @@
+{% extends "crowbar/base.html" %}
+{% load static %}
+
+{% block centercolumn %}
+		<p>{{data|safe}}</p>
+		{% endblock %}
+
+{% block pageprops %}charid="{{instance.id}}"{%  endblock %}
+
+{% block modals %}
+
+{% endblock %}
+
+
+
+{% block script %}
+
+<script id="template-consolecontent" type="text/x-handlebars-template">
+{% verbatim %}
+{{consoleLast}}
+{% endverbatim %}
+</script>
+
+<script id="template-leftcol" type="text/x-handlebars-template">
+{% include "crowbar/card-Character-JS.html"%}
+{% include "crowbar/card-Attributes-JS.html"%}
+{% include "crowbar/card-Advantage-JS.html" %}
+{% include "crowbar/card-Disadvantage-JS.html" %}
+{% include "crowbar/card-Skill-JS.html" %}
+</script>
+<script id="template-rightcol" type="text/x-handlebars-template">
+	{% include "crowbar/card-Melee-JS.html" %}
+	{% include "crowbar/card-Range-JS.html" %}
+	{% include "crowbar/card-Possession-JS.html" %}
+</script>
+
+<script id="template-centercol" type="text/x-handlebars-template">
+{{data|safe}}
+</script>
+
+
+<script id="template-modalwrapper" type="text/x-handlebars-template">
+{% include "crowbar/modal-Attributes-JS.html" %}
+{% include "crowbar/modal-Advantage.html" %}
+{% include "crowbar/modal-Disadvantage.html" %}
+{% include "crowbar/modal-Skill.html" %}
+{% include "crowbar/modal-Possession.html" %}
+{% include "crowbar/modal-Temporary.html" %}
+</script>
+
+
+<script type="text/javascript">
+	updated = '{{instance.updated|date:"c"}}'
+	var data = {
+		console: ["Loaded..."],
+		modal: "",
+		char: {{data|safe}}
+		};
+	pushDataToTemplate();
+	
+	function pushDataToTemplate(){
+		// console.log('pushDataToTemplate');
+		// data["consoleLast"] = data["console"][-1];
+		data["consoleLast"] = data["console"].slice(-1)[0];
+		targets = ["template-leftcol","template-rightcol","template-centercol","template-consolecontent",
+		"template-modalwrapper",
+		];
+		$.each(targets,function(i,o){
+			var target = o.split("-").slice(-1)[0];
+			// console.log(target);
+			var templateContent = document.getElementById(o).innerHTML;
+			Handlebars.registerHelper('isVal', function (value, test) {
+				return value == test;
+			});
+			var template = Handlebars.compile(templateContent);
+			var templateData = template(data);
+			$("#"+target).html(templateData);
+		});
+		
+
+	}
+	function getCharData(){
+		// console.log('getCharData');
+		$.get('/rpg/api/characters/{{instance.id}}/', function(response) {
+			data["char"] = response;
+			data["console"].push("Reloaded character data");
+			pushDataToTemplate();
+		});
+	}
+
+	function doPoll(){
+		// console.log(idle);
+		if (idle){
+			// console.log("not polling");
+			setTimeout(doPoll, 5000);
+		}else{
+			// console.log("polling");
+			$.get('/rpg/api/characters_updated/{{instance.id}}/', function(response) {
+		// console.log(response["updated"]);
+		// console.log(updated);
+		// console.log(response["updated"] != updated)
+		if (response["updated"] != updated){
+			// console.log("updating");
+			updated = response["updated"];
+			getCharData();
+		}else{
+			// console.log('stagnant');
+		}
+		setTimeout(doPoll, 5000);
+	});
+		}
+}
+doPoll();
+
+
+	$("a.link").click(function(){
+		console.log("CLICK");
+		link = "/getpage/"+$(this).attr("link")
+		console.log(link);
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+			console.log("RESULT");
+			console.log(result);
+			$(".center.column").find(".column.wrapper").html(result);
+		  })
+		  .fail(function(result){
+			$(".center.column").find(".column.wrapper").html('error');
+		  });
+	})
+
+	function getCard(cardid){
+		charid = $("body").attr("charid")
+		link = "/rpg/card/"+charid+"/"+cardid
+		console.log(link);
+		$.ajax({
+		  url: link,
+		  cache: false
+		})
+		  .done(function( result ) {
+			$("#"+cardid).replaceWith(result);
+		  })
+		  .fail(function(result){
+			console.log(result);
+			// $(".center.column").find(".column.wrapper").html('error');
+		  });
+	}
+
+
+	$(function(){
+	$.contextMenu({
+		selector: '.card', 
+		build: function($trigger, e) {
+			console.log($trigger)
+			console.log(e)
+			cardtype = $($trigger).attr("cardtype")
+			// this callback is executed every time the menu is to be shown
+			// its results are destroyed every time the menu is hidden
+			// e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
+			return {
+				callback: function(key, options) {
+					// var m = "clicked: " + key;
+					// window.console && console.log(m) || alert(m); 
+				},
+				items: {
+					"edit": {
+						name: "Edit "+cardtype,
+						icon: "edit",
+						callback: function(itemKey, opt, e) {
+						data["modal"] = cardtype;
+						if (cardtype != undefined){
+						$("#modalwrapper").addClass("activated")
+						$(".modal[modaltype="+cardtype+"]").addClass("activated");
+						}
+
+						}
+					},
+				}
+			};
+		}
+	});
+});
+</script>
+{% endblock %}
+</html>

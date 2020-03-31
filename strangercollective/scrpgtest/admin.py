@@ -21,7 +21,7 @@ class disadvInline(admin.TabularInline):
 	readonly_fields = ('cost',
 		# 'mods',
 		)
-	fields = ('disadvantage','	rank','cost',
+	fields = ('disadvantage','rank','cost',
 		# 'modifiers','mods'
 		)
 	extra = 0 # how many rows to 
@@ -75,7 +75,7 @@ class mapAdmin(admin.ModelAdmin):
 	pass
 
 
-admin.site.register(map,mapAdmin)
+admin.site.register(worldMap,mapAdmin)
 admin.site.register(campaign,listAdmin)
 admin.site.register(characterType,listAdmin)
 admin.site.register(race,listAdmin)

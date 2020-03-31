@@ -28,37 +28,33 @@
 	<div class="modal-content right">
 	</div>
 <script>
-	$(".close-modal").click(function(){
-		console.log(this)
-		$(this).parents(".modal").removeClass("activated");
-	})
+	
 	$("input.attributerank").change(function(){
 		charid = $("body").attr("charid")
 		attrid = $(this).attr("id")
 		rank = $(this).val()
 		// link = "/rpg/api/newpos/"+charid+"/"+possid
 		link = "/rpg/api/editattr/"+charid+"/"+attrid+"/"+rank
-		console.log(link)
 		modal = $(this).parents("div.modal")
 		$.ajax({
 		  url: link,
 		  cache: false
 		})
 		  .done(function( result ) {
-		  	modal.replaceWith(result);
+		  	// modal.replaceWith(result);
 			// $("#"+cardid).replaceWith(result);
 		  })
 		  .fail(function(result){
-		  	console.log(result);
+		  	// console.log(result);
 		  	// $("body").html(result.responseText);
 		  	// $(".center.column").find(".column.wrapper").html('error');
 		  })
 		    .always(function() {
-		    getCard("card-Character");
-		  	getCard("card-Attributes");
-		  	getCard("card-Skill");
-		  	getCard("card-Melee");
-		  	getCard("card-Range");
+		    // getCard("card-Character");
+		  	// getCard("card-Attributes");
+		  	// getCard("card-Skill");
+		  	// getCard("card-Melee");
+		  	// getCard("card-Range");
 		  });
 	});
 

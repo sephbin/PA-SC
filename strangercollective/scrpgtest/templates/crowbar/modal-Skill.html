@@ -28,10 +28,7 @@
 		</table>
 	</div>
 <script>
-	$(".close-modal").click(function(){
-		console.log(this)
-		$(this).parents(".modal").removeClass("activated");
-	})
+
 	$("input.skillrank").change(function(){
 		charid = $("body").attr("charid")
 		skillid = $(this).attr("id")

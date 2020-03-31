@@ -1,0 +1,32 @@
+{% verbatim %}
+<div class="card" id="card-Attributes" cardtype="Attributes">
+	<div class="card-header" onClick=""> <span> <table class="card-header-table"> <tr>
+		<td class="card-header-title">Attributes</td>
+		<td class="card-header-cost" thin></td>
+		</tr> </table> </span></div>
+
+	<div class="card-content">
+	<table style="width:100%">
+	<tr style="height:2em, textAlign:center">
+	<td><b>ST</b></td> <td>{{char.st}}</td><td>[<a>{{char.cost.attributes.stCost}}</a>]</td>
+	<td><b>HP</b></td> <td>{{char.hp}}</td><td>[<a>{{char.cost.attributes.hpCost}}</a>]</td>
+	<td><b>SM</b></td> <td>{{char.sm}}</td><td>[<a>{{char.cost.attributes.smCost}}</a>]</td>
+	</tr>
+	<tr style="height:2em, textAlign:center">
+	<td><b>DX</b></td><td>{{char.dx}}</td><td>[<a>{{char.cost.attributes.dxCost}}</a>]</td>
+	<td><b>Per</b></td><td>{{char.per}}</td><td>[<a>{{char.cost.attributes.perCost}}</a>]</td>
+	<td><b>BS</b></td><td>{{char.bs}}</td><td>[<a>{{char.cost.attributes.bsCost}}</a>]</td>
+	</tr>
+	<tr style="height:2em, textAlign:center">
+	<td><b>IQ</b></td><td>{{char.iq}}</td><td>[<a>{{char.cost.attributes.iqCost}}</a>]</td>
+	<td><b>Will</b></td><td>{{char.will}}</td><td>[<a>{{char.cost.attributes.willCost}}</a>]</td>
+	<td><b>BM</b></td><td>{{char.bm}}</td><td>[<a>{{char.cost.attributes.bmCost}}</a>]</td>
+	</tr>
+	<tr style="height:2em, textAlign:center">
+	<td><b>HT</b></td><td>{{char.ht}}</td><td>[<a>{{char.cost.attributes.htCost}}</a>]</td>
+	<td><b>FP</b></td><td>{{char.fp}}</td><td>[<a>{{char.cost.attributes.fpCost}}</a>]</td>
+	</tr>
+	</table>
+	</div>
+</div>
+{% endverbatim %}

@@ -10,20 +10,24 @@ from .models import *
 from .serializers import *
 # Create your views here.
 class CharacterViewSet(viewsets.ModelViewSet):
-    queryset = character.objects.all()
-    serializer_class = CharacterSerializer
+	queryset = character.objects.all()
+	serializer_class = CharacterSerializer
+
+class CharacterViewSet_Updated(viewsets.ModelViewSet):
+	queryset = character.objects.all()
+	serializer_class = CharacterSerializer_Updated
 
 class RaceViewSet(viewsets.ModelViewSet):
-    queryset = race.objects.all()
-    serializer_class = raceSerializer
+	queryset = race.objects.all()
+	serializer_class = raceSerializer
 
 class PossessionViewSet(viewsets.ModelViewSet):
-    queryset = possession.objects.all()
-    serializer_class = PossessionSerializer
+	queryset = possession.objects.all()
+	serializer_class = PossessionSerializer
 
 class CampaignViewSet(viewsets.ModelViewSet):
-    queryset = campaign.objects.all()
-    serializer_class = CampaignSerializer
+	queryset = campaign.objects.all()
+	serializer_class = CampaignSerializer
 
 def login_view(request):
 	from django.contrib.auth import login
@@ -109,7 +113,15 @@ def logout_view(request):
 def charPage(request, characterid):
 	instance = get_object_or_404(character, id=characterid)
 	context = {"instance":instance }
-	return render(request, "crowbar/base.html",context)
+	return render(request, "crowbar/base_character.html",context)
+
+def charPageTemplating(request, characterid):
+	import json
+	instance = get_object_or_404(character, id=characterid)
+	data = json.dumps(CharacterSerializer(instance).data)
+	# instance = {}
+	context = {"instance":instance, "data":data }
+	return render(request, "crowbar/character.html",context)
 
 def csCard(request, characterid, cardid):
 	instance = get_object_or_404(character, id=characterid)
@@ -249,17 +261,17 @@ def createCampaign(request):
 def CRUDMap(request, whatCampaign, whatMap = None):
 	from django.forms import ModelForm
 	if whatMap:
-		instance = get_object_or_404(map, id=whatMap)
+		instance = get_object_or_404(worldMap, id=whatMap)
 	if request.user.username != "sephbin":
 		class MapForm(ModelForm):
 			class Meta:
-				model = map
+				model = worldMap
 				# fields = '__all__'
 				fields = ['map_name', 'externalHost',]
 	else:
 		class MapForm(ModelForm):
 			class Meta:
-				model = map
+				model = worldMap
 				# fields = '__all__'
 				fields = ['map_name', 'externalHost', 'image', 'maxZoom','startZoom']
 	
@@ -322,7 +334,7 @@ def editmappaths(request, whatlayer):
 @login_required(login_url="/rpg/login/")
 def mapview(request, whatmap):
 	
-	themap = get_object_or_404(map, id=whatmap)
+	themap = get_object_or_404(worldMap, id=whatmap)
 	accessList = []
 	gms = themap.campaign.gameMaster.all()
 	players = themap.campaign.player.all()
@@ -338,7 +350,7 @@ def mapview(request, whatmap):
 		return JsonResponse({"error":"No map found!"})
 
 def externaltile(request,mapid,Z,Y,X):
-	themap = get_object_or_404(map, id=mapid)
+	themap = get_object_or_404(worldMap, id=mapid)
 	url = themap.gpntile(Z,Y,X)
 	return HttpResponseRedirect(url)
 	

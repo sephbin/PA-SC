@@ -3,15 +3,18 @@
 <html>
 <head>
 	<title>{% block title %}CROWBAR{% endblock %}</title>
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-contextmenu/2.7.1/jquery.contextMenu.min.css">
 	<script src="{% static 'crowbar/js/contextMenu/jquery.contextMenu.js' %}"></script>
+
 	<script src="{% static 'crowbar/js/contextMenu/jquery.ui.position.js' %}"></script>
+	<!-- <script src="https://cdn.tutorialjinni.com/dna.js/1.6.0/dna.js"></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
 	<link rel="stylesheet" href="{% static 'crowbar/css/base.css' %}">
 	<link rel="stylesheet" href="{% static 'crowbar/css/css-Modal.css' %}">
 	<link rel="stylesheet" href="{% static 'crowbar/css/css-Flat.css' %}">
 </head>
-<body charid="{{instance.id}}" campid="{{instance.campaign.id}}">
+<body {% block pageprops %}{%  endblock %}>
 <div class="top layout">
 		{% include "crowbar/accountButton.html"%}
 </div>
@@ -35,51 +38,105 @@
 	<div class="content wrapper">
 		{% block content %}
 		<div class="left column">
-		<div class="column wrapper">
+		<div class="column wrapper" id="leftcol">
 		{% block leftcolumn %}
 		<!-- {% include "crowbar/card-Character.html"%} -->
 		{% endblock %}
 		</div>
 		</div>
 
-        <div class="center column">
-        <div class="column wrapper">
+		<div class="center column">
+		<div class="column wrapper" id="centercol">
 		{% block centercolumn %}
-        	<table wide>
-        	</table>
+			<table wide>
+			</table>
 		{% endblock %}
-        </div>
-        </div>
-        <div class="right column">
-        <div class="column wrapper">
+		</div>
+		</div>
+		<div class="right column">
+		<div class="column wrapper" id="rightcol">
 		{% block rightcolumn %}
 		<!-- {% include "crowbar/card-Melee.html" %} -->
 		{% endblock %}
-        </div>
+		</div>
 		{% endblock %}
-        </div>
+		</div>
 	</div>
 </div>
 <div class="bottom layout">
-      <table class="console">
-      <tr>
-      <td>Console:</td> <td wide>Loaded...</td>
-      </tr>
-      </table>
+	  <table class="console">
+	  <tr>
+	  <td>Console:</td> <td id="consolecontent" wide>Loading...</td>
+	  </tr>
+	  </table>
   </div>
 
 <div class="loading hidden" style="background-image: url('{% static 'crowbar/Loading.svg' %}')">
 
 </div>
-
+<div id="modalwrapper">
+{% block modals %}
+{% endblock %}
+</div>
 </body>
 <script>
+var idle = false;
+var pollRate = 5000;
+var timeoutInMiliseconds = 10000;
+var timeoutId; 
+  
+function startTimer() {
+	// window.setTimeout returns an Id that can be used to start and stop a timer
+	timeoutId = window.setTimeout(doInactive, timeoutInMiliseconds);
+}
+function doInactive() {
+	// does whatever you need it to actually do - probably signs them out or stops polling the server for info
+	idle = true;
+	pollRate = 60000;
+	data["console"].push("Page idle");
+	pushDataToTemplate();
+	// console.log(idle);
+}
+
+function resetTimer() { 
+	window.clearTimeout(timeoutId)
+	if(idle){
+		idle = false;
+		pollRate = 5000;
+		data["console"].push("Page active");
+	}
+	// console.log(idle);
+	startTimer();
+}
+
+function setupTimers () {
+	document.addEventListener("mousemove", resetTimer, false);
+	document.addEventListener("mousedown", resetTimer, false);
+	document.addEventListener("keypress", resetTimer, false);
+	document.addEventListener("touchmove", resetTimer, false);
+	 
+	startTimer();
+}
+
+
+$(document).ready(function(){
+	// do some other initialization
+	// console.log(idle);
+	setupTimers();
+});
+
+
 	$('.button[href]').click(function(){
 		href = $(this).attr('href');
 		if(href != undefined){
 			window.location.href = href;
 		}
 	});
+	$(document).on("click", ".close-modal" , function() {
+		console.log(this)
+		$("#modalwrapper").removeClass("activated");
+		$(this).parents(".modal").removeClass("activated");
+	})
 </script>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132320002-1"></script>
@@ -90,6 +147,8 @@
 
   gtag('config', 'UA-132320002-1');
 </script>
+{% block script %}
+{% endblock %}
 
 
 </html>

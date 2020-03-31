@@ -1,0 +1,24 @@
+{% verbatim %}
+<div class="card" id="card-Disadvantage" cardtype="Disadvantages">
+	<div class="card-header" onClick=""> <span> <table class="card-header-table"> <tr>
+		<td class="card-header-title">Disdvantages</td>
+		<td class="card-header-cost" thin></td>
+		</tr> </table> </span></div>
+	<div class="card-content">
+		<table>
+
+		{{#each char.reldisadvantage}}
+		<tr >
+			<td wide >
+				<a class="link" href={{disadvantage.url}}>{{name}}</a>
+			</td>
+			<td>
+				[<a>{{cost}}</a>]
+			</td>
+		</tr>
+		{{/each}}
+		</table>
+	</div>
+</div>
+{% endverbatim %}
+

@@ -5,6 +5,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'characters', views.CharacterViewSet)
+router.register(r'characters_updated', views.CharacterViewSet_Updated)
 router.register(r'races', views.RaceViewSet)
 router.register(r'possessions', views.PossessionViewSet)
 router.register(r'campaigns', views.CampaignViewSet)
@@ -21,7 +22,8 @@ urlpatterns = [
 	path(r'createcampaign/', views.createCampaign),
 	path(r'createmap/<str:whatCampaign>/<str:whatMap>', views.CRUDMap),
 	path(r'createmap/<str:whatCampaign>', views.CRUDMap),
-	path(r'character/<int:characterid>', views.charPage),
+	path(r'character/<int:characterid>', views.charPageTemplating),
+	path(r'character/old/<int:characterid>', views.charPage),
 	path(r'card/<int:characterid>/<str:cardid>', views.csCard),
 	path(r'api/editattr/<int:characterid>/<str:attrid>/<str:attrval>', views.editattr),
 	path(r'api/newpos/<int:characterid>/<int:possessionid>', views.newpos),

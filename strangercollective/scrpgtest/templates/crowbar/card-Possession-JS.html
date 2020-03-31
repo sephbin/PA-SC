@@ -1,0 +1,31 @@
+{% verbatim %}
+<div class="card" id="card-Possession" cardtype="Possessions">
+	<div class="card-header" onClick=""> <span> <table class="card-header-table"> <tr>
+	<td class="card-header-title">Possessions</td>
+	<th class='posval' tl-right>Wt</th><th class='posval' tl-right>$</th>
+	</tr> </table> </span></div>
+	<div class="card-content">
+		<table wide>
+		{{#each char.relpossession}}
+		<tr>
+			<td thin no-wrap><a>{{ammount}}</a> x </td>
+			<td mwide>
+				<a>{{possession.possession_name}}</a>
+			</td>
+			<td class='posval' tl-right>
+				{{weight}}
+			</td>
+			<td class='posval' tl-right>
+				{{cost}}
+			</td>
+		</tr>
+		{{/each}}
+		<tr>
+			<th colspan="2" tl-right>Total</th>
+			<th tl-right>{{char.possessionTotals.weight}}</th>
+			<th tl-right>{{char.possessionTotals.cost}}</th>
+		</tr>
+		</table>
+	</div>
+</div>
+{% endverbatim %}

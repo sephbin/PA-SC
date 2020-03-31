@@ -30,7 +30,7 @@ def splitImage(ob_id):
 	if os.name == 'nt':
 		delim = "\\"
 	# print("delim",delim)
-	ob = get_object_or_404(map, id=ob_id)
+	ob = get_object_or_404(worldMap, id=ob_id)
 	im = Image.open(ob.image)
 	w, h = im.size
 	# print("wh:",w,h)
@@ -238,6 +238,8 @@ class language(models.Model):
 		return self.language_name
 
 class character(models.Model):
+	created =		models.DateTimeField(auto_now_add=True)
+	updated =		models.DateTimeField(auto_now=True)
 	campaign = models.ForeignKey(campaign, on_delete=models.CASCADE, related_name="character")
 	characterType = models.ForeignKey(characterType, on_delete=models.CASCADE)
 	firstname = models.CharField(max_length = 120)
@@ -293,6 +295,24 @@ class character(models.Model):
 			try:    allSkills.remove(cs)
 			except: pass
 		return(allSkills)
+	def meleePossessions(self):
+		instances = self.relpossession.filter()
+		excludelist = []
+		for i in instances:
+			if i.possession.meleeStatsText == "":
+				excludelist.append(i.id)
+		for el in excludelist:
+			instances = instances.exclude(id=el)
+		return instances
+	def rangePossessions(self):
+		instances = self.relpossession.filter()
+		excludelist = []
+		for i in instances:
+			if i.possession.rangeStatsText == "":
+				excludelist.append(i.id)
+		for el in excludelist:
+			instances = instances.exclude(id=el)
+		return instances
 	def possessionTotals(self):
 		cost = 0
 		weight = 0
@@ -349,7 +369,6 @@ class modPackage(models.Model):
 			txt.append(str(i))
 		txt = "; ".join(txt)
 		return txt
-
 class modifier(models.Model):
 	# modPackage = models.ForeignKey(modPackage, on_delete=models.CASCADE)
 	name = models.CharField(max_length = 120)
@@ -357,7 +376,6 @@ class modifier(models.Model):
 	modifier = models.IntegerField()
 	def __str__(self):
 		return self.name
-
 class rel_advantage(models.Model):
 	character = models.ForeignKey(character, on_delete=models.CASCADE, related_name='reladvantage')
 	advantage = models.ForeignKey(advantage, on_delete=models.CASCADE, related_name='reladvantage')
@@ -400,7 +418,6 @@ class rel_advantage(models.Model):
 			return str(self.advantage)
 	def __str__(self):
 		return str(self.rank)
-
 class rel_disadvantage(models.Model):
 	character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='reldisadvantage')
 	disadvantage =  models.ForeignKey(disadvantage, on_delete=models.CASCADE, related_name='reldisadvantage')
@@ -435,7 +452,6 @@ class rel_disadvantage(models.Model):
 			return str(self.disadvantage)
 	def __str__(self):
 		return str(self.rank)
-
 class rel_skill(models.Model):
 	character =     models.ForeignKey(character, on_delete=models.CASCADE, related_name='relskill')
 	skill =  models.ForeignKey(skill, on_delete=models.CASCADE, related_name='relskill')
@@ -562,7 +578,7 @@ class rel_language(models.Model):
 
 
 
-class map(models.Model):
+class worldMap(models.Model):
 	map_name = models.CharField(max_length=255,
 		verbose_name="Name",
 		help_text="")
@@ -663,7 +679,7 @@ class map(models.Model):
 
 
 class mapLayer(models.Model):
-	parentMap = models.ForeignKey('map', on_delete=models.CASCADE, related_name="mapfeatures")
+	parentMap = models.ForeignKey('worldMap', on_delete=models.CASCADE, related_name="mapfeatures")
 	layerName = models.CharField(max_length=255, verbose_name="Name", help_text="")
 	_geoJSON = models.CharField(max_length=9999,
 		default='{"type":"FeatureCollection","features":[]}')
@@ -674,7 +690,7 @@ class mapLayer(models.Model):
 			# return self._paths
 		except:
 			return {}
-@receiver(post_save, sender=map)
+@receiver(post_save, sender=worldMap)
 def queue_splitImage(sender, instance, created, **kwargs):
 	print(instance)
 	splitImage(instance.id)

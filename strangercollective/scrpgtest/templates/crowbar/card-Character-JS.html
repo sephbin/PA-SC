@@ -1,0 +1,12 @@
+{% verbatim %}
+<div class="card" id="card-Character" cardtype="Character">
+		<div class="card-header" onClick=""> <span> <table class="card-header-table"> <tr>
+		<td class="card-header-title">{{char.displayname}}</td>
+		<td class="card-header-cost" thin>{{char.cost.total}}</td>
+		</tr> </table> </span> </div>
+	<div class="card-content">
+	<a>{{char.occupation}}</a><br>
+	<a>{{char.status.status}}</a>
+	</div>
+</div>
+{% endverbatim %}

@@ -1,0 +1,22 @@
+{% verbatim %}
+<div class="card" id="card-Skill" cardtype="Skills">
+	<div class="card-header" onClick=""> <span> <table class="card-header-table"> <tr>
+	<td class="card-header-title">Skills</td>
+	<td class="card-header-cost" thin></td>
+	</tr> </table> </span></div>
+	<div class="card-content">
+		<table>
+		{{#each char.relskill}}
+		<tr>
+			<td wide>
+				<a>{{relative_value}}</a> - <a class="link" data-attr-link=~~skill.url~~>{{skill.skill_name}}</a> (<a>{{skill_challenge}}</a>) <a>{{relative_skill}}</a>
+			</td>
+			<td>
+				[<a>{{cost}}</a>]
+			</td>
+		</tr>
+		{{/each}}
+		</table>
+	</div>
+</div>
+{% endverbatim %}

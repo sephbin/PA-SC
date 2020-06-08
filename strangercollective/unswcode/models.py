@@ -20,7 +20,7 @@ class DataFieldFormField(forms.CharField):
 
 class DataField(models.TextField):
 	def __init__(self, *args, **kwargs):
-		kwargs['max_length'] = 9999
+		kwargs['max_length'] = 1024
 		kwargs['default'] = {}
 		kwargs['blank'] = True
 		kwargs['null'] = True
@@ -145,7 +145,7 @@ class buildingComponent(models.Model):
 	created =			models.DateTimeField(auto_now_add=True)
 	updated =			models.DateTimeField(auto_now=True)
 	hasError =			models.BooleanField(default=False)
-	errorText =			models.TextField(max_length=9999, default="", blank=True, null=True)
+	errorText =			models.TextField(max_length=255, default="", blank=True, null=True)
 	enableDelete =		models.BooleanField(default=False)
 	createdBy =			models.CharField(max_length=256, default = "default")
 	createdFunction =	models.CharField(max_length=256, default = "admin")

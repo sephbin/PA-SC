@@ -4,8 +4,9 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.utils.safestring import mark_safe
 from django.conf import settings
 from django.shortcuts import get_object_or_404, render
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_init, pre_save
 from django.dispatch import receiver
+
 
 from background_task import background
 
@@ -20,6 +21,64 @@ import requests
 # from taggit.managers import TaggableManager
 # Create your models here.
 package = str(__package__)
+
+from django import forms
+class DataFieldFormField(forms.CharField):
+
+	def prepare_value(self, value):
+		try:
+			import json
+			if value =="{}":
+				return value
+			else:
+				return json.dumps(value)
+		except Exception as e:
+			return value
+
+
+class DataField(models.TextField):
+	def __init__(self, *args, **kwargs):
+		kwargs['max_length'] = 9999
+		kwargs['default'] = {}
+		kwargs['blank'] = True
+		kwargs['null'] = True
+		super().__init__(*args, **kwargs)
+
+	def parseString(self, s):
+		import json
+		try:
+			# return "!-%s-!"%(s)
+			ns = json.loads(s)
+			return ns
+		except Exception as e:
+			return {}
+
+	def from_db_value(self, value, expression, connection):
+		if value is None:
+			return {}
+		return self.parseString(value)
+
+	def to_python(self, value):
+		try:
+			py_val = self.parseString(value)
+			return py_val
+		except Exception as e:
+			return {}
+	def get_db_prep_save(self, value, connection):
+		import json
+		try:
+			new_value = json.dumps(value)
+			return json.dumps(value)
+		except Exception as e:
+			return json.dumps({"error":str(e)})
+	def formfield(self, **kwargs):
+		# This is a fairly standard way to set up some defaults
+		# while letting the caller override them.
+		defaults = {'form_class': DataFieldFormField}
+		defaults.update(kwargs)
+		return super().formfield(**defaults)
+
+
 
 @background(schedule=1)
 def splitImage(ob_id):
@@ -690,8 +749,213 @@ class mapLayer(models.Model):
 			# return self._paths
 		except:
 			return {}
+
+from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField, StreamField
+from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.search import index
+class cmfTest(Page):
+	firstname = models.CharField(max_length = 120)
+	lastname = models.CharField(max_length = 120)
+	body = RichTextField(blank=True)
+	search_fields = Page.search_fields + [index.SearchField('firstname'),index.SearchField('lastname'),]
+	content_panels = Page.content_panels + [
+	MultiFieldPanel([FieldPanel('firstname'),FieldPanel('lastname')], heading="Name", classname="collapsible collapsed"),
+	# FieldPanel('points', classname="full"),
+	FieldPanel('body', classname="full"),
+	# FieldPanel('special_limitations', classname="full"),
+	# FieldPanel('special_enhancements', classname="full"), 
+	]
+
+class occupationtemplate(Page):
+	body = RichTextField(blank=True)
+
+	content_panels = Page.content_panels + [
+	FieldPanel('body', classname="full"),
+	]
+	def __init__(self, *args, **kwargs):
+		check = ["title","draft_title","slug"]
+		for c in check:
+			if c not in kwargs:
+					kwargs[c] = "-none-"
+		super(occupationtemplate, self).__init__(*args, **kwargs)
+
+
+class occupationtemplate_outcome(models.Model):
+	page =			models.ForeignKey('occupationtemplate', null=True, blank=True, on_delete=models.SET_NULL)
+	name =			models.CharField(max_length=255, default="name")
+	stOffset =		models.IntegerField(default=0)
+	dxOffset =		models.IntegerField(default=0)
+	iqOffset =		models.IntegerField(default=0)
+	htOffset =		models.IntegerField(default=0)
+	hpOffset =		models.IntegerField(default=0)
+	willOffset =	models.IntegerField(default=0)
+	perOffset =		models.IntegerField(default=0)
+	fpOffset =		models.IntegerField(default=0)
+	smOffset =		models.IntegerField(default=0)
+	bsOffset =		models.FloatField(default=0)
+	bmOffset =		models.IntegerField(default=0)
+	skillsText =	DataField()
+	choiceText =	DataField()
+
+	def __str__(self):
+		return self.name
+	@property
+	def secondarySkills(self):
+
+		try:
+			outText = []
+			for i in self.choiceText:
+				if i["templateType"] == "secondary skills":
+					syntaxLUT = {
+					"disperse": "A total of %(target)s points chosen from %(choiceText)s"
+					}
+					cl = []
+					for choice in i["choices"]:
+						cl.append(choice["name"])
+					cl[-1] = "and "+cl[-1]
+					i["choiceText"] = "; ".join(cl)
+					outText.append(syntaxLUT[i["choiceType"]]%i)
+			outText = ". ".join(outText)+"."
+			return outText
+		except:
+			return ""
+	@property
+	def backgroundSkills(self):
+		try:
+			outText = []
+			for i in self.choiceText:
+				if i["templateType"] == "background skills":
+					syntaxLUT = {
+					"disperse": "A total of %(target)s points chosen from %(choiceText)s"
+					}
+					cl = []
+					for choice in i["choices"]:
+						cl.append(choice["name"])
+					cl[-1] = "and "+cl[-1]
+					i["choiceText"] = "; ".join(cl)
+					outText.append(syntaxLUT[i["choiceType"]]%i)
+			outText = ". ".join(outText)+"."
+			return outText
+		except:
+			return ""
+	def save(self, *args, **kwargs):
+		from django.utils.html import strip_tags
+		import re
+		import json
+		bs = self.page.body.replace("><",">\n<")
+		bs = bs.splitlines()
+		bs = list(map(lambda x: strip_tags(x), bs))
+		skillslist = []
+		choicelist = []
+		
+		for b in bs:
+			if "Attributes" in b or "Secondary Attributes" in b or "Secondary Characteristics" in b:
+				b = b.split(": ")[1]
+				b = b.split("; ")
+				for a in b:
+					try:
+						a = re.sub('([a-z]) ([A-Z])', r'\g<1>_\g<2>', a)
+						print(a)
+						c = a.split(" ")
+						val = c[1]
+						select = c[0].lower()
+						attr = {
+						"st":{"field":"st","offset":(int(val)-10)},
+						"dx":{"field":"dx","offset":(int(val)-10)},
+						"iq":{"field":"iq","offset":(int(val)-10)},
+						"ht":{"field":"ht","offset":(int(val)-10)},
+						"hp":{"field":"hp","offset":(int(val)-self.stOffset-10)},
+						"will":{"field":"will","offset":(int(val)-self.iqOffset-10)},
+						"per":{"field":"per","offset":(int(val)-self.iqOffset-10)},
+						"fp":{"field":"fp","offset":(int(val)-self.htOffset-10)},
+						"basic_speed":{"field":"bs","offset":((float(val)*4)-(self.htOffset+self.dxOffset+20))/4},
+						"basic_move":{"field":"bm","offset":int(val)-math.floor((self.htOffset+self.dxOffset+20)/4)},
+						}
+						print(attr[select]["field"]+"Offset",attr[select])
+						attr = setattr(self, attr[select]["field"]+"Offset", attr[select]["offset"])
+					except Exception as e: print(e)
+			if "Primary Skills: " in b or "Secondary Skills: " in b or "Background Skills:" in b:
+				b = b.split(": ")
+				line = b[0].lower()
+				b = b[1]
+				b = b.replace("; and ","; ").replace(" and ","; ").replace(" /TL "," ").replace("/TL "," ")
+				b = re.sub(r" of ([A-Z])",r" of; \g<1>", b)
+				b = b.split("; ")
+				# print(">>>>>>>>>",b)
+				pausePosition = None
+				pauseType = None
+				for c in b:
+					d = c.replace(" (E) ","<SPLIT>").replace(" (A) ","<SPLIT>").replace(" (H) ","<SPLIT>").replace(" (VH) ","<SPLIT>")
+					d = d.split("<SPLIT>")
+					print("#####",c)
+					try:
+						if re.search("A total of [0-9]+? points",d[0]):
+							pausePosition = b.index(c)
+							pauseType = "disperse"
+							break
+						# print(c[1],re.search(r"\[.+?\]",c[1]))
+						if re.search(r"\[.+?\]",d[1]):
+							rank = int(re.sub(r'.+?\[(.+?)\].*',r'\g<1>',d[1])) 
+							if rank > 3:
+								rank = int((rank/4)+2)
+							outob = {"name":d[0], "rank": rank, "templateType":line, "type": "skill"}
+							if re.search(r"\bor\b",d[0]):
+								other = dict(outob)
+								other.update({"name":"other"})
+								choiceob = {
+									"choiceType": "oneOf",
+									"templateType":line,
+									"choices": [outob,other]
+								}
+								choicelist.append(choiceob)
+							else:
+								skillslist.append(outob)
+					except Exception as e:
+						print(e)
+				print(skillslist)
+				if pauseType == "disperse":
+					b = b[pausePosition:]
+					print(b[0])
+					disperseText = int(re.sub(r".+? ([0-9]*?) .*",r"\g<1>",b.pop(0)))
+
+					choiceob = {
+						"choiceType": "disperse",
+						"templateType":line,
+						"target":disperseText,
+						"choices": []
+					}
+					print(choiceob)
+					for c in b:
+						choice = re.sub(r"(.+?) \([A-Z| |a-z]+?\/.*",r"\g<1>",c)
+						choiceob["choices"].append({"name":choice, "type":"skill"})
+					choicelist.append(choiceob)
+		self.skillsText = skillslist
+		self.choiceText = choicelist
+		super(occupationtemplate_outcome, self).save(*args, **kwargs)
+
+@receiver(pre_save, sender=occupationtemplate)
+def preSaveOc(sender, instance, **kwargs):
+	from django.utils.html import strip_tags
+	print("saveing:", instance)
+	print("TITLE:",instance.title, instance.title== "-none-")
+	if instance.title == "-none-" or instance.draft_title== "-none-":
+		print("transfer body to model")
+		bs = instance.body.replace("><",">\n<")
+		bs = bs.splitlines()
+		instance.draft_title = strip_tags(bs[0])
+		instance.title = strip_tags(bs[0])
+		instance.slug = strip_tags(bs[0]).lower()
+		instance.full_clean()
+		print("altered:",instance.title, instance.draft_title, instance.slug)
+
+@receiver(post_save, sender=occupationtemplate)
+def createModelFromDocument(sender, instance, created, **kwargs):
+	occupationtemplate_outcome.objects.update_or_create(page=instance, defaults={"name":instance.title})
+
 @receiver(post_save, sender=worldMap)
 def queue_splitImage(sender, instance, created, **kwargs):
 	print(instance)
 	splitImage(instance.id)
 	print("queued split image with id: %s" %(str(sender.id)))
+

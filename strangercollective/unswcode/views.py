@@ -3,11 +3,59 @@ from django.shortcuts import get_object_or_404, render
 from django.views.decorators.csrf import csrf_exempt
 # from .forms import PostForm
 from .models import *
+from .serializers import *
 from django.contrib  import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-
+from rest_framework import viewsets
+from rest_framework import filters
+from rest_framework.settings import api_settings
+from rest_framework_csv import renderers as drfrenderer
+from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
 import json, sys, os
 # Create your views here.
+class buildingComponentViewSet(viewsets.ModelViewSet):
+	queryset = buildingComponent.objects.filter(enabled=True)
+	serializer_class = buildingComponentSerializer
+	filter_backends = [filters.OrderingFilter, filters.SearchFilter , DjangoFilterBackend, ]
+	filterset_fields = ['createdBy',]
+	search_fields = ('$data','name',)
+	ordering_fields = '__all__'
+	ordering = ['createdBy','name',]
+	renderer_classes = tuple(api_settings.DEFAULT_RENDERER_CLASSES) + (drfrenderer.CSVRenderer, )
+
+def getPayload(request):
+	d = {}
+	try:
+		d = json.loads(str(request.body, encoding='utf-8'))
+	except Exception as e:
+		print(e)
+		if request.method == "GET":
+			try:	d = dict(request.GET)
+			except: pass
+		if request.method == "POST":
+			try:	d = dict(request.POST)
+			except: d = json.loads(str(request.body, encoding='utf-8'))
+		if request.method == "DELETE":
+			try:	d = json.loads(str(request.body, encoding='utf-8'))
+			except: pass
+	return d
+
+@csrf_exempt
+def uploadBuildingComponent(request):
+	payload = getPayload(request)
+	elementModel = getattr(sys.modules[__name__], "buildingComponent")
+	try:
+		existing = get_object_or_404(elementModel, name=payload["name"], createdBy=payload["createdBy"])
+		serializer = buildingComponentSerializer(existing, data=payload)
+	except Exception as e:
+		print(e)
+		serializer = buildingComponentSerializer(data=payload)
+	if serializer.is_valid():
+		savedObject = serializer.save()
+	else:
+		print(serializer.errors)
+	return JsonResponse({"error":False, "payload":payload, "saved":buildingComponentSerializer(savedObject).data})
 
 def teacher_check(user):
 	groups = user.groups.all()

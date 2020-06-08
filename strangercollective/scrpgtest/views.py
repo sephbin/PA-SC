@@ -29,6 +29,24 @@ class CampaignViewSet(viewsets.ModelViewSet):
 	queryset = campaign.objects.all()
 	serializer_class = CampaignSerializer
 
+def getPayload(request):
+	d = {}
+	try:
+		d = json.loads(str(request.body, encoding='utf-8'))
+	except Exception as e:
+		print(e)
+		if request.method == "GET":
+			try:	d = dict(request.GET)
+			except: pass
+		if request.method == "POST":
+			try:	d = dict(request.POST)
+			except: d = json.loads(str(request.body, encoding='utf-8'))
+		if request.method == "DELETE":
+			try:	d = json.loads(str(request.body, encoding='utf-8'))
+			except: pass
+	return d
+
+
 def login_view(request):
 	from django.contrib.auth import login
 	from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -353,7 +371,33 @@ def externaltile(request,mapid,Z,Y,X):
 	themap = get_object_or_404(worldMap, id=mapid)
 	url = themap.gpntile(Z,Y,X)
 	return HttpResponseRedirect(url)
-	
+
+def ef_attribute(request, instance, edit):
+	if "." in str(edit["value"]):
+		edit["value"] = float(edit["value"])
+	else:
+		edit["value"] = int(edit["value"])
+
+	setattr(instance, edit["key"], edit["value"])
+
+@csrf_exempt
+def editanything(request, characterid):
+	instance = get_object_or_404(character, id=characterid)
+	if request.method == "POST":
+		pl = getPayload(request)
+		for edit in pl["edits"]:
+			eval("ef_"+edit["type"]+"(request, instance, edit)")
+		instance.save()
+
+
+		out = {
+			"payload": CharacterSerializer(instance).data,
+			"meta":pl
+		}
+		return JsonResponse(out)
+
+
+
 # def home(request):
 # 	instance = get_object_or_404(character, id=1)
 # 	context = {"instance":instance}

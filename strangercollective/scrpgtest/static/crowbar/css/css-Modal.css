@@ -32,6 +32,9 @@
 	top: var(--nav_size);
 	bottom: var(--nav_size);
 }
+.modal-content{
+	padding-top: 3em;
+}
 .modal-content.left{
 	position: absolute;
 	padding: 1em;
@@ -39,7 +42,7 @@
 	top:0px;
 	bottom:0px; 
 	right:50%;
-	padding-top: 3em;
+	
 }
 .modal-content.right{
 	background: #333;
@@ -49,7 +52,6 @@
 	top:0px;
 	bottom:0px; 
 	right:0px;
-	padding-top: 3em;
 }
 .close-modal{
 	cursor: pointer;

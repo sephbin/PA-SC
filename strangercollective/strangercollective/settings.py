@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # 'jet',
+    'rest_framework',
+    'django_filters',
     'markdownx',
     'django.contrib.admin',
     'polls.apps.PollsConfig',
@@ -41,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     
     ##Wagtail
     'wagtail.contrib.forms',

@@ -1,5 +1,14 @@
 from django.urls import path
 from . import views
+from django.conf.urls import url, include
+from rest_framework import routers
+
+
+
+router = routers.DefaultRouter()
+router.register(r'buildingcomponents', views.buildingComponentViewSet)
+
+
 
 app_name = 'unswcode'
 urlpatterns = [
@@ -14,4 +23,7 @@ urlpatterns = [
     path(r'test/results/<str:testName>', views.marklist),
     path(r'get_test_question/<str:question>', views.get_test_question),
     path(r'function/changemarks', views.changemarks),
+    url(r'^api/', include(router.urls)),
+    path(r'api/uploadBuildingComponent/', views.uploadBuildingComponent),
+    url(r'^api/api-auth/', include('rest_framework.urls')),
 ]

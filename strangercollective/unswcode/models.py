@@ -4,6 +4,62 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 import json
+from django import forms
+class DataFieldFormField(forms.CharField):
+
+	def prepare_value(self, value):
+		try:
+			import json
+			if value =="{}":
+				return value
+			else:
+				return json.dumps(value)
+		except Exception as e:
+			return value
+
+
+class DataField(models.TextField):
+	def __init__(self, *args, **kwargs):
+		kwargs['max_length'] = 9999
+		kwargs['default'] = {}
+		kwargs['blank'] = True
+		kwargs['null'] = True
+		super().__init__(*args, **kwargs)
+
+	def parseString(self, s):
+		import json
+		try:
+			# return "!-%s-!"%(s)
+			ns = json.loads(s)
+			return ns
+		except Exception as e:
+			return {}
+
+	def from_db_value(self, value, expression, connection):
+		if value is None:
+			return {}
+		return self.parseString(value)
+
+	def to_python(self, value):
+		try:
+			py_val = self.parseString(value)
+			return py_val
+		except Exception as e:
+			return {}
+	def get_db_prep_save(self, value, connection):
+		import json
+		try:
+			new_value = json.dumps(value)
+			return json.dumps(value)
+		except Exception as e:
+			return json.dumps({"error":str(e)})
+	def formfield(self, **kwargs):
+		# This is a fairly standard way to set up some defaults
+		# while letting the caller override them.
+		defaults = {'form_class': DataFieldFormField}
+		defaults.update(kwargs)
+		return super().formfield(**defaults)
+
 
 class profile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -81,3 +137,56 @@ class testquestion(models.Model):
 			return json.loads(self._archjson)
 		except:
 			return {}
+
+
+class buildingComponent(models.Model):
+	name =				models.CharField(max_length=256, default = "-empty name-")
+	enabled =			models.BooleanField(default=True)
+	created =			models.DateTimeField(auto_now_add=True)
+	updated =			models.DateTimeField(auto_now=True)
+	hasError =			models.BooleanField(default=False)
+	errorText =			models.TextField(max_length=9999, default="", blank=True, null=True)
+	enableDelete =		models.BooleanField(default=False)
+	createdBy =			models.CharField(max_length=256, default = "default")
+	createdFunction =	models.CharField(max_length=256, default = "admin")
+
+	data =				DataField()
+	class Meta:
+		ordering = ['name']
+		unique_together = [['name','createdBy']]
+	def delete_start(self):
+		pass
+
+	def delete_end(self):
+		pass
+
+	def delete(self):
+		self.delete_start()
+		#print("delete: %s" %(self))
+		if self.enableDelete:
+			super(buildingComponent, self).delete()
+		else:
+			self.enabled = False
+			self.save()
+		self.delete_end()
+
+	def save_start(self):
+		#print("default: save_start")
+		pass
+
+	def save_end(self):
+		#print("default: save_end")
+		pass
+
+	def save(self, *args, **kw ):
+		self.save_start()
+		try:
+			upd = self.previous_state["data"]
+			#print(upd)
+			if upd != self.data:
+				upd.update(self.data)
+				self.data = upd
+		except Exception as e: pass
+		super( buildingComponent, self ).save( *args, **kw )
+		self.save_end()
+

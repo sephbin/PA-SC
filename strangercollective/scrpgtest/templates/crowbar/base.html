@@ -81,6 +81,7 @@
 </body>
 <script>
 var idle = false;
+var pause = false;
 var pollRate = 5000;
 var timeoutInMiliseconds = 10000;
 var timeoutId; 
@@ -94,7 +95,6 @@ function doInactive() {
 	idle = true;
 	pollRate = 60000;
 	data["console"].push("Page idle");
-	pushDataToTemplate();
 	// console.log(idle);
 }
 
@@ -125,13 +125,41 @@ $(document).ready(function(){
 	setupTimers();
 });
 
-
+function getHtml(ob){
+	valType = $(ob).attr("valtype");
+	if (valType == "int"){
+		return parseInt($(ob).html())
+	}
+	if (valType == "float"){
+		return parseFloat($(ob).html())
+	}
+}
 	$('.button[href]').click(function(){
 		href = $(this).attr('href');
 		if(href != undefined){
 			window.location.href = href;
 		}
 	});
+
+	// $(document).on( "keydown", "[contenteditable]", function(event) {
+	// 	console.log(event.which);
+	// 	console.log(String.fromCharCode(event.which));
+	// 	validType = $(this).attr("valtype");
+	// 	console.log("keydown", this);
+	// 	if (validType == "int"){
+	// 		// console.log("KEYDOWN",event);
+	// 		console.log($(this));
+	// 		console.log($(this).html());
+	// 		if(isNaN(parseInt(event.delegateTarget.activeElement.innerHTML))) {
+	// 		event.preventDefault();
+	// 		}
+	// 	}
+	// 	if (validType == "float"){
+	// 		if(event.which != 8 && event.which !=46 && isNaN(parseFloat($(this).html())))	{
+	// 		event.preventDefault(); 
+	// 		}
+	// 	}
+	// });
 	$(document).on("click", ".close-modal" , function() {
 		console.log(this)
 		$("#modalwrapper").removeClass("activated");

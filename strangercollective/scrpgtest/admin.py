@@ -74,6 +74,10 @@ class mapAdmin(admin.ModelAdmin):
 	# fields = ('map_name', 'campaign', 'image', 'maxZoom')
 	pass
 
+class occupationtemplate_outcomeAdmin(admin.ModelAdmin):
+	readonly_fields = ["secondarySkills","backgroundSkills",]
+	pass
+
 
 admin.site.register(worldMap,mapAdmin)
 admin.site.register(campaign,listAdmin)
@@ -93,3 +97,4 @@ admin.site.register(rel_possession,listAdmin)
 admin.site.register(possession_category)
 admin.site.register(rel_skill)
 admin.site.register(mapLayer)
+admin.site.register(occupationtemplate_outcome,occupationtemplate_outcomeAdmin)

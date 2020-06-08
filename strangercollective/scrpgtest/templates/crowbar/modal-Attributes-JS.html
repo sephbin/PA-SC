@@ -1,63 +1,110 @@
 {% verbatim %}
+<style>
+	.editableattr{
+		text-align: center;
+	}
+	.attributerank{
+		width: 4em;
+		background: rgba(255,255,255,0.2);
+	}
+	.attributewrapper td{
+		position: relative;
+	}
+	.attributewrapper{
+		width: 50%;
+	}
+	.attributewrapper{width:100%;
+	padding-right:15px;
+	padding-left:15px;
+	margin-right:auto;
+	margin-left:auto}
+
+	@media (min-width:576px){
+		.attributewrapper{
+
+		max-width:calc(90px * 3)}
+
+	}
+
+	@media (min-width:768px){
+		.attributewrapper{
+		max-width:calc(90px * 4)}
+
+	}
+
+	@media (min-width:992px){
+		.attributewrapper{
+		max-width:calc(90px * 7)}
+
+	}
+
+	@media (min-width:1200px){
+		.attributewrapper{
+		max-width:calc(90px * 8)}
+
+	}
+	[ta-right]{
+		text-align:right;
+	}
+</style>
 <div class="modal {{#if (isVal modal "Attributes")}}activated{{/if}}" id="modal-Attributes" modaltype="Attributes">
 	<div class="close-modal">X</div>
-	<div class="modal-content left">
-			<div class="card-content">
-			<table style="width:100%">
-			<tr style="height:2em, textAlign:center">
-			<td><b>ST</b></td> <td>		<input	class="attributerank"	id="st"		value="{{char.st}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.stCost}}]</td>
-			<td><b>HP</b></td> <td>		<input	class="attributerank"	id="hp"		value="{{char.hp}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.hpCost}}]</td>
-			<td><b>SM</b></td> <td>		<input	class="attributerank"	id="sm"		value="{{char.sm}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.smCost}}]</td>
-			</tr>
-			<tr style="height:2em, textAlign:center">
-			<td><b>DX</b></td><td>		<input	class="attributerank"	id="dx"		value="{{char.dx}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.dxCost}}]</td>
-			<td><b>Per</b></td><td>		<input	class="attributerank"	id="per"	value="{{char.per}}"	type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.perCost}}]</td>
-			<td><b>BS</b></td><td>		<input	class="attributerank"	id="bs"		value="{{char.bs}}"		type="number"	autocomplete="off" step="0.25" /></td><td>[{{char.cost.attributes.bsCost}}]</td>
-			</tr>
-			<tr style="height:2em, textAlign:center">
-			<td><b>IQ</b></td><td>		<input	class="attributerank"	id="iq"		value="{{char.iq}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.iqCost}}]</td>
-			<td><b>Will</b></td><td>	<input	class="attributerank"	id="will"	value="{{char.will}}"	type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.willCost}}]</td>
-			<td><b>BM</b></td><td>		<input	class="attributerank"	id="bm"		value="{{char.bm}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.bmCost}}]</td>
-			</tr>
-			<tr style="height:2em, textAlign:center">
-			<td><b>HT</b></td><td>		<input	class="attributerank"	id="ht"		value="{{char.ht}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.htCost}}]</td>
-			<td><b>FP</b></td><td>		<input	class="attributerank"	id="fp"		value="{{char.fp}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.fpCost}}]</td>
-			</tr>
-			</table>
-			</div>
-	</div>
-	<div class="modal-content right">
-	</div>
+
+	<!-- <div class="modal-content left"> -->
+			<div class="modal-content">
+				<div class="attributewrapper">
+							<div class="card-content">
+									<table style="width:100%">
+									<tr style="height:4em; textAlign:center">
+									<td ta-right><b>ST</b></td> <td id="st" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.st}}</td> <td id="stCost" class="editableattr">[{{char.cost.attributes.stCost}}] </td>
+									<td ta-right><b>HP</b></td> <td id="hp" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.hp}}</td><td id="hpCost" class="editableattr">[{{char.cost.attributes.hpCost}}] </td>
+									<td ta-right><b>SM</b></td> <td id="sm" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.sm}}</td><td id="smCost" class="editableattr">[{{char.cost.attributes.smCost}}] </td>
+									</tr>
+									<tr style="height:4em; textAlign:center">
+									<td ta-right><b>DX</b></td> <td id="dx" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.dx}}</td> <td id="dxCost" class="editableattr">[{{char.cost.attributes.dxCost}}] </td>
+									<td ta-right><b>Per</b></td> <td id="per" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.per}}</td><td id="perCost" class="editableattr">[{{char.cost.attributes.perCost}}] </td>
+									<td ta-right><b>BS</b></td> <td id="bs" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="float">{{char.bs}}</td><td id="bsCost" class="editableattr">[{{char.cost.attributes.bsCost}}] </td>
+									</tr>
+									<tr style="height:4em; textAlign:center">
+									<td ta-right><b>IQ</b></td> <td id="iq" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.iq}}</td> <td id="iqCost" class="editableattr">[{{char.cost.attributes.iqCost}}] </td>
+									<td ta-right><b>Will</b></td> <td id="will" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.will}}</td><td id="willCost" class="editableattr">[{{char.cost.attributes.willCost}}] </td>
+									<td ta-right><b>BM</b></td> <td id="bm" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.bm}}</td><td id="bmCost" class="editableattr">[{{char.cost.attributes.bmCost}}] </td>
+									</tr>
+									<tr style="height:4em; textAlign:center">
+									<td ta-right><b>HT</b></td> <td id="ht" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.ht}}</td> <td id="htCost" class="editableattr">[{{char.cost.attributes.htCost}}] </td>
+									<td ta-right><b>FP</b></td> <td id="fp" class="editableattr attributerank" pytype="attribute" contenteditable="true" valtype="int">{{char.fp}}</td><td id="fpCost" class="editableattr">[{{char.cost.attributes.fpCost}}] </td>
+									</tr>
+			
+									<!-- <tr style="height:2em, textAlign:center"> -->
+									<!-- <td><b>ST</b></td> <td>		<input	class="attributerank" pytype="attribute"	id="st"		value="{{char.st}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.stCost}}]</td> -->
+									<!-- <td><b>HP</b></td> <td>		<input	class="attributerank" pytype="attribute"	id="hp"		value="{{char.hp}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.hpCost}}]</td> -->
+									<!-- <td><b>SM</b></td> <td>		<input	class="attributerank" pytype="attribute"	id="sm"		value="{{char.sm}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.smCost}}]</td> -->
+									<!-- </tr> -->
+									<!-- <tr style="height:2em, textAlign:center"> -->
+									<!-- <td><b>DX</b></td><td>		<input	class="attributerank" pytype="attribute"	id="dx"		value="{{char.dx}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.dxCost}}]</td> -->
+									<!-- <td><b>Per</b></td><td>		<inpuzt	class="attributerank" pytype="attribute"	id="per"	value="{{char.per}}"	type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.perCost}}]</td> -->
+									<!-- <td><b>BS</b></td><td>		<input	class="attributerank" pytype="attribute"	id="bs"		value="{{char.bs}}"		type="number"	autocomplete="off" step="0.25" /></td><td>[{{char.cost.attributes.bsCost}}]</td> -->
+									<!-- </tr> -->
+									<!-- <tr style="height:2em, textAlign:center"> -->
+									<!-- <td><b>IQ</b></td><td>		<input	class="attributerank" pytype="attribute"	id="iq"		value="{{char.iq}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.iqCost}}]</td> -->
+									<!-- <td><b>Will</b></td><td>	<input	class="attributerank" pytype="attribute"	id="will"	value="{{char.will}}"	type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.willCost}}]</td> -->
+									<!-- <td><b>BM</b></td><td>		<input	class="attributerank" pytype="attribute"	id="bm"		value="{{char.bm}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.bmCost}}]</td> -->
+									<!-- </tr> -->
+									<!-- <tr style="height:2em, textAlign:center"> -->
+									<!-- <td><b>HT</b></td><td>		<input	class="attributerank" pytype="attribute"	id="ht"		value="{{char.ht}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.htCost}}]</td> -->
+									<!-- <td><b>FP</b></td><td>		<input	class="attributerank" pytype="attribute"	id="fp"		value="{{char.fp}}"		type="number"	autocomplete="off"/></td><td>[{{char.cost.attributes.fpCost}}]</td> -->
+									<!-- </tr> -->
+									</table>
+									<div class="save-modal">Save</div>
+									</div></div>
+					</div>
+	<!-- </div> -->
+	<!-- <div class="modal-content right"> -->
+	<!-- </div> -->
 <script>
-	
-	$("input.attributerank").change(function(){
-		charid = $("body").attr("charid")
-		attrid = $(this).attr("id")
-		rank = $(this).val()
-		// link = "/rpg/api/newpos/"+charid+"/"+possid
-		link = "/rpg/api/editattr/"+charid+"/"+attrid+"/"+rank
-		modal = $(this).parents("div.modal")
-		$.ajax({
-		  url: link,
-		  cache: false
-		})
-		  .done(function( result ) {
-		  	// modal.replaceWith(result);
-			// $("#"+cardid).replaceWith(result);
-		  })
-		  .fail(function(result){
-		  	// console.log(result);
-		  	// $("body").html(result.responseText);
-		  	// $(".center.column").find(".column.wrapper").html('error');
-		  })
-		    .always(function() {
-		    // getCard("card-Character");
-		  	// getCard("card-Attributes");
-		  	// getCard("card-Skill");
-		  	// getCard("card-Melee");
-		  	// getCard("card-Range");
-		  });
-	});
+
+
+
 
 
 </script>

@@ -35,7 +35,10 @@
 </script>
 
 <script id="template-centercol" type="text/x-handlebars-template">
-{{data|safe}}
+<!-- {{data|safe}} -->
+{% verbatim %}
+{{console}}
+{% endverbatim %}
 </script>
 
 
@@ -50,24 +53,53 @@
 
 
 <script type="text/javascript">
-	updated = '{{instance.updated|date:"c"}}'
+	var updated = '{{instance.updated|date:"c"}}'
+	var charid = {{instance.id}};
+
 	var data = {
 		console: ["Loaded..."],
 		modal: "",
-		char: {{data|safe}}
+		char: {{data|safe}},
+		dynLUT : {
+			"st": {"rate":10, "base":10, "effect":[{"key":"hp", "rate":1}]},
+			"hp": {"rate":2, "base":"st", "effect":[]},
+			"dx": {"rate":20, "base":10, "effect":[{"key":"bs", "rate":0.25}]},
+			"iq": {"rate":20, "base":10, "effect":[{"key":"will", "rate":1},{"key":"per", "rate":1}]},
+			"ht": {"rate":10, "base":10, "effect":[{"key":"fp", "rate":1},{"key":"bs", "rate":0.25}]},
+			"will": {"rate":5, "base":"iq", "effect":[]},
+			"per": {"rate":5, "base":"iq", "effect":[]},
+			"fp": {"rate":3, "base":"ht", "effect":[]},
+			"sm": {"rate":0, "base":0, "effect":[]},
+			"bm": {"rate":5, "base":"Math.floor(bs)", "effect":[]},
+			"bs": {"rate":20, "base":"(dx+ht)/4", "effect":[{"key":"bm", "type":"discrete", "rate":1}]},
+		}
 		};
 	pushDataToTemplate();
-	
+
+function parseHTML(ob){
+	var outVal = getHtml(ob);
+	if (ob.attr("valtype") == "int"){
+		outVal = parseInt(outVal)
+	}else if (ob.attr("valtype") == "float"){
+		outVal = parseFloat(outVal)
+	}
+	return outVal
+}
+
 	function pushDataToTemplate(){
-		// console.log('pushDataToTemplate');
+		//console.log("pushDataToTemplate >>>> 0");
+		//// console.log('pushDataToTemplate');
 		// data["consoleLast"] = data["console"][-1];
+		//console.log(data);
 		data["consoleLast"] = data["console"].slice(-1)[0];
+		//console.log("pushDataToTemplate >>>> 1");
 		targets = ["template-leftcol","template-rightcol","template-centercol","template-consolecontent",
 		"template-modalwrapper",
 		];
+		//console.log("pushDataToTemplate >>>> 2");
 		$.each(targets,function(i,o){
 			var target = o.split("-").slice(-1)[0];
-			// console.log(target);
+			//// console.log(target);
 			var templateContent = document.getElementById(o).innerHTML;
 			Handlebars.registerHelper('isVal', function (value, test) {
 				return value == test;
@@ -76,11 +108,13 @@
 			var templateData = template(data);
 			$("#"+target).html(templateData);
 		});
+		//console.log("pushDataToTemplate >>>> 3");
 		
 
 	}
 	function getCharData(){
-		// console.log('getCharData');
+		//console.log('getCharData >>>> 0');
+		//console.log(data);
 		$.get('/rpg/api/characters/{{instance.id}}/', function(response) {
 			data["char"] = response;
 			data["console"].push("Reloaded character data");
@@ -89,22 +123,22 @@
 	}
 
 	function doPoll(){
-		// console.log(idle);
-		if (idle){
-			// console.log("not polling");
+		//// console.log(idle);
+		if (idle || pause){
+			//// console.log("not polling");
 			setTimeout(doPoll, 5000);
 		}else{
-			// console.log("polling");
+			//// console.log("polling");
 			$.get('/rpg/api/characters_updated/{{instance.id}}/', function(response) {
-		// console.log(response["updated"]);
-		// console.log(updated);
-		// console.log(response["updated"] != updated)
+		//console.log(response["updated"]);
+		//console.log(updated);
+		//console.log(response["updated"] != updated)
 		if (response["updated"] != updated){
-			// console.log("updating");
+			//// console.log("updating");
 			updated = response["updated"];
 			getCharData();
 		}else{
-			// console.log('stagnant');
+			//// console.log('stagnant');
 		}
 		setTimeout(doPoll, 5000);
 	});
@@ -114,16 +148,16 @@ doPoll();
 
 
 	$("a.link").click(function(){
-		console.log("CLICK");
+		//console.log("CLICK");
 		link = "/getpage/"+$(this).attr("link")
-		console.log(link);
+		//console.log(link);
 		$.ajax({
 		  url: link,
 		  cache: false
 		})
 		  .done(function( result ) {
-			console.log("RESULT");
-			console.log(result);
+			//console.log("RESULT");
+			//console.log(result);
 			$(".center.column").find(".column.wrapper").html(result);
 		  })
 		  .fail(function(result){
@@ -134,7 +168,7 @@ doPoll();
 	function getCard(cardid){
 		charid = $("body").attr("charid")
 		link = "/rpg/card/"+charid+"/"+cardid
-		console.log(link);
+		//console.log(link);
 		$.ajax({
 		  url: link,
 		  cache: false
@@ -143,44 +177,183 @@ doPoll();
 			$("#"+cardid).replaceWith(result);
 		  })
 		  .fail(function(result){
-			console.log(result);
+			//console.log(result);
 			// $(".center.column").find(".column.wrapper").html('error');
 		  });
 	}
+$(document).on('focus', '[contenteditable]', function() {
+	const $this = $(this);
+	$this.data('before', parseHTML($this));
+}).on('blur keyup paste input', '[contenteditable]', function() {
+	const $this = $(this);
+	validType = $this.attr("valtype");
+	hval = $this.html()
+	val = getHtml($this);
+	// console.log(String(hval), String(val));
+	if (String(val) != String(hval)){
+		console.log("WHAT?")
+		$this.html(val);
+	}
+	// if (validType == "int"){
+	// 	console.log(parseInt($this.html()));
+	// }
+	// console.log(val);
+	if ($this.data('before') !== val) {
+		// $this.html(val);
+		// $this.data('before', $this.html());
+		
+		$this.trigger('change');
+	}
+});
 
 
-	$(function(){
-	$.contextMenu({
-		selector: '.card', 
-		build: function($trigger, e) {
-			console.log($trigger)
-			console.log(e)
-			cardtype = $($trigger).attr("cardtype")
-			// this callback is executed every time the menu is to be shown
-			// its results are destroyed every time the menu is hidden
-			// e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
-			return {
-				callback: function(key, options) {
-					// var m = "clicked: " + key;
-					// window.console && console.log(m) || alert(m); 
-				},
-				items: {
-					"edit": {
-						name: "Edit "+cardtype,
-						icon: "edit",
-						callback: function(itemKey, opt, e) {
-						data["modal"] = cardtype;
-						if (cardtype != undefined){
-						$("#modalwrapper").addClass("activated")
-						$(".modal[modaltype="+cardtype+"]").addClass("activated");
-						}
+$(document).on("change","[contenteditable]", function(){
+	console.log("editableattr changed!!");
+	$(this).addClass("changed");
+	var $this = $(this);
+	var before = $this.data('before');
+	console.log("this, before", $this, before);
+	$this.data('before', parseHTML($this));
+	type = $(this).attr("pytype");
+	console.log("type",type);
+	if (type =="attribute"){
+		var st = parseHTML($("#st"));
+		var dx = parseHTML($("#dx"));
+		var iq = parseHTML($("#iq"));
+		var ht = parseHTML($("#ht"));
+		var hp = parseHTML($("#hp"));
+		var per = parseHTML($("#per"));
+		var will = parseHTML($("#will"));
+		var ht = parseHTML($("#ht"));
+		var sm = parseHTML($("#sm"));
+		var bs = parseHTML($("#bs"));
+		var bm = parseHTML($("#bm"));
+		$("#bm").data('before', bm);
 
-						}
-					},
-				}
-			};
+
+		var now = parseHTML($this);
+		var dif = now-before;
+		console.log("now, before, dif",now, before, dif)
+		var id = $this.attr("id");
+		console.log(data["dynLUT"],id)
+		var lu = data["dynLUT"][id];
+		rate = lu["rate"];
+		if(typeof(lu["base"]) == typeof("")){
+			var base = eval(lu["base"]);
+		}else{
+			var base = lu["base"];
 		}
-	});
+		totalCost = (now-base)*rate;
+		$("#"+id+"Cost").html(`[${totalCost}]`);
+		$.each(lu["effect"],function(i,o){
+			console.log("vvv effect vvv");
+			var $effectedKey = $("#"+o["key"]);
+			var effectedVal = parseHTML($effectedKey);
+			rate = o["rate"]
+			extra = 0;
+			if (o["type"] == "discrete"){
+				extra = (Math.floor(now) - Math.floor(before))*rate
+				rate = 0;
+			}
+
+			change = (dif*rate)+extra
+			result = effectedVal+change;
+			console.log("dif->",dif, o, effectedVal, change, result);
+			var newValue = result
+			$effectedKey.html(newValue);
+			if ($effectedKey.data('before') == undefined){
+				$effectedKey.data('before', effectedVal);
+			}
+			$effectedKey.trigger('change');
+			console.log("^^^ effect ^^^");
+		});
+		console.log(before, now, dif);
+	}
+
+});
+$(document).on("click",".save-modal", function(){
+		pause = true;
+
+
+		link = `/rpg/api/edit/${charid}/`
+		postdata = {
+			"edits": []
+			// {"type":"attribute", "key":attrid, "value": rank }
+		}
+		$(".changed").each(function(i,o){
+			obType = $(o).attr("pytype");
+			if(obType == 'attribute'){
+				key = $(o).attr("id");
+				val = getHtml(o);
+				apob = {
+					"type":"attribute",
+					"key":key,
+					"value": val
+				};
+				postdata["edits"].push(apob);
+			}
+		});
+		console.log(postdata);
+		$(".loading").removeClass("hidden");
+		$("#modalwrapper").removeClass("activated");
+		data["modal"] = undefined;
+		$(this).parents(".modal").removeClass("activated");
+		$.ajax({
+			method: "POST",
+			url: link,
+			cache: false,
+			data: JSON.stringify(postdata),
+		})
+			.done(function( result ) {
+				console.log("AJAX RESULT")
+				console.log(result["payload"]);
+				data["char"] = result["payload"];
+				updated = result["payload"]["updated"];
+				console.log(data);
+				console.log("return")
+				pushDataToTemplate();
+			})
+			.fail(function(result){
+				console.log(result);
+			})
+			.always(function() {
+				pause = false;
+				$(".loading").addClass("hidden");
+			});
+});
+
+$(function(){
+$.contextMenu({
+	selector: '.card', 
+	build: function($trigger, e) {
+		//console.log($trigger)
+		//console.log(e)
+		cardtype = $($trigger).attr("cardtype")
+		// this callback is executed every time the menu is to be shown
+		// its results are destroyed every time the menu is hidden
+		// e is the original contextmenu event, containing e.pageX and e.pageY (amongst other data)
+		return {
+			callback: function(key, options) {
+				// var m = "clicked: " + key;
+				//// window.console && console.log(m) || alert(m); 
+			},
+			items: {
+				"edit": {
+					name: "Edit "+cardtype,
+					icon: "edit",
+					callback: function(itemKey, opt, e) {
+					data["modal"] = cardtype;
+					if (cardtype != undefined){
+					$("#modalwrapper").addClass("activated")
+					$(".modal[modaltype="+cardtype+"]").addClass("activated");
+					}
+
+					}
+				},
+			}
+		};
+	}
+});
 });
 </script>
 {% endblock %}

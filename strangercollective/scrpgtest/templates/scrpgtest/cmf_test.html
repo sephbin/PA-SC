@@ -1,0 +1,6 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+{% load custom %}
+{{ page.firstname }}
+{{ page.lastname }}
+{{ page.body|richtext |dyntext| safe }}

@@ -34,6 +34,7 @@ urlpatterns = [
 	path(r'api/newadvantage/<int:characterid>/<int:traitid>', views.newadvantage),
 	path(r'api/remadvantage/<int:characterid>/<int:traitid>', views.remadvantage),
 	path(r'api/ediadvantagemodal/<int:characterid>/<int:traitid>', views.ediadvantagemodal),
+	path(r'api/edit/<int:characterid>/', views.editanything),
 	url(r'api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),

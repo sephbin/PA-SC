@@ -214,7 +214,7 @@ def submit_test_question(request):
 			r = json.loads(data)
 			created = True
 			try:
-				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test=["test"])
+				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test__testName=r["test"])
 				if testEnd.endTime > datetime.now():
 					r["score"] = 2
 				else:

@@ -9,6 +9,7 @@ router.register(r'characters_updated', views.CharacterViewSet_Updated)
 router.register(r'races', views.RaceViewSet)
 router.register(r'possessions', views.PossessionViewSet)
 router.register(r'campaigns', views.CampaignViewSet)
+router.register(r'chatacter_templates', views.characterTemplate_ViewSet)
 
 app_name = 'scrpgtest'
 urlpatterns = [
@@ -35,6 +36,7 @@ urlpatterns = [
 	path(r'api/remadvantage/<int:characterid>/<int:traitid>', views.remadvantage),
 	path(r'api/ediadvantagemodal/<int:characterid>/<int:traitid>', views.ediadvantagemodal),
 	path(r'api/edit/<int:characterid>/', views.editanything),
+	path(r'editanything/<str:thing>/<str:thingId>', views.edit_thing),
 	url(r'api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),
     # path(r'', views.home),

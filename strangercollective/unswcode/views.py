@@ -176,10 +176,11 @@ def get_test_question(request, question):
 	try:
 		tq = get_object_or_404(testquestion, questionName = question)
 		outob = {
-		"questionName"	:	tq.questionName,
-		"questionText"	:	tq.questionText,
-		"questionHint"	:	tq.questionHint,
-		"archjson"		:	tq.archjson(),
+		"questionName"		:	tq.questionName,
+		"questionText"		:	tq.questionText,
+		"questionHint"		:	tq.questionHint,
+		"archjson"			:	tq.archjson(),
+		"questionAccuracy"	:	tq.questionAccuracy,
 		}
 		return JsonResponse(outob)
 	except:
@@ -189,6 +190,7 @@ def get_test_question(request, question):
 
 @csrf_exempt
 def submit_test_question(request):
+	from datetime import datetime
 	'''
 	test = models.CharField(max_length=256)
 	identifier = models.CharField(max_length=256)
@@ -210,8 +212,13 @@ def submit_test_question(request):
 		try:
 			data = request.POST["data"]
 			r = json.loads(data)
-			created = True	
+			created = True
 			try:
+				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test=["test"])
+				if testEnd.endTime > datetime.now():
+					r["score"] = 2
+				else:
+					r["score"] = 1
 				obj = testresult(**r).save()
 			except:
 				created = False

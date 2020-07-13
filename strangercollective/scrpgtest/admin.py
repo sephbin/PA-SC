@@ -58,7 +58,7 @@ class possessionModelAdmin(admin.ModelAdmin):
 
 class skillModelAdmin(admin.ModelAdmin):
 	filter_horizontal = ('campaign',) 
-
+	search_fields = ["skill_name"]
 
 class modPackageAdmin(admin.ModelAdmin):
 	# inlines = (modInline,)
@@ -78,6 +78,18 @@ class occupationtemplate_outcomeAdmin(admin.ModelAdmin):
 	readonly_fields = ["secondarySkills","backgroundSkills",]
 	pass
 
+class rel_skill_template_Inline(admin.TabularInline):
+	model = rel_skill_template
+	# readonly_fields = ()
+	autocomplete_fields = ("skill",)
+	fields = (
+		'skill',
+		'rank',
+		)
+	extra = 0
+class characterTemplate_Admin(admin.ModelAdmin):
+	model = characterTemplate
+	inlines = (rel_skill_template_Inline,)
 
 admin.site.register(worldMap,mapAdmin)
 admin.site.register(campaign,listAdmin)
@@ -98,3 +110,5 @@ admin.site.register(possession_category)
 admin.site.register(rel_skill)
 admin.site.register(mapLayer)
 admin.site.register(occupationtemplate_outcome,occupationtemplate_outcomeAdmin)
+admin.site.register(characterTemplate, characterTemplate_Admin)
+admin.site.register(rel_skill_template)

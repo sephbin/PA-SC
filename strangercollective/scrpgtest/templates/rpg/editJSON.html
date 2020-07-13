@@ -1,0 +1,87 @@
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="{% static 'rpg/js/vendor/jquery-2.1.4.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor-minimalist.js" integrity="sha256-hqkZ8AhvgpjMEy/7p8Ft4mNa/dSgYFqbXbdZpOv/7+g=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor.min.css" integrity="sha256-thQmdfrg82/N5u9ybMxam1RKdSfaxOPCgl5q9AI/mDI=" crossorigin="anonymous" />
+	<style>
+		.jsoneditor-text {
+			resize: vertical !important;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="jedit" id="jedit"></div>
+
+
+</div>
+</div>
+
+
+	<script>
+		var data = {{instance|safe}};
+		const container = document.getElementById("jedit");
+		const options = {
+			mode: 'tree',
+			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'],
+			templates: [
+				{
+				text: 'Person',
+				title: 'Insert a Person Node',
+				className: 'jsoneditor-type-object',
+				field: 'PersonTemplate',
+				value: {
+				'firstName': 'John',
+				'lastName': 'Do',
+				'age': 28
+				}
+				},
+				],
+			// onEvent: function(node, event) {
+			onChange: function(change) {
+				// console.log(event.type);
+				console.log(change);
+				// if (event.type === 'blur') {
+					console.log(editor.get());
+					$.ajax({url: "", method:"POST", data: JSON.stringify(editor.get())}).done(function(response) {
+						if (response["isError"]){
+							console.log(response);
+						}else{
+							delete response['isError'];
+							data = response;
+							editor.set(data);
+						}
+					});
+				// }
+			},
+			onEditable: function (node) {
+				switch (node.field) {
+				case 'id':
+				return false
+
+				// case 'name':
+				// return {
+				// field: false,
+				// value: true
+				// }
+
+				default:
+				return {
+				field: false,
+				value: true
+				}
+				}
+				}
+			}
+		const editor = new JSONEditor(container, options);
+		editor.set(data);
+	</script>
+</body>
+</html>
+
+{% endblock %}

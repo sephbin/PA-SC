@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor-minimalist.js" integrity="sha256-hqkZ8AhvgpjMEy/7p8Ft4mNa/dSgYFqbXbdZpOv/7+g=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor.min.css" integrity="sha256-thQmdfrg82/N5u9ybMxam1RKdSfaxOPCgl5q9AI/mDI=" crossorigin="anonymous" />
+</head>
+<body>
+<div id="jsoneditor" style="width: 400px; height: 400px;"></div>
+
+    <script>
+        // create the editor
+        const container = document.getElementById("jsoneditor")
+        const options = {
+	    onEvent: function(node, event) {
+	      // console.log(event.type);
+	      if (event.type === 'blur') {
+	        console.log(editor.get());
+	      }
+	    }
+	  }
+        const editor = new JSONEditor(container, options)
+
+        // set json
+        const initialJson = {
+        	"abc":"123",
+        }
+        editor.set(initialJson)
+
+        // get json
+        const updatedJson = editor.get()
+        console.log(updatedJson);
+    </script>
+</body>
+</html>

@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'articles',
     'tests',
     'home',
+    'crowbar',
     'scrpgtest',
     'unswcode',
     'cv',

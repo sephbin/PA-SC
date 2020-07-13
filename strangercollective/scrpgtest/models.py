@@ -236,10 +236,11 @@ class disadvantage(models.Model):
 		return self.name
 
 class skill(models.Model):
-	campaign = models.ManyToManyField(campaign, related_name="skill")
-	skill_name = models.CharField(max_length=120)
+	unpackString = models.CharField(max_length=120, null=True, blank=True)
+	campaign = models.ManyToManyField(campaign, related_name="skill",  blank=True)
+	skill_name = models.CharField(max_length=120, unique=True , blank=True, null=True)
 	url = models.CharField(max_length = 999, null=True, blank=True)
-	skillchchoices = (
+	skillchchoices = (	
 		('E', 'Easy'),
 		('A', 'Average'),
 		('H', 'Hard'),
@@ -256,10 +257,30 @@ class skill(models.Model):
 	skill_attribute = models.CharField(max_length=4, choices=skillatchoices, null=True, blank=True)
 	skill_description = models.TextField(max_length = 9999, blank=True, null=True)
 	skill_defaults = models.TextField(max_length = 9999, blank=True, null=True)
+	hasTechLevel = models.BooleanField(default=False)
 	class Meta:
 		ordering = ['skill_name']
 	def __str__(self):
 		return self.skill_name
+	def save(self, *args, **kwargs):
+		if self.unpackString:
+			# pass
+			# Hiking () (A) HT+1 [4]-11
+			# Armory /TL (A) IQ+2 [8]- 12
+			skillString = self.unpackString
+			if "/TL" in skillString:
+				self.hasTechLevel = True
+			skillString = skillString.replace("/TL ","").replace(" (E) ","~(E)~").replace(" (A) ","~(A)~").replace(" (H) ","~(H)~").replace(" (VH) ","~(VH)~").replace(" [","~[")
+			skillString = skillString.split("~")
+			self.skill_name =		skillString[0]
+			self.skill_challenge =	skillString[1].replace("(","").replace(")","")
+			self.skill_attribute =	skillString[2].split("+")[0].split("-")[0].lower()
+			self.unpackString = None
+		# try:
+		# 	unvcamp , created = campaign.objects.get_or_create(name="Universal")
+		# 	self.campaign.add(unvcamp)
+		# except: pass
+		super(skill, self).save(*args, **kwargs)
 
 class possession_category(models.Model):
 	possession_category_name = models.CharField(max_length=256)
@@ -805,10 +826,13 @@ class occupationtemplate_outcome(models.Model):
 
 		try:
 			outText = []
+			for i in self.skillsText:
+				outText.append(i["name"])
 			for i in self.choiceText:
 				if i["templateType"] == "secondary skills":
 					syntaxLUT = {
-					"disperse": "A total of %(target)s points chosen from %(choiceText)s"
+					"disperse": "A total of %(target)s points chosen from %(choiceText)s",
+					"oneOf": "One of %(choiceText)s",
 					}
 					cl = []
 					for choice in i["choices"]:
@@ -818,8 +842,8 @@ class occupationtemplate_outcome(models.Model):
 					outText.append(syntaxLUT[i["choiceType"]]%i)
 			outText = ". ".join(outText)+"."
 			return outText
-		except:
-			return ""
+		except Exception as e:
+			return str(e)
 	@property
 	def backgroundSkills(self):
 		try:
@@ -843,96 +867,154 @@ class occupationtemplate_outcome(models.Model):
 		from django.utils.html import strip_tags
 		import re
 		import json
-		bs = self.page.body.replace("><",">\n<")
-		bs = bs.splitlines()
-		bs = list(map(lambda x: strip_tags(x), bs))
-		skillslist = []
-		choicelist = []
-		
-		for b in bs:
-			if "Attributes" in b or "Secondary Attributes" in b or "Secondary Characteristics" in b:
-				b = b.split(": ")[1]
-				b = b.split("; ")
-				for a in b:
-					try:
-						a = re.sub('([a-z]) ([A-Z])', r'\g<1>_\g<2>', a)
-						print(a)
-						c = a.split(" ")
-						val = c[1]
-						select = c[0].lower()
-						attr = {
-						"st":{"field":"st","offset":(int(val)-10)},
-						"dx":{"field":"dx","offset":(int(val)-10)},
-						"iq":{"field":"iq","offset":(int(val)-10)},
-						"ht":{"field":"ht","offset":(int(val)-10)},
-						"hp":{"field":"hp","offset":(int(val)-self.stOffset-10)},
-						"will":{"field":"will","offset":(int(val)-self.iqOffset-10)},
-						"per":{"field":"per","offset":(int(val)-self.iqOffset-10)},
-						"fp":{"field":"fp","offset":(int(val)-self.htOffset-10)},
-						"basic_speed":{"field":"bs","offset":((float(val)*4)-(self.htOffset+self.dxOffset+20))/4},
-						"basic_move":{"field":"bm","offset":int(val)-math.floor((self.htOffset+self.dxOffset+20)/4)},
-						}
-						print(attr[select]["field"]+"Offset",attr[select])
-						attr = setattr(self, attr[select]["field"]+"Offset", attr[select]["offset"])
-					except Exception as e: print(e)
-			if "Primary Skills: " in b or "Secondary Skills: " in b or "Background Skills:" in b:
-				b = b.split(": ")
-				line = b[0].lower()
-				b = b[1]
-				b = b.replace("; and ","; ").replace(" and ","; ").replace(" /TL "," ").replace("/TL "," ")
-				b = re.sub(r" of ([A-Z])",r" of; \g<1>", b)
-				b = b.split("; ")
-				# print(">>>>>>>>>",b)
-				pausePosition = None
-				pauseType = None
-				for c in b:
-					d = c.replace(" (E) ","<SPLIT>").replace(" (A) ","<SPLIT>").replace(" (H) ","<SPLIT>").replace(" (VH) ","<SPLIT>")
-					d = d.split("<SPLIT>")
-					print("#####",c)
-					try:
-						if re.search("A total of [0-9]+? points",d[0]):
-							pausePosition = b.index(c)
-							pauseType = "disperse"
-							break
-						# print(c[1],re.search(r"\[.+?\]",c[1]))
-						if re.search(r"\[.+?\]",d[1]):
-							rank = int(re.sub(r'.+?\[(.+?)\].*',r'\g<1>',d[1])) 
-							if rank > 3:
-								rank = int((rank/4)+2)
-							outob = {"name":d[0], "rank": rank, "templateType":line, "type": "skill"}
-							if re.search(r"\bor\b",d[0]):
-								other = dict(outob)
-								other.update({"name":"other"})
-								choiceob = {
-									"choiceType": "oneOf",
-									"templateType":line,
-									"choices": [outob,other]
-								}
-								choicelist.append(choiceob)
-							else:
-								skillslist.append(outob)
-					except Exception as e:
-						print(e)
-				print(skillslist)
-				if pauseType == "disperse":
-					b = b[pausePosition:]
-					print(b[0])
-					disperseText = int(re.sub(r".+? ([0-9]*?) .*",r"\g<1>",b.pop(0)))
+		if skillsText == {}:
 
-					choiceob = {
-						"choiceType": "disperse",
-						"templateType":line,
-						"target":disperseText,
-						"choices": []
-					}
-					print(choiceob)
+			bs = self.page.body.replace("><",">\n<")
+			bs = bs.splitlines()
+			bs = list(map(lambda x: strip_tags(x), bs))
+			skillslist = []
+			choicelist = []
+			
+			for b in bs:
+				if "Attributes" in b or "Secondary Attributes" in b or "Secondary Characteristics" in b:
+					b = b.split(": ")[1]
+					b = b.split("; ")
+					for a in b:
+						try:
+							a = re.sub('([a-z]) ([A-Z])', r'\g<1>_\g<2>', a)
+							print(a)
+							c = a.split(" ")
+							val = c[1]
+							select = c[0].lower()
+							attr = {
+							"st":{"field":"st","offset":(int(val)-10)},
+							"dx":{"field":"dx","offset":(int(val)-10)},
+							"iq":{"field":"iq","offset":(int(val)-10)},
+							"ht":{"field":"ht","offset":(int(val)-10)},
+							"hp":{"field":"hp","offset":(int(val)-self.stOffset-10)},
+							"will":{"field":"will","offset":(int(val)-self.iqOffset-10)},
+							"per":{"field":"per","offset":(int(val)-self.iqOffset-10)},
+							"fp":{"field":"fp","offset":(int(val)-self.htOffset-10)},
+							"basic_speed":{"field":"bs","offset":((float(val)*4)-(self.htOffset+self.dxOffset+20))/4},
+							"basic_move":{"field":"bm","offset":int(val)-math.floor((self.htOffset+self.dxOffset+20)/4)},
+							}
+							print(attr[select]["field"]+"Offset",attr[select])
+							attr = setattr(self, attr[select]["field"]+"Offset", attr[select]["offset"])
+						except Exception as e: print(e)
+				if "Primary Skills: " in b or "Secondary Skills: " in b or "Background Skills:" in b:
+					b = b.split(": ")
+					line = b[0].lower()
+					b = b[1]
+					b = b.replace("; and ","; ").replace("; or ","; ").replace(" and ","; ").replace(" or ","; ").replace(" /TL "," ").replace("/TL "," ").replace(" chosen from "," chosen from; ")
+					b = re.sub(r" of ([A-Z])",r" of; \g<1>", b)
+					b = b.split("; ")
+					# print(">>>>>>>>>",b)
+					pausePosition = None
+					pauseType = None
 					for c in b:
-						choice = re.sub(r"(.+?) \([A-Z| |a-z]+?\/.*",r"\g<1>",c)
-						choiceob["choices"].append({"name":choice, "type":"skill"})
-					choicelist.append(choiceob)
-		self.skillsText = skillslist
-		self.choiceText = choicelist
+						d = c.replace(" (E) ","<SPLIT>").replace(" (A) ","<SPLIT>").replace(" (H) ","<SPLIT>").replace(" (VH) ","<SPLIT>")
+						d = d.split("<SPLIT>")
+						print("#####",c)
+						try:
+							if re.search("A total of [0-9]+? points",d[0]):
+								pausePosition = b.index(c)
+								pauseType = "disperse"
+								break
+							# print(c[1],re.search(r"\[.+?\]",c[1]))
+							if re.search(r"\[.+?\]",d[1]):
+								rank = int(re.sub(r'.+?\[(.+?)\].*',r'\g<1>',d[1])) 
+								if rank > 3:
+									rank = int((rank/4)+2)
+								outob = {"name":d[0], "rank": rank, "templateType":line, "type": "skill"}
+								if re.search(r"\bor\b",d[0]):
+									other = dict(outob)
+									other.update({"name":"other"})
+									choiceob = {
+										"choiceType": "oneOf",
+										"templateType":line,
+										"choices": [outob,other]
+									}
+									choicelist.append(choiceob)
+								else:
+									skillslist.append(outob)
+						except Exception as e:
+							print(e)
+					print(skillslist)
+					if pauseType == "disperse":
+						b = b[pausePosition:]
+						print(b[0])
+						disperseText = int(re.sub(r".+? ([0-9]*?) .*",r"\g<1>",b.pop(0)))
+
+						choiceob = {
+							"choiceType": "disperse",
+							"templateType":line,
+							"target":disperseText,
+							"choices": []
+						}
+						print(choiceob)
+						for c in b:
+							choice = re.sub(r"(.+?) \([A-Z| |a-z]+?\/.*",r"\g<1>",c)
+							choiceob["choices"].append({"name":choice, "type":"skill"})
+						choicelist.append(choiceob)
+			self.skillsText = skillslist
+			self.choiceText = choicelist
 		super(occupationtemplate_outcome, self).save(*args, **kwargs)
+
+class characterTemplate(models.Model):
+	page =			models.ForeignKey('occupationtemplate', null=True, blank=True, on_delete=models.SET_NULL)
+	name =			models.CharField(max_length=255, default="name")
+	stOffset =		models.IntegerField(default=0)
+	dxOffset =		models.IntegerField(default=0)
+	iqOffset =		models.IntegerField(default=0)
+	htOffset =		models.IntegerField(default=0)
+	hpOffset =		models.IntegerField(default=0)
+	willOffset =	models.IntegerField(default=0)
+	perOffset =		models.IntegerField(default=0)
+	fpOffset =		models.IntegerField(default=0)
+	smOffset =		models.IntegerField(default=0)
+	bsOffset =		models.FloatField(default=0)
+	bmOffset =		models.IntegerField(default=0)
+
+
+	skills = models.ManyToManyField(skill, through='rel_skill_template',through_fields=('characterTemplate', 'skill'), blank=True,)
+
+class rel_skill_template(models.Model):
+	characterTemplate =     models.ForeignKey("characterTemplate", on_delete=models.CASCADE, related_name='rel_skill_template')
+	skill =  models.ForeignKey(skill, on_delete=models.CASCADE, related_name='rel_skill_template')
+	rank = models.IntegerField(null=True, blank=True,)
+	class Meta:
+		ordering = ['skill']
+	def __str__(self):
+		return str(self.skill)+": "+str(self.rank)
+	def cost(self):
+		if self.rank:
+			if self.rank <= 2:
+				return self.rank
+			else:
+				return (self.rank-2)*4
+	def skill_challenge(self):
+		return self.skill.skill_challenge
+	def skill_attribute(self):
+		return self.skill.skill_attribute
+	def relative_skill(self):
+		val = 0
+		if self.rank:
+			  val = self.rank
+		lookup = {"E":-1,"A":-2,"H":-3,"VH":-4}
+		rel = val+lookup[self.skill.skill_challenge]
+		atr = self.skill.skill_attribute
+		operator = ""
+		if rel > 0:
+			operator = "+"
+		if rel != 0:
+			return atr.upper()+operator+str(rel)
+		else:
+			return atr.upper()
+
+class templateChoice(models.Model):
+	pass
+	# choiceType = models.CharField(max_length=255, default="oneOf")
+	# skills = models.ManyToManyField(skill, through='rel_skill_template',through_fields=('characterTemplate', 'skill'), blank=True,)
 
 @receiver(pre_save, sender=occupationtemplate)
 def preSaveOc(sender, instance, **kwargs):

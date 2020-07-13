@@ -29,6 +29,10 @@ class CampaignViewSet(viewsets.ModelViewSet):
 	queryset = campaign.objects.all()
 	serializer_class = CampaignSerializer
 
+class characterTemplate_ViewSet(viewsets.ModelViewSet):
+	queryset = characterTemplate.objects.all()
+	serializer_class = characterTemplate_Serializer
+
 def getPayload(request):
 	d = {}
 	try:
@@ -396,7 +400,62 @@ def editanything(request, characterid):
 		}
 		return JsonResponse(out)
 
+def getPayload(request):
+	d = {}
+	try:
+		d = json.loads(str(request.body, encoding='utf-8'))
+	except Exception as e:
+		print(e)
+		if request.method == "GET":
+			try:	d = dict(request.GET)
+			except: pass
+		if request.method == "POST":
+			try:	d = dict(request.POST)
+			except: d = json.loads(str(request.body, encoding='utf-8'))
+		if request.method == "DELETE":
+			try:	d = json.loads(str(request.body, encoding='utf-8'))
+			except: pass
+	return d
 
+@csrf_exempt
+def edit_thing(request, thing=None, thingId=None, payload=None):
+	import json
+	out = {"isError":False}
+	editmod = getattr(sys.modules[__name__], thing)
+	ob = get_object_or_404(editmod, pk=int(thingId))
+	modser = getattr(sys.modules[__name__], thing+"_Serializer")
+	processKeys = [{"key":"rel_skill_template"}, {"key":"skill"}]
+	if request.method == "GET":
+		instance = modser(ob)
+		out = instance.data
+		context = {"instance":json.dumps(out)}
+		return render(request, "rpg/editJSON.html", context)
+	if request.method == "POST":
+		if not payload:
+			payload = getPayload(request)
+		for k in processKeys:
+			try:
+				val = payload.pop(k["key"])
+				if val:
+					if type(val) == type([]):
+						for el in val:
+							print(k,el)
+							edit_thing(request, thing=k["key"], thingId=el["id"], payload=el)
+					if type(val) == type({}):
+						print(k,val)
+						edit_thing(request, thing=k["key"], thingId=el["id"], payload=val)
+			except:	pass
+		instance = modser(ob, data = payload)
+		if instance.is_valid():
+			print("valid instance", payload)
+			savedObject = instance.save()
+			print(savedObject)
+			out.update(instance.data)
+			return JsonResponse(out)
+		else:
+			out = {"isError":False, "errors":instance.errors}
+			print(out)
+			return JsonResponse(out)
 
 # def home(request):
 # 	instance = get_object_or_404(character, id=1)

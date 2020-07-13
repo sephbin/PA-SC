@@ -1,0 +1,85 @@
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="{% static 'rpg/js/vendor/jquery-2.1.4.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor-minimalist.js" integrity="sha256-hqkZ8AhvgpjMEy/7p8Ft4mNa/dSgYFqbXbdZpOv/7+g=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.0.0/jsoneditor.min.css" integrity="sha256-thQmdfrg82/N5u9ybMxam1RKdSfaxOPCgl5q9AI/mDI=" crossorigin="anonymous" />
+	<style>
+		.jsoneditor-text {
+            resize: vertical !important;
+        }
+	</style>
+</head>
+<body>
+	<div class="login-page">
+<div class="form">
+	<h2>{{variables.title}}</h2>
+<!-- <h1>Log In</h1> -->
+<form id="site-form" class="site-form register-form" action="" method="post"
+{% if form.is_multipart %}
+enctype="multipart/form-data"
+{% endif %}
+>
+	{% for field in form.visible_fields %}
+	<div>{{field.name}}</div>
+	{% if field.fieldType == "DataFieldFormField"%}
+	<script>
+		var {{field.name}}JSON = {{field.value|safe}};
+	</script>
+	<div class="jedit" id="{{field.name}}"></div>
+	{% else %}
+	<div>{% render_field field %}</div>
+	{% endif %}
+		{% if field.errors%}
+			{% for error in field.errors %}
+			{{ error }}<br>
+			{% endfor %}
+			<br>
+		{% endif %}
+	{% endfor %}
+	{% csrf_token %}
+	{% if form.non_field_errors %}
+		<ul>
+		{% for error in form.non_field_errors %}
+		<li>{{ error }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+<!-- 	<button>END</button> -->
+</form>
+
+</div>
+</div>
+
+
+	<script>
+		// create the editor
+		$(".jedit").each(function(i,o){
+			const thingId = {{thing.id}};
+			var thisid = $(this).attr("id");
+			const container = document.getElementById(thisid);
+			const options = {
+			mode: 'tree',
+			modes: ['code', 'form', 'text', 'tree', 'view', 'preview'], // allowed modes
+			onEvent: function(node, event) {
+			  // console.log(event.type);
+			  if (event.type === 'blur') {
+				console.log(thingId,thisid);
+				console.log(editor.get());
+			  }
+			}
+		  }
+			const editor = new JSONEditor(container, options);
+			initJSON = window[thisid+"JSON"];
+			console.log(initJSON);
+			editor.set(initJSON);
+		});
+	</script>
+</body>
+</html>
+
+{% endblock %}

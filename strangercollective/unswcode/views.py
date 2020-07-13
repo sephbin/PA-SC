@@ -190,7 +190,7 @@ def get_test_question(request, question):
 
 @csrf_exempt
 def submit_test_question(request):
-	from datetime import datetime
+	from django.utils import timezone
 	'''
 	test = models.CharField(max_length=256)
 	identifier = models.CharField(max_length=256)
@@ -215,7 +215,7 @@ def submit_test_question(request):
 			created = True
 			try:
 				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test__testName=r["test"])
-				if testEnd.endTime > datetime.now():
+				if testEnd.endTime > timezone.now():
 					r["score"] = 2
 				else:
 					r["score"] = 1

@@ -223,7 +223,9 @@ def submit_test_question(request):
 					existing = get_object_or_404(testresult, identifier=r["identifier"], test=r["test"] )
 					if existing.score < r["score"]:
 						obj, created = testresult.objects.update_or_create(identifier=r["identifier"], test=r["test"], defaults=r)
+
 				except:
+					log.append("creating new object")
 					obj = testresult(**r).save()
 					created = True
 					pass

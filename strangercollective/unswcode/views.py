@@ -220,10 +220,11 @@ def submit_test_question(request):
 				else:
 					r["score"] = 1
 				obj = testresult(**r).save()
-			except:
+			except Exception as e:
 				created = False
+				log.append(str(e))
 
-			return JsonResponse({"created":created})
+			return JsonResponse({"created":created, "log":log})
 		except Exception as e:
 			exc_type, exc_obj, exc_tb = sys.exc_info()
 			other = sys.exc_info()[0].__name__

@@ -216,9 +216,9 @@ def submit_test_question(request):
 			try:
 				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test__testName=r["test"])
 				if testEnd.endTime > timezone.now():
-					r["score"] = 2
+					r["score"] = r["score"]*2
 				else:
-					r["score"] = 1
+					r["score"] = r["score"]
 				try:
 					existing = get_object_or_404(testresult, identifier=r["identifier"], test=r["test"], question=r["question"] )
 					if existing.score < r["score"]:

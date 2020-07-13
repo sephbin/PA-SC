@@ -220,9 +220,9 @@ def submit_test_question(request):
 				else:
 					r["score"] = 1
 				try:
-					existing = get_object_or_404(testresult, identifier=r["identifier"], test=r["test"] )
+					existing = get_object_or_404(testresult, identifier=r["identifier"], test=r["test"], question=r["question"] )
 					if existing.score < r["score"]:
-						obj, created = testresult.objects.update_or_create(identifier=r["identifier"], test=r["test"], defaults=r)
+						obj, created = testresult.objects.update_or_create(identifier=r["identifier"], test=r["test"], question=r["question"], defaults=r)
 						log.append("if")
 						return JsonResponse({"created":created, "log":log})
 					else:

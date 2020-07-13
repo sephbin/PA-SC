@@ -212,14 +212,21 @@ def submit_test_question(request):
 		try:
 			data = request.POST["data"]
 			r = json.loads(data)
-			created = True
+			created = False
 			try:
 				testEnd = get_object_or_404(testStart, identifier=r["identifier"], test__testName=r["test"])
 				if testEnd.endTime > timezone.now():
 					r["score"] = 2
 				else:
 					r["score"] = 1
-				obj = testresult(**r).save()
+				try:
+					existing = get_object_or_404(testresult, identifier=r["identifier"], test=r["test"] )
+					if existing.score < r["score"]:
+						obj, created = testresult.objects.update_or_create(identifier=r["identifier"], test=r["test"], defaults=r)
+				except:
+					obj = testresult(**r).save()
+					created = True
+					pass
 				return JsonResponse({"created":created, "log":log})
 			except Exception as e:
 				exc_type, exc_obj, exc_tb = sys.exc_info()

@@ -223,6 +223,7 @@ def submit_test_question(request):
 			except Exception as e:
 				created = False
 				log.append(str(e))
+				log.append(r)
 
 			return JsonResponse({"created":created, "log":log})
 		except Exception as e:

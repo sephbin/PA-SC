@@ -4,33 +4,43 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 {% image page.feed_image width-400 as tmp_photo %}
+<style type="text/css">
+    div.header{
+    background-image: url({{tmp_photo.url}});
+}
+</style>
+<div class="page">
+<div class="header"></div>
+<table style="width:100%"><tr>
+<td style="width:50%"><a href="{{ page.prev_sibling.url }}">< {{ page.prev_sibling.title }}</a></td>
+<td style="width:50%; text-align: right;"><a href="{{ page.next_sibling.url }}">{{ page.next_sibling.title }} ></a></td>
+</tr></table>
     <table>
         <tr>
             <td> <h1>{{ page.title }}</h1></td>
             <td><h1>{{ page.points|richtext }}</h1></td>
         </tr>
         <tr><td colspan="2">
-    <!-- <a href="..">Advantages</a> | 
-    <a target="_edit" href="/cms/pages/{{ page.id }}/edit/">Edit</a> -->
+    <a href="..">Advantages</a> | 
+    <a target="_edit" href="/cms/pages/{{ page.id }}/edit/">Edit</a>
     {% if page.exotic %} E {% endif %}
     {% if page.physical %} P {% endif %}
     <p>{{ page.body_progress | richtext }}</p>
     
 
-    {% if page.special_limitations%}
     {% if page.special_limitations != "<p></p>" %}
     <h2> Special Limitations </h2>
     <p>{{ page.limits_dyn | richtext }}</p>
     {% endif %}
-    {% endif %}
-    {% if page.special_enhancements%}
     {% if page.special_enhancements != "<p></p>" %}
     <h2> Special Enhancements </h2>
     <p>{{ page.enhance_dyn | richtext }}</p>
     {% endif %}
-    {% endif %}
 </td></tr>
     </table>
-
-
+<table style="width:100%"><tr>
+<td style="width:50%"><a href="{{ page.prev_sibling.url }}">< {{ page.prev_sibling.title }}</a></td>
+<td style="width:50%; text-align: right;"><a href="{{ page.next_sibling.url }}">{{ page.next_sibling.title }} ></a></td>
+</tr></table>
+</div>
 {% endblock %}

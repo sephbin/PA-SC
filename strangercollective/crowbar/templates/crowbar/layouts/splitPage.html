@@ -20,33 +20,67 @@
 	.right a{
 		color: rgb(0, 255, 255);
 	}
-	div.split{
-		overflow-y: auto;
-		padding-left:2em;
-		padding-right:2em;
-		padding-top: 1em;
-		top: 3em;
-	}
-	div.left{
-		position: absolute;
-		left:0;
-		right:50%;
-		bottom:0;
-		
-	}
-	div.right{
-		position: absolute;
-		left:50%;
-		right:0;
-		bottom:0;
-	}
-	div.nav{
-		position: absolute;
-		top:0;
-		left:0;
-		right:0;
-		height:3em;
-		background: #222;
+		div.split{
+			overflow-y: auto;
+			padding-left:2em;
+			padding-right:2em;
+			padding-top: 1em;
+			top: 3em;
+		}
+		div.left{
+			position: absolute;
+			left:0;
+			right:50%;
+			bottom:0;
+			
+		}
+		div.right{
+			position: absolute;
+			left:50%;
+			right:0;
+			bottom:0;
+		}
+		div.nav{
+			position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			height:3em;
+			background: #222;
+		}
+	@media only screen and (max-width: 600px) {
+		body{
+			font-size:10pt;
+		}
+		div.split{
+			overflow-y: auto;
+			padding-left:1em;
+			padding-right:1em;
+			padding-top: 0.5em;
+			top: 0em;
+		}
+		div.left{
+			position: absolute;
+			left:0;
+			right:0;
+			bottom:50;
+			
+		}
+		div.right{
+			position: absolute;
+			left:0%;
+			right:0;
+			top:50%;
+		}
+		div.nav{
+			display: none;
+			position: absolute;
+			top:0;
+			left:0;
+			right:0;
+			height:3em;
+			background: #222;
+		}
 	}
 	div.left{
 		background : #000;

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+	body{
+		font-family: "Roboto Mono";
+	}
+	div.split{
+		overflow-y: auto;
+		padding-left:2em;
+		padding-right:2em;
+		padding-top: 1em;
+		top: 3em;
+	}
+	div.left{
+		position: absolute;
+		left:0;
+		right:50%;
+		bottom:0;
+		
+	}
+	div.right{
+		position: absolute;
+		left:50%;
+		right:0;
+		bottom:0;
+	}
+	div.nav{
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		height:3em;
+		background: #222;
+	}
+	div.left{
+		background : #000;
+		color: White;
+	}
+	div.right{
+		background : #333;
+		color: White;
+	}
+	#campaign-title{
+		position: relative;
+		width: 20em;
+		height:100%;
+	}
+	#campaign-title div{
+		position: absolute;
+		/* top:0;
+		left:0;
+		right:0;
+		bottom:0; */
+		height:100%;
+		width:100%;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		image-rendering: pixelated;
+	}
+	@keyframes scrolling-bg {
+		100%{
+		background-position:-2000px -1200px;
+		}
+	}
+	[scrolling-background]{
+		animation: scrolling-bg 100s linear infinite;
+	}
+</style>
+</head>
+<body>
+	<div class="top nav">
+		<div id="campaign-title">
+			<div scrolling-background style="background-position:-0px -0px; background-size: 1000px; background-repeat: repeat; background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title_background.jpg');"></div>
+			<div style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title.png');"></div>
+		</div>
+	</div>
+	<div class="left split">
+		{%if left%}{{left|safe}}{%endif%}
+	</div>
+	<div class="right split">
+		{%if right%}{{right|safe}}{%endif%}
+	</div>
+</body>
+<script>
+{%if right%}
+right = true;
+{% else %}
+right = false;
+{%endif%}
+if (right){
+	var currenturl = String(window.location);
+}else{
+	var currenturl = String(window.location)+"/";
+}
+$('.left a').click(function(event){
+	event.preventDefault();
+	
+	console.log(currenturl);
+	var newurl = this.href;
+	currenturl = currenturl.split("/");
+	
+	console.log(currenturl);
+	$.ajax({
+		url: "",
+		method: "post",
+		dataType: "json",
+		data: {"href":newurl},
+	}).done(function(r){
+		$(".right").html(r.page);
+
+		newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
+		currenturl[currenturl.length-2] = newappend;
+		pushurl = currenturl.join("/");
+		window.history.pushState('page2', 'Title', pushurl);
+	}).always(function(){
+		currenturl = currenturl.join("/");
+	});
+});
+$('.right a').click(function(event){
+	event.preventDefault();
+	var newurl = this.href;
+	$.ajax({
+		url: "",
+		method: "post",
+		dataType: "json",
+		data: {"href":newurl},
+	}).done(function(r){
+		$(".right").html(r.page);
+	});
+});
+</script>
+</html>

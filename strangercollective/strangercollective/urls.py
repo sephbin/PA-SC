@@ -42,8 +42,9 @@ urlpatterns = [
     path(r'maps/', include('maps.urls'),name='maps'),
     path(r'huginn/', include('huginn.urls'),name='huginn'),
     path(r'changeling/', include('changeling.urls')),
+    path(r'crowbar/', include('crowbar.urls')),
     path(r'', include('home.urls'),name='home'),
-    re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
+    # re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

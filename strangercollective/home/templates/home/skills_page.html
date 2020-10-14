@@ -1,4 +1,7 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 <h1>{{ page.title|richtext }}</h1>
+<h2>{{ page.attribute|richtext }}/{{ page.challenge|richtext }}</h2>
+<i>Defaults: {{page.defaults|richtext}}</i>
+<i>Prerequisites: {{page.prerequisites|richtext}}</i>
 {{ page.body|richtext}}

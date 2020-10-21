@@ -15,7 +15,7 @@
 			{% for advantage in instance.Traits.Advantage  %}
 			<tr>
 				<td>
-					<a href="__pages__advantages__{{advantage.name}}">{{advantage.name}}</a>
+					<a href="/pages/advantages/{{advantage.name}}">{{advantage.name}}</a>
 				</td>
 				<td>
 					[{{advantage.points}}]
@@ -34,7 +34,7 @@
 			{% for disadvantage in instance.Traits.Disadvantage  %}
 			<tr>
 				<td>
-					<a href="__pages__disadvantages__{{disadvantage.name}}">{{disadvantage.name}}</a>
+					<a href="/pages/disadvantages/{{disadvantage.name}}">{{disadvantage.name}}</a>
 				</td>
 				<td>
 					[{{disadvantage.points}}]
@@ -59,7 +59,7 @@
 					-
 				</td>
 				<td>
-					<a href="__pages__skills__{{skill.name}}">{{skill.name}}</a>
+					<a href="/pages/skills/{{skill.name}}">{{skill.name}}</a>
 				</td>
 				<td>
 					[{{skill.points}}]
@@ -85,7 +85,7 @@
 					-
 				</td>
 				<td>
-					<a href="__pages__skills__{{spell.name}}">{{spell.name}}</a>
+					<a href="/pages/skills/{{spell.name}}">{{spell.name}}</a>
 				</td>
 				<td>
 					[{{spell.points}}]

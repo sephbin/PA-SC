@@ -320,15 +320,15 @@ class feature_relative(parentModel):
 	# 	else:
 	# 		return atr.upper()
 
-def charXmlPath(instance, filename):
-	from django.conf import settings
-	import os
-	import datetime
-	return os.path.join("crowbar","characters", instance.name+"-"+str(instance.id), datetime.datetime.now().strftime("%Y%m%d-%H%M"), filename)
+# def charXmlPath(instance, filename):
+# 	from django.conf import settings
+# 	import os
+# 	import datetime
+# 	return os.path.join("crowbar","characters", instance.name+"-"+str(instance.id), datetime.datetime.now().strftime("%Y%m%d-%H%M"), filename)
 class character(parentModel):
 	gcaData = DataField()
 
-	gcaXml = models.FileField(upload_to=charXmlPath, blank=True, null=True)
+	gcaXml = models.FileField(upload_to='crowbar/characters/', blank=True, null=True)
 	def save_start(self):
 		try:
 			import json

@@ -20,9 +20,9 @@
 				<td>
 					[{{advantage.points}}]
 				</td>
-				<!-- <td>
-					{{advantage}}
-				</td> -->
+				<td style="display:none;">
+					{{advantage|safe}}
+				</td>
 			</tr>
 	
 			{% endfor %}
@@ -39,9 +39,9 @@
 				<td>
 					[{{disadvantage.points}}]
 				</td>
-				<!-- <td>
-					{{disadvantage}}
-				</td> -->
+				<td style="display:none;">
+					{{disadvantage|safe}}
+				</td>
 			</tr>
 	
 			{% endfor %}
@@ -64,9 +64,9 @@
 				<td>
 					[{{skill.points}}]
 				</td>
-				<!-- <td>
-					{{skill}}
-				</td> -->
+				<td style="display:none;">
+					{{skill|safe}}
+				</td>
 			</tr>
 	
 			{% endfor %}
@@ -90,9 +90,9 @@
 				<td>
 					[{{spell.points}}]
 				</td>
-				<!-- <td>
-					{{spell}}
-				</td> -->
+				<td style="display:none;">
+					{{spell|safe}}
+				</td>
 			</tr>
 	
 			{% endfor %}

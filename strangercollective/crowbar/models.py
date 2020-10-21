@@ -332,7 +332,7 @@ class character(parentModel):
 	def save_start(self):
 		import json
 		import xmltodict
-		with open("D:\\Users\\s-abutler\\Downloads\\GURPS\\GURPS 4e\\GURPS 4e Character Assistant\\Chars\\Sten\\Sten (Owen).gca4.XML") as xml_file:
+		with open(self.gcaXml) as xml_file:
 			dd = xmltodict.parse(xml_file.read())
 			self.gcaData = {
 				"Traits":dd['Character']["Traits"],

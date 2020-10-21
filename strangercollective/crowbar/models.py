@@ -320,11 +320,11 @@ class feature_relative(parentModel):
 	# 	else:
 	# 		return atr.upper()
 
-# def charXmlPath(instance, filename):
-# 	from django.conf import settings
-# 	import os
-# 	import datetime
-# 	return os.path.join("crowbar","characters", instance.name+"-"+str(instance.id), datetime.datetime.now().strftime("%Y%m%d-%H%M"), filename)
+def charXmlPath(instance, filename):
+	from django.conf import settings
+	import os
+	import datetime
+	return os.path.join("crowbar","characters", instance.name+"-"+str(instance.id), datetime.datetime.now().strftime("%Y%m%d-%H%M"), filename)
 class character(parentModel):
 	gcaData = DataField()
 
@@ -333,10 +333,12 @@ class character(parentModel):
 		try:
 			import json
 			import xmltodict
+			import codecs
 			# print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 			# print(self.gcaXml.path)
 			# print(self.gcaXml.name)
-			with open(self.gcaXml.path) as xml_file:
+			# with open(self.gcaXml.path) as xml_file:
+			with codecs.open(self.gcaXml.path, 'r', encoding='utf-8', errors='ignore') as xml_file:
 				dd = xmltodict.parse(xml_file.read())
 				self.gcaData = {
 					"Traits":dd['Character']["Traits"],

@@ -7,6 +7,7 @@ from . import views
 # router.register(r'characters', views.CharacterViewSet)
 
 urlpatterns = [
+	path(r'character/<int:charID>/', views.charContent),
 	path(r'mcharactercreation/<str:left>/<str:right>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/', views.splitPage),
 

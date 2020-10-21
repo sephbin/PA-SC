@@ -8,6 +8,22 @@ from django.db.models.signals import post_save, post_init, pre_save
 from django.dispatch import receiver
 from django import forms
 
+
+def coolUpdate(original, new):
+	appendList = ["class"]
+	originaldict = dict(original)
+	newdict = dict(new)
+	for k,v in originaldict.items():
+		if type(v) == type({}):
+			try:
+				newdict[k] = coolUpdate(v, newdict[k])
+			except:
+				pass
+		if k in appendList:
+			try:	newdict[k] = newdict[k]+" "+v
+			except:	pass
+			try:	newdict[k] = " ".join(list(filter(None,sorted(set((newdict[k].split(" ")))))))
+			except:	pass
 class DataFieldFormField(forms.CharField):
 
 	def prepare_value(self, value):
@@ -21,7 +37,7 @@ class DataFieldFormField(forms.CharField):
 			return value
 class DataField(models.TextField):
 	def __init__(self, *args, **kwargs):
-		kwargs['max_length'] = 9999
+		kwargs['max_length'] = 99999
 		kwargs['default'] = {}
 		kwargs['blank'] = True
 		kwargs['null'] = True
@@ -222,6 +238,8 @@ class parentModel(models.Model):
 		self.save_end()
 
 
+
+
 	@staticmethod
 
 	# @receiver(post_init, self)
@@ -302,6 +320,25 @@ class feature_relative(parentModel):
 	# 	else:
 	# 		return atr.upper()
 
+def charXmlPath(instance, filename):
+	from django.conf import settings
+	import os
+	import datetime
+	return os.path.join("crowbar","characters", instance.name+"-"+str(instance.id), datetime.datetime.now().strftime("%Y%m%d-%H%M"), filename)
+class character(parentModel):
+	gcaData = DataField()
+
+	gcaXml = models.FileField(upload_to=charXmlPath, blank=True, null=True)
+	def save_start(self):
+		import json
+		import xmltodict
+		with open("D:\\Users\\s-abutler\\Downloads\\GURPS\\GURPS 4e\\GURPS 4e Character Assistant\\Chars\\Sten\\Sten (Owen).gca4.XML") as xml_file:
+			dd = xmltodict.parse(xml_file.read())
+			self.gcaData = {
+				"Traits":dd['Character']["Traits"],
+				"General":dd['Character']["General"],
+			}
+		pass
 
 for subclass in parentModel.__subclasses__():
 	post_init.connect(subclass.remember_state, sender=subclass)

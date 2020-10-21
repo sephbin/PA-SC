@@ -30,3 +30,11 @@ def splitPage(request, left=None, right=None):
 		print(request.POST)
 		page = getPage(request, request.POST["href"])
 		return JsonResponse({"isError":isError,"log":log,"page":page})
+
+
+@csrf_exempt
+def charContent(request, charID=None):
+	instance = get_object_or_404(character, id=charID)
+	if request.method == "GET":
+		context = {"instance":instance.gcaData}
+		return render(request,"crowbar/content/simpleChar.html",context)

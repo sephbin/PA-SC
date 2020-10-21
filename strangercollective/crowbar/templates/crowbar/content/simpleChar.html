@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h2>
+		{{instance.General.name}}
+	</h2>
+	<div>
+		Advantages
+		<table>
+			{% for advantage in instance.Traits.Advantage  %}
+			<tr>
+				<td>
+					<a href="__pages__advantages__{{advantage.name}}">{{advantage.name}}</a>
+				</td>
+				<td>
+					[{{advantage.points}}]
+				</td>
+				<!-- <td>
+					{{advantage}}
+				</td> -->
+			</tr>
+	
+			{% endfor %}
+		</table>
+	</div>
+	<div>
+		Disadvantages
+		<table>
+			{% for disadvantage in instance.Traits.Disadvantage  %}
+			<tr>
+				<td>
+					<a href="__pages__disadvantages__{{disadvantage.name}}">{{disadvantage.name}}</a>
+				</td>
+				<td>
+					[{{disadvantage.points}}]
+				</td>
+				<!-- <td>
+					{{disadvantage}}
+				</td> -->
+			</tr>
+	
+			{% endfor %}
+		</table>
+	</div>
+	<div>
+		Skills
+		<table>
+			{% for skill in instance.Traits.Skill  %}
+			<tr>
+				<td>
+					<a>{{skill.level}}</a>
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					<a href="__pages__skills__{{skill.name}}">{{skill.name}}</a>
+				</td>
+				<td>
+					[{{skill.points}}]
+				</td>
+				<!-- <td>
+					{{skill}}
+				</td> -->
+			</tr>
+	
+			{% endfor %}
+		</table>
+	</div>
+	{% if instance.Traits.Spell %}
+	<div>
+		Spells
+		<table>
+			{% for spell in instance.Traits.Spell  %}
+			<tr>
+				<td>
+					<a>{{spell.level}}</a>
+				</td>
+				<td>
+					-
+				</td>
+				<td>
+					<a href="__pages__skills__{{spell.name}}">{{spell.name}}</a>
+				</td>
+				<td>
+					[{{spell.points}}]
+				</td>
+				<!-- <td>
+					{{spell}}
+				</td> -->
+			</tr>
+	
+			{% endfor %}
+		</table>
+	</div>
+	{% endif %}
+</body>
+</html>

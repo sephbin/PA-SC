@@ -34,7 +34,7 @@
 			{% for disadvantage in instance.Traits.Disadvantage  %}
 			<tr>
 				<td>
-					<a href="/pages/disadvantages/{{disadvantage.name||slugifylo}}">{{disadvantage.name}}</a>
+					<a href="/pages/disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}</a>
 				</td>
 				<td>
 					[{{disadvantage.points}}]

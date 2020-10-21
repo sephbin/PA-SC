@@ -332,7 +332,7 @@ class character(parentModel):
 	def save_start(self):
 		import json
 		import xmltodict
-		with open(self.gcaXml) as xml_file:
+		with open(self.gcaXml.path) as xml_file:
 			dd = xmltodict.parse(xml_file.read())
 			self.gcaData = {
 				"Traits":dd['Character']["Traits"],

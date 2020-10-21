@@ -333,6 +333,9 @@ class character(parentModel):
 		try:
 			import json
 			import xmltodict
+			# print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			# print(self.gcaXml.path)
+			# print(self.gcaXml.name)
 			with open(self.gcaXml.path) as xml_file:
 				dd = xmltodict.parse(xml_file.read())
 				self.gcaData = {
@@ -340,7 +343,8 @@ class character(parentModel):
 					"General":dd['Character']["General"],
 				}
 			pass
-		except:
+		except Exception as e:
+			self.error(str(e))
 			pass
 
 for subclass in parentModel.__subclasses__():

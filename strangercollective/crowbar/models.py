@@ -330,15 +330,18 @@ class character(parentModel):
 
 	gcaXml = models.FileField(upload_to=charXmlPath, blank=True, null=True)
 	def save_start(self):
-		import json
-		import xmltodict
-		with open(self.gcaXml.path) as xml_file:
-			dd = xmltodict.parse(xml_file.read())
-			self.gcaData = {
-				"Traits":dd['Character']["Traits"],
-				"General":dd['Character']["General"],
-			}
-		pass
+		try:
+			import json
+			import xmltodict
+			with open(self.gcaXml.path) as xml_file:
+				dd = xmltodict.parse(xml_file.read())
+				self.gcaData = {
+					"Traits":dd['Character']["Traits"],
+					"General":dd['Character']["General"],
+				}
+			pass
+		except:
+			pass
 
 for subclass in parentModel.__subclasses__():
 	post_init.connect(subclass.remember_state, sender=subclass)

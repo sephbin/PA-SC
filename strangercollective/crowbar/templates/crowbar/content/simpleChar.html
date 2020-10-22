@@ -10,7 +10,8 @@
 		{{instance.General.name}}
 	</h2>
 	<div>
-		Advantages
+		<b>Advantages</b>
+		<hr>
 		<table>
 			{% for advantage in instance.Traits.Advantage  %}
 			<tr>
@@ -29,7 +30,8 @@
 		</table>
 	</div>
 	<div>
-		Disadvantages
+		<b>Disadvantages</b>
+		<hr>
 		<table>
 			{% for disadvantage in instance.Traits.Disadvantage  %}
 			<tr>
@@ -48,7 +50,8 @@
 		</table>
 	</div>
 	<div>
-		Skills
+		<b>Skills</b>
+		<hr>
 		<table>
 			{% for skill in instance.Traits.Skill  %}
 			<tr>
@@ -78,7 +81,8 @@
 	</div>
 	{% if instance.Traits.Spell %}
 	<div>
-		Spells
+		<b>Spells</b>
+		<hr>
 		<table>
 			{% for spell in instance.Traits.Spell  %}
 			<tr>

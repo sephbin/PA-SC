@@ -13,10 +13,10 @@
 		<div>
 			<b>Skills</b>
 			<hr>
-			<table>
+			<table wide>
 				{% for skill in instance.Traits.Skill  %}
 				<tr>
-					<td>
+					<td style="width:2em; text-align: center;">
 						<a class="hlt-100">{{skill.level}}</a>
 					</td>
 					<td>
@@ -29,7 +29,7 @@
 						<a href="/pages/skills/{{skill.name|slugify}}">{{skill.name}}</a>
 						{% endif %}
 					</td>
-					<td>
+					<td style="width:3em; text-align: right;">
 						[{{skill.points}}]
 					</td>
 					<td style="display:none;">
@@ -44,10 +44,10 @@
 		<div>
 			<b>Spells</b>
 			<hr>
-			<table>
+			<table wide>
 				{% for spell in instance.Traits.Spell  %}
 				<tr>
-					<td>
+					<td style="width:2em; text-align: center;">
 						<a class="hlt-100">{{spell.level}}</a>
 					</td>
 					<td>
@@ -56,7 +56,7 @@
 					<td>
 						<a href="/pages/skills/{{spell.name|slugify}}">{{spell.name}}</a>
 					</td>
-					<td>
+					<td style="width:3em; text-align: right;">
 						[{{spell.points}}]
 					</td>
 					<td style="display:none;">

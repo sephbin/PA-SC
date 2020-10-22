@@ -15,19 +15,19 @@
 		color: inherit; /* blue colors for links too */
 		text-decoration: inherit; /* no underline */
 	}
-	.left a{
+	.left a, .right a{
 		color: rgb(255, 0, 221);
 		text-shadow: 0 0 2px #393a33, 0 0 35px #ffffff44, 0 0 10px #fc199a, 0 0 2px #fc199a;
 	}
-	.left a.hlt-100{
+	.left a.hlt-100, .right a.hlt-100{
 		color: rgb(255, 208, 0);
 		text-shadow: 0 0 2px #3a3733, 0 0 35px #e9dac641, 0 0 10px #fcbf19, 0 0 2px #fcac19;
 	}
-	.left hr{
+	.left hr, .right hr{
 		border-top: 1px solid rgb(255, 255, 255);
 		/* box-shadow: 0 0 2px #3a3733, 0 0 35px #e9dac641, 0 0 10px #fcbf19, 0 0 2px #fcac19; */
 	}
-	.right a{
+	.center a{
 		color: rgb(0, 255, 255);
 		text-shadow: 0 0 2px #100c0f, 0 0 10px #257c55, 0 0 35px #212724;
 	}
@@ -36,7 +36,7 @@
 			padding-left:2em;
 			padding-right:2em;
 			padding-top: 1em;
-			top: 3em;
+			top: 32px;
 		}
 		div.left{
 			position: absolute;
@@ -51,12 +51,21 @@
 			right:0;
 			bottom:0;
 		}
+		div.center{
+			position: absolute;
+			left:25%;
+			right:25%;
+			bottom:0;
+			border-left: rgb(255, 208, 0) solid 1px;
+			border-right: rgb(255, 208, 0) solid 1px;
+			padding-top: 4.5em;
+		}
 		div.nav{
 			position: absolute;
 			top:0;
 			left:0;
 			right:0;
-			height:3em;
+			height:32px;
 			background: #222;
 		}
 	@media only screen and (max-width: 600px) {
@@ -77,7 +86,7 @@
 			bottom:calc(50% - 1.5em);
 			
 		}
-		div.right{
+		div.center{
 			position: absolute;
 			left:0%;
 			right:0;
@@ -88,11 +97,11 @@
 			top:0;
 			left:0;
 			right:0;
-			height:3em;
+			height:32px;
 			background: #222;
 		}
 	}
-	div.left{
+	div.left, div.right{
 		background :#200933;
 		box-shadow: inset 0px 0px 200px rgba(0,0,0,0.5);
 		background-image:linear-gradient(90deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px), linear-gradient(0deg, rgba(252,25,154,.1) 1px, rgba(0,0,0,0) 1px);
@@ -101,7 +110,7 @@
 		background-size:15px 15px;
 		color: White;
 	}
-	div.right{
+	div.center{
 		background :#091b33;
 		box-shadow: inset 0px 0px 200px rgba(0,0,0,0.5);
 		background-image:linear-gradient(90deg, rgba(25, 244, 252, 0.1) 1px, rgba(0,0,0,0) 1px), linear-gradient(0deg, rgba(25, 244, 252, 0.1) 1px, rgba(0,0,0,0) 1px);
@@ -140,20 +149,37 @@
 		width: calc(50% - 5px);
 		display: inline-block;
 	}
+	[wide]{
+		width:100%;
+	}
+	.campaign-icon{
+		z-index : 100;
+		position: absolute;
+		width:174px;
+		height: 116px;
+		left:50%;
+		top:0%;
+		transform: translate(-50%, 0%);
+		image-rendering: pixelated;
+		
+	}
 </style>
 </head>
 <body>
+	<div class="campaign-icon" style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/GOR ICON.png');"></div>
 	<div class="top nav">
-		<div id="campaign-title">
-			<div scrolling-background style="background-position:-0px -0px; background-size: 106px; background-repeat: repeat; background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title_background.jpg');"></div>
-			<div style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title.png');"></div>
-		</div>
+		<!-- <div id="campaign-title"> -->
+			<!-- <div scrolling-background style="background-position:-0px -0px; background-size: 106px; background-repeat: repeat; background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title_background.jpg');"></div> -->
+			<!-- <div style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title.png');"></div> -->
+		<!-- </div> -->
 	</div>
 	<div class="left split">
 		{%if left%}{{left|safe}}{%endif%}
 	</div>
 	<div class="right split">
 		{%if right%}{{right|safe}}{%endif%}
+	</div>
+	<div class="center split">
 	</div>
 </body>
 <script>
@@ -172,21 +198,21 @@ $('.left a').click(function(event){
 	
 	console.log(currenturl);
 	var newurl = this.href;
-	currenturl = currenturl.split("/");
+	// currenturl = currenturl.split("/");
 	
-	console.log(currenturl);
+	// console.log(currenturl);
 	$.ajax({
 		url: "",
 		method: "post",
 		dataType: "json",
 		data: {"href":newurl},
 	}).done(function(r){
-		$(".right").html(r.page);
+		$(".center").html(r.page);
 
-		newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
-		currenturl[currenturl.length-2] = newappend;
-		pushurl = currenturl.join("/");
-		window.history.pushState('page2', 'Title', pushurl);
+		// newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
+		// currenturl[currenturl.length-2] = newappend;
+		// pushurl = currenturl.join("/");
+		// window.history.pushState('page2', 'Title', pushurl);
 	}).always(function(){
 		currenturl = currenturl.join("/");
 	});
@@ -196,23 +222,23 @@ $('.right a').click(function(event){
 	
 	console.log(currenturl);
 	var newurl = this.href;
-	currenturl = currenturl.split("/");
+	// currenturl = currenturl.split("/");
 	
-	console.log(currenturl);
+	// console.log(currenturl);
 	$.ajax({
 		url: "",
 		method: "post",
 		dataType: "json",
 		data: {"href":newurl},
 	}).done(function(r){
-		$(".right").html(r.page);
+		$(".center").html(r.page);
 
-		newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
-		currenturl[currenturl.length-2] = newappend;
-		pushurl = currenturl.join("/");
-		window.history.pushState('page2', 'Title', pushurl);
+		// newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
+		// currenturl[currenturl.length-2] = newappend;
+		// pushurl = currenturl.join("/");
+		// window.history.pushState('page2', 'Title', pushurl);
 	}).always(function(){
-		currenturl = currenturl.join("/");
+		// currenturl = currenturl.join("/");
 	});
 });
 </script>

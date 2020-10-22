@@ -10,6 +10,8 @@ urlpatterns = [
 	path(r'character/<int:charID>/', views.charContent),
 	path(r'mcharactercreation/<str:left>/<str:right>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/', views.splitPage),
+	path(r'p/<str:pformat>/<str:left>/<str:right>/', views.splitPage),
+	path(r'p/<str:pformat>/', views.splitPage),
 
 	# url(r'api/', include(router.urls)),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rpgapi')),

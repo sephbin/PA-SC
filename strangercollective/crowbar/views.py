@@ -15,7 +15,7 @@ def getPage(request, url):
 	return page_contents
 
 @csrf_exempt
-def splitPage(request, left=None, right=None):
+def splitPage(request,pformat="splitPage", left=None, right=None):
 	log = []
 	isError = False
 	if request.method == "GET":
@@ -25,7 +25,7 @@ def splitPage(request, left=None, right=None):
 			right = getPage(request, right)
 
 		context = {"left":left,"right":right}
-		return render(request,"crowbar/layouts/splitPage.html",context)
+		return render(request,"crowbar/layouts/%s.html"%(pformat),context)
 	if request.method == "POST":
 		print(request.POST)
 		page = getPage(request, request.POST["href"])

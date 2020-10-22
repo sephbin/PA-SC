@@ -33,8 +33,8 @@ def splitPage(request,pformat="splitPage", left=None, right=None):
 
 
 @csrf_exempt
-def charContent(request, charID=None):
+def charContent(request, charID=None, page="1"):
 	instance = get_object_or_404(character, id=charID)
 	if request.method == "GET":
 		context = {"instance":instance.gcaData}
-		return render(request,"crowbar/content/simpleChar.html",context)
+		return render(request,"crowbar/content/simpleChar%s.html"%(page),context)

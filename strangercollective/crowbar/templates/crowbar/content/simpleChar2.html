@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+		<div>
+			<b>Advantages</b>
+			<hr>
+			<table wide>
+				{% for advantage in instance.Traits.Advantage  %}
+				<tr>
+					<td>
+						<a href="/pages/advantages/{{advantage.name|slugify}}">{{advantage.name}}</a>
+					</td>
+					<td>
+						[{{advantage.points}}]
+					</td>
+					<td style="display:none;">
+						{{advantage|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+		<div>
+			<b>Disadvantages</b>
+			<hr>
+			<table wide>
+				{% for disadvantage in instance.Traits.Disadvantage  %}
+				<tr>
+					<td>
+						<a href="/pages/disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}</a>
+					</td>
+					<td>
+						[{{disadvantage.points}}]
+					</td>
+					<td style="display:none;">
+						{{disadvantage|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+</body>
+</html>

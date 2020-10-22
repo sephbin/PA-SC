@@ -9,103 +9,107 @@
 	<h2>
 		{{instance.General.name}}
 	</h2>
-	<div>
-		<b>Advantages</b>
-		<hr>
-		<table>
-			{% for advantage in instance.Traits.Advantage  %}
-			<tr>
-				<td>
-					<a href="/pages/advantages/{{advantage.name|slugify}}">{{advantage.name}}</a>
-				</td>
-				<td>
-					[{{advantage.points}}]
-				</td>
-				<td style="display:none;">
-					{{advantage|safe}}
-				</td>
-			</tr>
-	
-			{% endfor %}
-		</table>
+	<div class="column col-left">
+		<div>
+			<b>Advantages</b>
+			<hr>
+			<table>
+				{% for advantage in instance.Traits.Advantage  %}
+				<tr>
+					<td>
+						<a href="/pages/advantages/{{advantage.name|slugify}}">{{advantage.name}}</a>
+					</td>
+					<td>
+						[{{advantage.points}}]
+					</td>
+					<td style="display:none;">
+						{{advantage|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+		<div>
+			<b>Disadvantages</b>
+			<hr>
+			<table>
+				{% for disadvantage in instance.Traits.Disadvantage  %}
+				<tr>
+					<td>
+						<a href="/pages/disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}</a>
+					</td>
+					<td>
+						[{{disadvantage.points}}]
+					</td>
+					<td style="display:none;">
+						{{disadvantage|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
 	</div>
-	<div>
-		<b>Disadvantages</b>
-		<hr>
-		<table>
-			{% for disadvantage in instance.Traits.Disadvantage  %}
-			<tr>
-				<td>
-					<a href="/pages/disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}</a>
-				</td>
-				<td>
-					[{{disadvantage.points}}]
-				</td>
-				<td style="display:none;">
-					{{disadvantage|safe}}
-				</td>
-			</tr>
-	
-			{% endfor %}
-		</table>
+	<div class="column col-right">
+		<div>
+			<b>Skills</b>
+			<hr>
+			<table>
+				{% for skill in instance.Traits.Skill  %}
+				<tr>
+					<td>
+						<a class="hlt-100">{{skill.level}}</a>
+					</td>
+					<td>
+						-
+					</td>
+					<td>
+						{% if "Weapons - Melee Combat" in skill.cat %}
+						<a href="/pages/skills/melee-weapon/{{skill.name|slugify}}">{{skill.name}}</a>
+						{% else %}
+						<a href="/pages/skills/{{skill.name|slugify}}">{{skill.name}}</a>
+						{% endif %}
+					</td>
+					<td>
+						[{{skill.points}}]
+					</td>
+					<td style="display:none;">
+						{{skill|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+		{% if instance.Traits.Spell %}
+		<div>
+			<b>Spells</b>
+			<hr>
+			<table>
+				{% for spell in instance.Traits.Spell  %}
+				<tr>
+					<td>
+						<a class="hlt-100">{{spell.level}}</a>
+					</td>
+					<td>
+						-
+					</td>
+					<td>
+						<a href="/pages/skills/{{spell.name|slugify}}">{{spell.name}}</a>
+					</td>
+					<td>
+						[{{spell.points}}]
+					</td>
+					<td style="display:none;">
+						{{spell|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+		{% endif %}
 	</div>
-	<div>
-		<b>Skills</b>
-		<hr>
-		<table>
-			{% for skill in instance.Traits.Skill  %}
-			<tr>
-				<td>
-					<a class="hlt-100">{{skill.level}}</a>
-				</td>
-				<td>
-					-
-				</td>
-				<td>
-					{% if "Weapons - Melee Combat" in skill.cat %}
-					<a href="/pages/skills/melee-weapon/{{skill.name|slugify}}">{{skill.name}}</a>
-					{% else %}
-					<a href="/pages/skills/{{skill.name|slugify}}">{{skill.name}}</a>
-					{% endif %}
-				</td>
-				<td>
-					[{{skill.points}}]
-				</td>
-				<td style="display:none;">
-					{{skill|safe}}
-				</td>
-			</tr>
-	
-			{% endfor %}
-		</table>
-	</div>
-	{% if instance.Traits.Spell %}
-	<div>
-		<b>Spells</b>
-		<hr>
-		<table>
-			{% for spell in instance.Traits.Spell  %}
-			<tr>
-				<td>
-					<a class="hlt-100">{{spell.level}}</a>
-				</td>
-				<td>
-					-
-				</td>
-				<td>
-					<a href="/pages/skills/{{spell.name|slugify}}">{{spell.name}}</a>
-				</td>
-				<td>
-					[{{spell.points}}]
-				</td>
-				<td style="display:none;">
-					{{spell|safe}}
-				</td>
-			</tr>
-	
-			{% endfor %}
-		</table>
-	</div>
-	{% endif %}
 </body>
 </html>

@@ -3,6 +3,7 @@ from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.contrib.table_block.blocks import TableBlock
 from wagtail.search import index
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.blocks import ImageChooserBlock
@@ -244,6 +245,7 @@ class DynamicPage(Page):
 	body = StreamField([
 		('heading', blocks.CharBlock(classname="full title")),
 		('paragraph', blocks.RichTextBlock()),
+		('table',TableBlock()),
 		('test', TwoColumnBlock()),
 		('test2', ColumnBlock()),
 		('image', ImageChooserBlock()),

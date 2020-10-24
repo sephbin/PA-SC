@@ -8,8 +8,10 @@ from . import views
 
 urlpatterns = [
 	path(r'character/<int:charID>/<str:page>', views.charContent),
+	path(r'mcharactercreation/<str:left>/<str:right>/<str:center>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/<str:right>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/', views.splitPage),
+	path(r'p/<str:pformat>/<str:left>/<str:right>/<str:center>/', views.splitPage),
 	path(r'p/<str:pformat>/<str:left>/<str:right>/', views.splitPage),
 	path(r'p/<str:pformat>/<str:left>/', views.splitPage),
 	path(r'p/<str:pformat>/', views.splitPage),

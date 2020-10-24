@@ -6,6 +6,83 @@
 	<title>Document</title>
 </head>
 <body>
+	<div>
+		{% with at=instance.Attributes %}
+		<table wide>
+			<tr>
+				<td>DODGE:</td>
+				<td>{{at.Dodge.score}}</td>
+				<td>BLOCK:</td>
+				<td>{{instance.Block}}</td>
+				<td>DR:</td>
+				<td>{% if at.DR.score %}{{at.DR.score}}{% else %}0{%endif%}</td>
+			</tr>
+		</table>
+		{% endwith %}
+	</div>
+	<div>
+			
+		<b>Melee</b>
+		<hr>
+		<table wide>
+			{% for eq in instance.Traits.All %}
+			{% if 'charreach' in eq %} {% if eq.charreach %}
+			
+			<tr>
+				<td colspan=99>
+					<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a>
+				</td>
+			</tr>
+			{% for d in eq.damages %}
+				<tr>
+					<td style="width:0.5em;"><a class="hlt-100">{{d.charskillscore}}</a></td>
+					<td style="width:0.5em;">({{d.charparryscore}})</td>
+					<td style="width:0.5em;">-</td>
+					<td>{{d.mode}}</td>
+					<td>{{d.chardamage}} {{d.chardamtype}}</td>
+					<td>{{d.charreach}}</td>
+					<td>{{d.charminst}}</td>
+					<td>{{d.chardb}}</td>
+					
+				</tr>
+			{% endfor %}
+			{% endif %} {% endif %}
+			{% endfor %}
+		</table>
+	</div>
+
+	<div>
+			
+		<b>Ranged</b>
+		<hr>
+		<table wide>
+			{% for eq in instance.Traits.All %}
+			{% if 'rangemax' in eq %}
+			
+			<tr>
+				<td colspan=99>
+					<a href="/pages/advantage/{{eq.name|slugify}}">{{eq.name}}</a>
+				</td>
+			</tr>
+
+				<tr>
+					<td style="width:0.5em;"><a class="hlt-100">{{eq.charskillscore}}</a></td>
+					<td style="width:0.5em;">-</td>
+					<td>{{eq.chardamage}} {{eq.chardamtype}}</td>
+					<td>{{eq.characc}}</td>
+					<td>{{eq.charrangehalfdam}}/{{eq.charrangemax}}</td>
+					<td>{{eq.charrof}}</td>
+					<td>{{eq.charshots}}</td>
+					<td>{{eq.charrcl}}</td>
+					
+				</tr>
+
+			{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+
+
 		<div>
 			<b>Advantages</b>
 			<hr>
@@ -40,6 +117,40 @@
 					</td>
 					<td style="display:none;">
 						{{disadvantage|safe}}
+					</td>
+				</tr>
+		
+				{% endfor %}
+			</table>
+		</div>
+		<div>
+			
+			<b>Possessions</b>
+			<hr>
+			<table wide>
+				<tr>
+					<td style="width:2em; text-align: left;"></td>
+					<td> <a href="/pages/possession/{{eq.name|slugify}}"></a> </td>
+					<td style="width:3em; text-align: right;"> wt </td>
+					<td style="width:3em; text-align: right;"> $ </td>
+					<td style="display:none;"></td>
+				</tr>
+				{% for eq in instance.Traits.Equipment %}
+				<tr>
+					<td style="width:2em; text-align: left;">
+						{{eq.count}}x
+					</td>
+					<td>
+						<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a>
+					</td>
+					<td style="width:3em; text-align: right;">
+						{{eq.baseweight}}
+					</td>
+					<td style="width:3em; text-align: right;">
+						{{eq.cost}}
+					</td>
+					<td style="display:none;">
+						{{eq|safe}}
 					</td>
 				</tr>
 		

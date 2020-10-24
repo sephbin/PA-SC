@@ -152,6 +152,9 @@
 	[wide]{
 		width:100%;
 	}
+	[ta-r]{
+		text-align: right;
+	}
 	.campaign-icon{
 		z-index : 100;
 		position: absolute;
@@ -180,6 +183,7 @@
 		{%if right%}{{right|safe}}{%endif%}
 	</div>
 	<div class="center split">
+		{%if right%}{{center|safe}}{%endif%}
 	</div>
 </body>
 <script>

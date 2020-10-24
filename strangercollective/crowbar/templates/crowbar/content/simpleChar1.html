@@ -9,7 +9,47 @@
 	<h2>
 		{{instance.General.name}}
 	</h2>
+	{% with at=instance.Attributes %}	
+	<div>
+			<table wide>
 
+				<tr>
+					<td>ST</td><td><a href="/pages/attributes/st/">{{at.ST.score}}</a></td><td>[{% if at.ST.points %}{{at.ST.points}}{% else %}0{% endif %}]</td>
+					<td>HP</td><td><a href="/pages/attributes/hp/">{{at.HP.score}}</a></td><td>[{% if at.HP.points %}{{at.HP.points}}{% else %}0{% endif %}]</td>
+					<td>SM</td><td><a href="/pages/attributes/sm/">{{at.SM.score}}</a></td><td>[{% if at.SM.points %}{{at.SM.points}}{% else %}0{% endif %}]</td>
+				</tr>
+				<tr>
+					<td>DX</td><td><a href="/pages/attributes/dx/">{{at.DX.score}}</a></td><td>[{% if at.DX.points %}{{at.DX.points}}{% else %}0{% endif %}]</td>
+					<td>Will</td><td><a href="/pages/attributes/will/">{{at.Will.score}}</a></td><td>[{% if at.Will.points %}{{at.Will.points}}{% else %}0{% endif %}]</td>
+					<td>BS</td><td><a href="/pages/attributes/bs/">{{at.Basic_Speed.score}}</a></td><td>[{% if at.Basic_Speed.points %}{{at.Basic_Speed.points}}{% else %}0{% endif %}]</td>
+				</tr>
+				<tr>
+					<td>IQ</td><td><a href="/pages/attributes/iq/">{{at.IQ.score}}</a></td><td>[{% if at.IQ.points %}{{at.IQ.points}}{% else %}0{% endif %}]</td>
+					<td>Per</td><td><a href="/pages/attributes/per/">{{at.Per.score}}</a></td><td>[{% if at.Per.points %}{{at.Per.points}}{% else %}0{% endif %}]</td>
+					<td>BM</td><td><a href="/pages/attributes/bm/">{{at.Basic_Move.score}}</a></td><td>[{% if at.Basic_Move.points %}{{at.Basic_Move.points}}{% else %}0{% endif %}]</td>
+				</tr>
+				<tr>
+					<td>HT</td><td><a href="/pages/attributes/ht/">{{at.HT.score}}</a></td><td>[{% if at.HT.points %}{{at.HT.points}}{% else %}0{% endif %}]</td>
+					<td>FP</td><td><a href="/pages/attributes/fp/">{{at.FP.score}}</a></td><td>[{% if at.FP.points %}{{at.FP.points}}{% else %}0{% endif %}]</td>
+					<td>BL</td><td><a href="/pages/attributes/bl/">{{at.BL.score}} {% if at.Metric.score == '1' %}kg{%endif%}</a></td><td></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<table wide>
+			<tr>
+				<th colspan=2">Enc. ({% if at.Metric.score == '1' %}kg{%endif%})</th>
+				<th colspan=2">Move</th>
+				<th colspan=2">Dodge</th>
+			</tr>
+			<tr><td>None</td>			<td ta-r><a class="hlt-100">{{at.BL.score}}</a></td>	<td>BMx1</td>	<td ta-r><a class="hlt-100">{{at.Basic_Move.score}}</a></td>		<td>Dodge</td>		<td ta-r><a class="hlt-100">{{at.Dodge.score}}</a></td></tr>
+			<tr><td>Light</td>			<td ta-r><a class="hlt-100">{{at.LEnc.score}}</a></td>	<td>BMx0.8</td>	<td ta-r><a class="hlt-100">{{at.LEncMove.score}}</a></td>		<td>Dodge-1</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-1}}</a></td></tr>
+			<tr><td>Medium</td>			<td ta-r><a class="hlt-100">{{at.MEnc.score}}</a></td>	<td>BMx0.6</td>	<td ta-r><a class="hlt-100">{{at.MEncMove.score}}</a></td>		<td>Dodge-2</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-2}}</a></td></tr>
+			<tr><td>Heavy</td>			<td ta-r><a class="hlt-100">{{at.HEnc.score}}</a></td>	<td>BMx0.4</td>	<td ta-r><a class="hlt-100">{{at.HEncMove.score}}</a></td>		<td>Dodge-3</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-3}}</a></td></tr>
+			<tr><td>X-Heavy</td>		<td ta-r><a class="hlt-100">{{at.XEnc.score}}</a></td>	<td>BMx0.2</td>	<td ta-r><a class="hlt-100">{{at.XEncMove.score}}</a></td>		<td>Dodge-4</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-4}}</a></td></tr>
+			</table>
+		</div>
+		{% endwith %}
 		<div>
 			<b>Skills</b>
 			<hr>
@@ -54,7 +94,7 @@
 						-
 					</td>
 					<td>
-						<a href="/pages/skills/{{spell.name|slugify}}">{{spell.name}}</a>
+						<a href="/pages/spells/{{spell.name|slugify}}">{{spell.name}}</a>
 					</td>
 					<td style="width:3em; text-align: right;">
 						[{{spell.points}}]

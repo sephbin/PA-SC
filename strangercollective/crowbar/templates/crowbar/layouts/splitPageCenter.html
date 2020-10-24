@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,7 +67,14 @@
 			left:0;
 			right:0;
 			height:32px;
-			background: #222;
+			background: #000;
+		}
+		div.nav-left{
+			right:50%
+		}
+		div.nav-right{
+			left:50%;
+			text-align: right;
 		}
 	@media only screen and (max-width: 600px) {
 		body{
@@ -166,11 +174,29 @@
 		image-rendering: pixelated;
 		
 	}
+	.button{
+		height:32px;
+		width:32px;
+		display: inline-block;
+		background-size: 90%;
+		background-position: center;
+		background-repeat: no-repeat;
+		cursor: pointer;
+	}
+	path{
+		fill:None;
+	}
+	[fill="#FFF"]{
+		fill:#F0F;
+	}
 </style>
 </head>
 <body>
 	<div class="campaign-icon" style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/GOR ICON.png');"></div>
-	<div class="top nav">
+	<div class="top nav nav-left">
+	</div>
+	<div class="top nav nav-right">
+		<div class="button" style="background-image:url({% static 'crowbar/icons/lorc/crossed-axes.svg' %})"></div><div class="button" href="/pages/general-rules/ranged-combat/" style="background-image:url({% static 'crowbar/icons/lorc/target-arrows.svg' %})"></div>
 		<!-- <div id="campaign-title"> -->
 			<!-- <div scrolling-background style="background-position:-0px -0px; background-size: 106px; background-repeat: repeat; background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title_background.jpg');"></div> -->
 			<!-- <div style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title.png');"></div> -->
@@ -197,11 +223,12 @@ if (right){
 }else{
 	var currenturl = String(window.location)+"/";
 }
-$('.left a').click(function(event){
+
+function linkmain(event, linkparent){
 	event.preventDefault();
 	
 	console.log(currenturl);
-	var newurl = this.href;
+	var newurl = $(linkparent).attr("href");
 	// currenturl = currenturl.split("/");
 	
 	// console.log(currenturl);
@@ -220,30 +247,33 @@ $('.left a').click(function(event){
 	}).always(function(){
 		currenturl = currenturl.join("/");
 	});
+}
+$('.left a, .right a, div.button').click(function(event){
+	linkmain(event, this)
 });
-$('.right a').click(function(event){
-	event.preventDefault();
+// $('.right a').click(function(event){
+// 	event.preventDefault();
 	
-	console.log(currenturl);
-	var newurl = this.href;
-	// currenturl = currenturl.split("/");
+// 	console.log(currenturl);
+// 	var newurl = this.href;
+// 	// currenturl = currenturl.split("/");
 	
-	// console.log(currenturl);
-	$.ajax({
-		url: "",
-		method: "post",
-		dataType: "json",
-		data: {"href":newurl},
-	}).done(function(r){
-		$(".center").html(r.page);
+// 	// console.log(currenturl);
+// 	$.ajax({
+// 		url: "",
+// 		method: "post",
+// 		dataType: "json",
+// 		data: {"href":newurl},
+// 	}).done(function(r){
+// 		$(".center").html(r.page);
 
-		// newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
-		// currenturl[currenturl.length-2] = newappend;
-		// pushurl = currenturl.join("/");
-		// window.history.pushState('page2', 'Title', pushurl);
-	}).always(function(){
-		// currenturl = currenturl.join("/");
-	});
-});
+// 		// newappend = newurl.replace("https://","").replace("http://","").replace("{{request.META.HTTP_HOST}}","").replaceAll("/","__").replaceAll("__$","");
+// 		// currenturl[currenturl.length-2] = newappend;
+// 		// pushurl = currenturl.join("/");
+// 		// window.history.pushState('page2', 'Title', pushurl);
+// 	}).always(function(){
+// 		// currenturl = currenturl.join("/");
+// 	});
+// });
 </script>
 </html>

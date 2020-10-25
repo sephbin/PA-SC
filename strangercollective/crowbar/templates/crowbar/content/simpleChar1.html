@@ -64,9 +64,9 @@
 					</td>
 					<td>
 						{% if "Weapons - Melee Combat" in skill.cat %}
-						<a href="/pages/skills/melee-weapon/{{skill.name|slugify}}">{{skill.name}}</a>
+						<a href="/pages/skills/melee-weapon/{{skill.name|slugify}}">{{skill.name}}{%if skill.nameext%} ({{skill.nameext}}){% endif %}</a>
 						{% else %}
-						<a href="/pages/skills/{{skill.name|slugify}}">{{skill.name}}</a>
+						<a href="/pages/skills/{{skill.name|slugify}}">{{skill.name}}{%if skill.nameext%} ({{skill.nameext}}){% endif %}</a>
 						{% endif %}
 					</td>
 					<td style="width:3em; text-align: right;">

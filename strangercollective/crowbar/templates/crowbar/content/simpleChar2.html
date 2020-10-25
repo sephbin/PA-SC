@@ -90,7 +90,7 @@
 				{% for advantage in instance.Traits.Advantage  %}
 				<tr>
 					<td>
-						<a href="/pages/advantages/{{advantage.name|slugify}}">{{advantage.name}}</a>
+						<a href="/pages/{%if advantage.usernotes%}{{advantage.usernotes}}/{%endif%}advantages/{{advantage.name|slugify}}">{{advantage.name}}{%if advantage.nameext%} ({{advantage.nameext}}){% endif %}</a>
 					</td>
 					<td style="width:3em; text-align: right;">
 						[{{advantage.points}}]
@@ -110,7 +110,7 @@
 				{% for disadvantage in instance.Traits.Disadvantage  %}
 				<tr>
 					<td>
-						<a href="/pages/disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}</a>
+						<a href="/pages/{%if disadvantage.usernotes%}{{disadvantage.usernotes}}/{%endif%}disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}{%if disavantage.nameext%} ({{disadvantage.nameext}}){% endif %}</a>
 					</td>
 					<td style="width:3em; text-align: right;">
 						[{{disadvantage.points}}]

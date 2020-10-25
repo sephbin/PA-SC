@@ -195,6 +195,8 @@
 	.block-table{
 		float: right;
 		text-align: center;
+		padding-left:2px;
+		padding-right:2px;
 	}
 	.block-table th {background-color: rgba(255,255,255,0.3);}
 	.block-table tr:nth-child(even) {background-color: rgba(255,255,255,0.2);}
@@ -206,7 +208,13 @@
 	<div class="top nav nav-left">
 	</div>
 	<div class="top nav nav-right">
-		<div class="button" href="/pages/general-rules/melee-combat/" style="background-image:url({% static 'crowbar/icons/lorc/crossed-axes.svg' %})"></div><div class="button" href="/pages/general-rules/ranged-combat/" style="background-image:url({% static 'crowbar/icons/lorc/target-arrows.svg' %})"></div><div class="button" href="/pages/general-rules/maneuvers/" style="background-image:url({% static 'crowbar/icons/lorc/run.svg' %})"></div>
+			<div title="Melee Combat" class="button" href="/pages/general-rules/melee-combat/" style="background-image:url({% static 'crowbar/icons/crossed-axes.svg' %})">
+		</div><div title="Ranged Combat" class="button" href="/pages/general-rules/ranged-combat/" style="background-image:url({% static 'crowbar/icons/target-arrows.svg' %})">
+		</div><div title="Combat Maneuvers" class="button" href="/pages/general-rules/maneuvers/" style="background-image:url({% static 'crowbar/icons/run.svg' %})">
+		</div><div title="Injuries" class="button" href="/pages/general-rules/injuries/" style="background-image:url({% static 'crowbar/icons/backstab.svg' %})">
+		</div><div title="Fatigue" class="button" href="/pages/general-rules/fatigue/" style="background-image:url({% static 'crowbar/icons/back-pain.svg' %})">
+		</div><div title="Recovery" class="button" href="/pages/general-rules/recovery/" style="background-image:url({% static 'crowbar/icons/defibrilate.svg' %})">
+		</div>
 		<!-- <div id="campaign-title"> -->
 			<!-- <div scrolling-background style="background-position:-0px -0px; background-size: 106px; background-repeat: repeat; background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title_background.jpg');"></div> -->
 			<!-- <div style="background-image: url('/media/crowbar/campaigns/gardiansofragnarok/main_title.png');"></div> -->

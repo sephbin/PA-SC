@@ -57,7 +57,7 @@
 				{% for skill in instance.Traits.Skill  %}
 				<tr>
 					<td style="width:2em; text-align: center;">
-						<a class="hlt-100">{{skill.level}}</a>
+						<a class="hlt-{% widthratio skill.level 1 100 %}">{{skill.level}}</a>
 					</td>
 					<td>
 						-
@@ -88,7 +88,7 @@
 				{% for spell in instance.Traits.Spell  %}
 				<tr>
 					<td style="width:2em; text-align: center;">
-						<a class="hlt-100">{{spell.level}}</a>
+						<a class="hlt-{% widthratio spell.level 1 100 %}">{{spell.level}}</a>
 					</td>
 					<td>
 						-

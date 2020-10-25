@@ -12,6 +12,9 @@
 		font-family: "Roboto Mono";
 		/* text-shadow: 0 0 3px hsla(28, 100%, 50%, 0.5), 0 0 4px rgba(255, 136, 0, 0.5), 0 0 10px hsla(27, 98%, 16%, 0.5); */
 	}
+	table{
+		border-collapse: collapse;
+	}
 	a {
 		color: inherit; /* blue colors for links too */
 		text-decoration: inherit; /* no underline */
@@ -189,6 +192,13 @@
 	[fill="#FFF"]{
 		fill:#F0F;
 	}
+	.block-table{
+		float: right;
+		text-align: center;
+	}
+	.block-table th {background-color: rgba(255,255,255,0.3);}
+	.block-table tr:nth-child(even) {background-color: rgba(255,255,255,0.2);}
+	.block-table tr:nth-child(odd) {background-color: rgba(255,255,255,0.1);}
 </style>
 </head>
 <body>

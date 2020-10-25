@@ -300,7 +300,7 @@ function linkmain(event, linkparent){
 		currenturl = currenturl.join("/");
 	});
 }
-$('.left a, .right a, div.button, .center a').click(function(event){
+$(document).on('click','.left a, .right a, div.button, .center a',function(event){
 	linkmain(event, this)
 });
 // $('.right a').click(function(event){

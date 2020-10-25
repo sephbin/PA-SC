@@ -10,7 +10,7 @@
 		{{instance.General.name}}
 	</h2>
 	{% with at=instance.Attributes %}	
-	<div>
+	<div class="card">
 			<table wide>
 
 				<tr>
@@ -35,25 +35,27 @@
 				</tr>
 			</table>
 		</div>
-		<div>
+		<div class="card">
 			<table wide>
 			<tr>
-				<th colspan=2">Enc. ({% if at.Metric.score == '1' %}kg{%endif%})</th>
-				<th colspan=2">Move</th>
-				<th colspan=2">Dodge</th>
+				<th b-1-b colspan=2">Enc. ({% if at.Metric.score == '1' %}kg{%endif%})</th>
+				<th b-1-b b-1-l colspan=2">Move</th>
+				<th b-1-b b-1-l colspan=2">Dodge</th>
 			</tr>
-			<tr><td>None</td>			<td ta-r><a class="hlt-100">{{at.BL.score}}</a></td>	<td>BMx1</td>	<td ta-r><a class="hlt-100">{{at.Basic_Move.score}}</a></td>		<td>Dodge</td>		<td ta-r><a class="hlt-100">{{at.Dodge.score}}</a></td></tr>
-			<tr><td>Light</td>			<td ta-r><a class="hlt-100">{{at.LEnc.score}}</a></td>	<td>BMx0.8</td>	<td ta-r><a class="hlt-100">{{at.LEncMove.score}}</a></td>		<td>Dodge-1</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-1}}</a></td></tr>
-			<tr><td>Medium</td>			<td ta-r><a class="hlt-100">{{at.MEnc.score}}</a></td>	<td>BMx0.6</td>	<td ta-r><a class="hlt-100">{{at.MEncMove.score}}</a></td>		<td>Dodge-2</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-2}}</a></td></tr>
-			<tr><td>Heavy</td>			<td ta-r><a class="hlt-100">{{at.HEnc.score}}</a></td>	<td>BMx0.4</td>	<td ta-r><a class="hlt-100">{{at.HEncMove.score}}</a></td>		<td>Dodge-3</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-3}}</a></td></tr>
-			<tr><td>X-Heavy</td>		<td ta-r><a class="hlt-100">{{at.XEnc.score}}</a></td>	<td>BMx0.2</td>	<td ta-r><a class="hlt-100">{{at.XEncMove.score}}</a></td>		<td>Dodge-4</td>	<td ta-r><a class="hlt-100">{{at.Dodge.score|add:-4}}</a></td></tr>
+			<tr><td>None</td>			<td ta-c><a class="hlt-100">{{at.BL.score}}</a></td>	<td b-1-l>BMx1</td>	<td ta-c><a class="hlt-100">{{at.Basic_Move.score}}</a></td>		<td b-1-l>Dodge</td>		<td ta-c><a class="hlt-100">{{at.Dodge.score}}</a></td></tr>
+			<tr><td>Light</td>			<td ta-c><a class="hlt-100">{{at.LEnc.score}}</a></td>	<td b-1-l>BMx0.8</td>	<td ta-c><a class="hlt-100">{{at.LEncMove.score}}</a></td>		<td b-1-l>Dodge-1</td>	<td ta-c><a class="hlt-100">{{at.Dodge.score|add:-1}}</a></td></tr>
+			<tr><td>Medium</td>			<td ta-c><a class="hlt-100">{{at.MEnc.score}}</a></td>	<td b-1-l>BMx0.6</td>	<td ta-c><a class="hlt-100">{{at.MEncMove.score}}</a></td>		<td b-1-l>Dodge-2</td>	<td ta-c><a class="hlt-100">{{at.Dodge.score|add:-2}}</a></td></tr>
+			<tr><td>Heavy</td>			<td ta-c><a class="hlt-100">{{at.HEnc.score}}</a></td>	<td b-1-l>BMx0.4</td>	<td ta-c><a class="hlt-100">{{at.HEncMove.score}}</a></td>		<td b-1-l>Dodge-3</td>	<td ta-c><a class="hlt-100">{{at.Dodge.score|add:-3}}</a></td></tr>
+			<tr><td>X-Heavy</td>		<td ta-c><a class="hlt-100">{{at.XEnc.score}}</a></td>	<td b-1-l>BMx0.2</td>	<td ta-c><a class="hlt-100">{{at.XEncMove.score}}</a></td>		<td b-1-l>Dodge-4</td>	<td ta-c><a class="hlt-100">{{at.Dodge.score|add:-4}}</a></td></tr>
 			</table>
 		</div>
 		{% endwith %}
-		<div>
-			<b>Skills</b>
-			<hr>
+		<div class="card">
 			<table wide>
+				<tr>
+					<td colspan="3" b-1-b><b>Skills</b></td>
+					<td b-1-b ta-r><b>Cost</b></td>
+				</tr>
 				{% for skill in instance.Traits.Skill  %}
 				<tr>
 					<td style="width:2em; text-align: center;">
@@ -81,7 +83,7 @@
 			</table>
 		</div>
 		{% if instance.Traits.Spell %}
-		<div>
+		<div class="card">
 			<b>Spells</b>
 			<hr>
 			<table wide>

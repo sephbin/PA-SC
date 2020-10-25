@@ -6,7 +6,7 @@
 	<title>Document</title>
 </head>
 <body>
-	<div>
+	<div class="card">
 		{% with at=instance.Attributes %}
 		<table wide>
 			<tr>
@@ -20,73 +20,102 @@
 		</table>
 		{% endwith %}
 	</div>
-	<div>
-			
-		<b>Melee</b>
-		<hr>
-		<table wide>
+	<div class="card">
+		<table wide zebra>
+			<tr>
+				<td b-1-b colspan=4><b>Melee</b></td>
+				<td b-1-l b-1-b ta-c><b>Dam</b></td>
+				<td b-1-l b-1-b ta-c><b>Reach</b></td>
+				<td b-1-l b-1-b ta-c><b>Min ST</b></td>
+				<td b-1-l b-1-b ta-c><b>DB</b></td>
+			</tr>
 			{% for eq in instance.Traits.All %}
 			{% if 'charreach' in eq %} {% if eq.charreach %}
 			
-			<tr>
-				<td colspan=99>
-					<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a>
+			<tr class="weapon-head">
+				<td colspan=4>
+					<!-- <a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a> -->
+					{{eq.name}}
 				</td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+				<td b-1-l></td>
 			</tr>
 			{% for d in eq.damages %}
-				<tr>
-					<td style="width:0.5em;"><a class="hlt-100">{{d.charskillscore}}</a></td>
-					<td style="width:0.5em;">({{d.charparryscore}})</td>
-					<td style="width:0.5em;">-</td>
-					<td>{{d.mode}}</td>
-					<td>{{d.chardamage}} {{d.chardamtype}}</td>
-					<td>{{d.charreach}}</td>
-					<td>{{d.charminst}}</td>
-					<td>{{d.chardb}}</td>
-					
-				</tr>
+			{% if d.charreach %}
+			<tr>
+				<td style="width:0.5em;"><a class="hlt-100">{{d.charskillscore}}</a></td>
+				<td style="width:0.5em;">{% if d.charparryscore%} {% if not d.charparryscore == 'No' %}({{d.charparryscore}}){% endif %}{% endif %}</td>
+				<td style="width:0.5em;">-</td>
+				<td>{{d.mode}}</td>
+				<td b-1-l ta-c>{{d.chardamage}} {{d.chardamtype}}</td>
+				<td b-1-l ta-c>{{d.charreach}}</td>
+				<td b-1-l ta-c>{{d.charminst}}</td>
+				<td b-1-l ta-c>{% if d.chardb %}{{d.chardb}}{% else %}-{% endif %}</td>
+				
+			</tr>
+			{% endif %}
 			{% endfor %}
 			{% endif %} {% endif %}
 			{% endfor %}
 		</table>
 	</div>
 
-	<div>
-			
-		<b>Ranged</b>
-		<hr>
+	<div class="card">
 		<table wide>
-			{% for eq in instance.Traits.All %}
-			{% if 'rangemax' in eq %}
-			
-			<tr>
-				<td colspan=99>
-					<a href="/pages/advantage/{{eq.name|slugify}}">{{eq.name}}</a>
-				</td>
-			</tr>
-
 				<tr>
-					<td style="width:0.5em;"><a class="hlt-100">{{eq.charskillscore}}</a></td>
+					<td b-1-b colspan=3><b>Ranged</b></td>
+					<td b-1-l b-1-b ta-c><b>Acc</b></td>
+					<td b-1-l b-1-b ta-c><b>Range</b></td>
+					<td b-1-l b-1-b ta-c><b>RoF</b></td>
+					<td b-1-l b-1-b ta-c><b>Shots</b></td>
+					<td b-1-l b-1-b ta-c><b>Rcl</b></td>
+				</tr>
+			{% for eq in instance.Traits.All %}
+			{% if 'charrangemax' in eq %} {% if eq.charrangemax %}
+			
+			<tr class="weapon-head">
+				<td colspan=3>
+					<!-- <a href="/pages/advantage/{{eq.name|slugify}}">{{eq.name}}</a> -->
+				{{eq.name}}
+				</td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+				<td b-1-l></td>
+			</tr>
+			{% for d in eq.damages %}
+			{% if d.charrangemax %}
+				<tr>
+					<td style="width:0.5em;"><a class="hlt-100">{{d.charskillscore}}</a></td>
 					<td style="width:0.5em;">-</td>
-					<td>{{eq.chardamage}} {{eq.chardamtype}}</td>
-					<td>{{eq.characc}}</td>
-					<td>{{eq.charrangehalfdam}}/{{eq.charrangemax}}</td>
-					<td>{{eq.charrof}}</td>
-					<td>{{eq.charshots}}</td>
-					<td>{{eq.charrcl}}</td>
+					<td>{{d.chardamage}} {{d.chardamtype}}</td>
+					<td b-1-l ta-c>{{d.characc}}</td>
+					<td b-1-l ta-c>{{d.charrangehalfdam}}/{{d.charrangemax}}</td>
+					<td b-1-l ta-c>{{d.charrof}}</td>
+					<td b-1-l ta-c>{{d.charshots}}</td>
+					<td b-1-l ta-c>{{d.charrcl}}</td>
 					
 				</tr>
+			{% endif %}
+			{% endfor %}
 
+			{% endif %}
 			{% endif %}
 			{% endfor %}
 		</table>
 	</div>
 
 
-		<div>
-			<b>Advantages</b>
-			<hr>
-			<table wide>
+		<div class="card">
+			
+			<table wide zebra>
+				<tr>
+					<td b-1-b><b>Advantages</b></td>
+					<td b-1-b ta-r><b>Cost</b></td>
+				</tr>
 				{% for advantage in instance.Traits.Advantage  %}
 				<tr>
 					<td>
@@ -103,10 +132,12 @@
 				{% endfor %}
 			</table>
 		</div>
-		<div>
-			<b>Disadvantages</b>
-			<hr>
-			<table wide>
+		<div class="card">
+			<table wide zebra>
+				<tr>
+					<td b-1-b><b>Disadvantages</b></td>
+					<td b-1-b ta-r><b>Cost</b></td>
+				</tr>
 				{% for disadvantage in instance.Traits.Disadvantage  %}
 				<tr>
 					<td>
@@ -123,17 +154,12 @@
 				{% endfor %}
 			</table>
 		</div>
-		<div>
-			
-			<b>Possessions</b>
-			<hr>
-			<table wide>
+		<div class="card">
+			<table wide zebra>
 				<tr>
-					<td style="width:2em; text-align: left;"></td>
-					<td> <a href="/pages/possession/{{eq.name|slugify}}"></a> </td>
-					<td style="width:3em; text-align: right;"> wt </td>
-					<td style="width:3em; text-align: right;"> $ </td>
-					<td style="display:none;"></td>
+					<td b-1-b colspan="2"><b>Possessions</b></td>
+					<td b-1-b b-1-l style="width:3em; text-align: center;"> <b>wt</b> </td>
+					<td b-1-b b-1-l style="width:3em; text-align: center;"> <b>$</b> </td>
 				</tr>
 				{% for eq in instance.Traits.Equipment %}
 				<tr>
@@ -143,10 +169,10 @@
 					<td>
 						<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a>
 					</td>
-					<td style="width:3em; text-align: right;">
+					<td b-1-l style="width:3em; text-align: right;">
 						{{eq.baseweight}}
 					</td>
-					<td style="width:3em; text-align: right;">
+					<td b-1-l style="width:3em; text-align: right;">
 						{{eq.cost}}
 					</td>
 					<td style="display:none;">

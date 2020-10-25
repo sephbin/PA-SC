@@ -11,7 +11,7 @@
 	</h2>
 	{% with at=instance.Attributes %}	
 	<div class="card">
-			<table wide>
+			<table wide zebra>
 
 				<tr>
 					<td>ST</td><td><a href="/pages/attributes/st/">{{at.ST.score}}</a></td><td>[{% if at.ST.points %}{{at.ST.points}}{% else %}0{% endif %}]</td>
@@ -51,7 +51,7 @@
 		</div>
 		{% endwith %}
 		<div class="card">
-			<table wide>
+			<table wide zebra>
 				<tr>
 					<td colspan="3" b-1-b><b>Skills</b></td>
 					<td b-1-b ta-r><b>Cost</b></td>
@@ -86,7 +86,7 @@
 		<div class="card">
 			<b>Spells</b>
 			<hr>
-			<table wide>
+			<table wide zebra>
 				{% for spell in instance.Traits.Spell  %}
 				<tr>
 					<td style="width:2em; text-align: center;">

@@ -93,7 +93,8 @@ def charContent(request, charID=None, page="1"):
 					del eq["damages"][di]
 			except: pass
 		
-		dr = {
+		try:
+			dr = {
 			"skull": [2+int(data["Attributes"]["DR"]["score"]),2+int(data["Attributes"]["DR"]["score"])],
 			"neck": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
 			"face": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
@@ -104,7 +105,20 @@ def charContent(request, charID=None, page="1"):
 			"arms": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
 			"legs": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
 			"hands": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
-		}
+			}
+		except:
+			dr = {
+			"skull": [2+0,2+0],
+			"neck": [0,0],
+			"face": [0,0],
+			"eyes": [0,0],
+			"torso": [0,0],
+			"groin": [0,0],
+			"feet": [0,0],
+			"arms": [0,0],
+			"legs": [0,0],
+			"hands": [0,0],
+			}
 		for tr in data["Traits"]["All"]:
 			try:
 				if "chardr" in tr:

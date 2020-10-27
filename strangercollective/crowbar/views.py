@@ -15,7 +15,7 @@ def getPage(request, url):
 	return page_contents
 
 @csrf_exempt
-def splitPage(request,pformat="splitPage", left=None, right=None, center=None):
+def splitPage(request,pformat="splitPage", char=None, left=None, right=None, center=None):
 	log = []
 	isError = False
 	if request.method == "GET":
@@ -27,7 +27,7 @@ def splitPage(request,pformat="splitPage", left=None, right=None, center=None):
 			center = getPage(request, center)
 
 
-		context = {"left":left,"right":right,"center":center}
+		context = {"char":char, "left":left,"right":right,"center":center}
 		return render(request,"crowbar/layouts/%s.html"%(pformat),context)
 	if request.method == "POST":
 		print(request.POST)
@@ -90,5 +90,45 @@ def charContent(request, charID=None, page="1"):
 				for di in reversed(delindexs):
 					del eq["damages"][di]
 			except: pass
-		context = {"instance":data}
+		
+		dr = {
+			"skull": [2+int(data["Attributes"]["DR"]["score"]),2+int(data["Attributes"]["DR"]["score"])],
+			"neck": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"face": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"eyes": [0,0],
+			"torso": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"groin": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"feet": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"arms": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"legs": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+			"hands": [int(data["Attributes"]["DR"]["score"]),int(data["Attributes"]["DR"]["score"])],
+		}
+		for tr in data["Traits"]["All"]:
+			try:
+				if "chardr" in tr:
+					drs = tr["chardr"].replace("*","").split("/")
+					drs = list(map(lambda x: int(x), drs))
+					if len(drs) == 1:
+						drs = [drs[0],drs[0]]
+					# print("drs",drs)
+					locs = tr["location"].lower().split(", ")
+					for l in locs:
+						index = 0
+						for a,b in zip(dr[l],drs):
+							dr[l][index] = a+b
+							index += 1
+			except Exception as e:
+				# print(e)
+				pass
+		# print(dr)
+		for k, v in dr.items():
+			v = list(map(lambda x: str(x), v))
+			if v[0]==v[1]:
+				dr[k] = v[0]
+			else:
+				print(k,v)
+				dr[k] = "/".join(v)
+
+
+		context = {"instance":data, "dr":dr}
 		return render(request,"crowbar/content/simpleChar%s.html"%(page),context)

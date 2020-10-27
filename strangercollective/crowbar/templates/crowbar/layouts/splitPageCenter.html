@@ -37,7 +37,7 @@
 		border-top: 1px solid white !important;
 		/* color: Black; */
 	}
-	.left a[class *= "hlt"], .right a[class *= "hlt"]{ color: rgba(255, 208, 0, 1); text-shadow: 0 0 2px #3a3733, 0 0 35px #e9dac641, 0 0 10px #fcbf19, 0 0 2px #fcac19; cursor:pointer;}
+	.left a[class *= "hlt"], .right a[class *= "hlt"], .center a[class *= "hlt"]{ color: rgba(255, 208, 0, 1); text-shadow: 0 0 2px #3a3733, 0 0 35px #e9dac641, 0 0 10px #fcbf19, 0 0 2px #fcac19; cursor:pointer;}
 	.left a.hlt-900, .right a.hlt-900{ opacity: 0.55;  }
 	.left a.hlt-1000, .right a.hlt-1000{ opacity: 0.60;  }
 	.left a.hlt-1100, .right a.hlt-1100{ opacity: 0.65;  }
@@ -242,7 +242,8 @@
 	<div class="top nav nav-left">
 	</div>
 	<div class="top nav nav-right">
-			<div title="Hit Locations" class="button" href="/pages/general-rules/hit-locations/" style="background-image:url({% static 'crowbar/icons/headshot.svg' %})">
+			<div title="DR" class="button" href="/crowbar/character/{{char}}/3" style="background-image:url({% static 'crowbar/icons/chain-mail.svg' %})">
+		</div><div title="Hit Locations" class="button" href="/pages/general-rules/hit-locations/" style="background-image:url({% static 'crowbar/icons/headshot.svg' %})">
 		</div><div title="Melee Combat" class="button" href="/pages/general-rules/melee-combat/" style="background-image:url({% static 'crowbar/icons/crossed-axes.svg' %})">
 		</div><div title="Ranged Combat" class="button" href="/pages/general-rules/ranged-combat/" style="background-image:url({% static 'crowbar/icons/target-arrows.svg' %})">
 		</div><div title="Combat Maneuvers" class="button" href="/pages/general-rules/maneuvers/" style="background-image:url({% static 'crowbar/icons/run.svg' %})">

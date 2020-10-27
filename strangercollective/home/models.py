@@ -230,6 +230,48 @@ class SkillsPage(Page):
 		super(SkillsPage, self).save(*args, **kwargs)
 
 
+class SpellsPage(Page):
+	feed_image = models.ForeignKey('wagtailimages.Image', null=True, blank=True, on_delete=models.SET_NULL, related_name='+')
+	body = RichTextField(blank=True)
+	challenge = models.CharField(max_length=200,choices=challenge_choices)
+	category = models.CharField(max_length=200, null=True, blank=True)
+	college = models.CharField(max_length=200, null=True, blank=True)
+	duration = models.CharField(max_length=200, null=True, blank=True)
+	cost = models.CharField(max_length=200, null=True, blank=True)
+	timeToCast = models.CharField(max_length=200, null=True, blank=True)
+	prerequisites = models.CharField(max_length=512, null=True, blank=True)
+
+
+	search_fields = Page.search_fields + [index.SearchField('body'),]
+	content_panels = Page.content_panels + [
+		# MultiFieldPanel([FieldPanel('challenge')], heading="Attribute/Challenge", classname="collapsible collapsed"),
+		FieldPanel('challenge', classname="full"),
+		FieldPanel('college', classname="full"),
+		FieldPanel('category', classname="full"),
+		FieldPanel('duration', classname="full"),
+		FieldPanel('cost', classname="full"),
+		FieldPanel('timeToCast', classname="full"),
+		FieldPanel('prerequisites', classname="full"),
+		FieldPanel('body', classname="full"),
+		]
+	promote_panels = [MultiFieldPanel(Page.promote_panels, "Common page configuration"), ImageChooserPanel('feed_image'), ]
+	
+	@property
+	def next_sibling(self):
+		return self.get_next_siblings().type(self.__class__).live().first()
+
+	@property
+	def prev_sibling(self):
+		return self.get_prev_siblings().type(self.__class__).live().first()
+	
+	@mark_safe
+	def body_progress(self):
+		return dyn_text(self.body)
+	body_progress.allow_tags = True
+
+	def save(self, *args, **kwargs):
+		super(SpellsPage, self).save(*args, **kwargs)
+
 
 
 class PageTag(TaggedItemBase):

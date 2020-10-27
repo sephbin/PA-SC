@@ -1,0 +1,5 @@
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+<h1>{{ page.title|richtext }}</h1>
+<i>Prerequisites: {{page.prerequisites|richtext}}</i>
+{{ page.body|richtext}}

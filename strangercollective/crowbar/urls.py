@@ -11,6 +11,7 @@ urlpatterns = [
 	path(r'mcharactercreation/<str:left>/<str:right>/<str:center>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/<str:right>/', views.splitPage),
 	path(r'mcharactercreation/<str:left>/', views.splitPage),
+	path(r'c/<str:char>/', views.charPage),
 	path(r'p/<str:pformat>/<str:char>/<str:left>/<str:right>/<str:center>/', views.splitPage),
 	path(r'p/<str:pformat>/<str:left>/<str:right>/<str:center>/', views.splitPage),
 	path(r'p/<str:pformat>/<str:left>/<str:right>/', views.splitPage),

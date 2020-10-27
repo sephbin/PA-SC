@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 # from .serializers import *
@@ -13,6 +13,8 @@ def getPage(request, url):
 	page_contents = BeautifulSoup(requests.get(page).text, features="lxml")
 	page_contents = str(page_contents.find('body').decode_contents())
 	return page_contents
+def charPage(request, char=None):
+	return redirect("/crowbar/p/splitPageCenter/%s/__crowbar__character__%s__1/__crowbar__character__%s__2/__crowbar__character__%s__3/"%(char,char,char,char))
 
 @csrf_exempt
 def splitPage(request,pformat="splitPage", char=None, left=None, right=None, center=None):

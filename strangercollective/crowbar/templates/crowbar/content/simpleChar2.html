@@ -167,10 +167,10 @@
 						{{eq.count}}x
 					</td>
 					<td>
-						<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}}</a>
+						<a href="/pages/possession/{{eq.name|slugify}}">{{eq.name}} {% if eq.nameext %}({{eq.nameext}}){% endif %}</a>
 					</td>
 					<td b-1-l style="width:3em; text-align: right;">
-						{{eq.baseweight}}
+						{{eq.weight|floatformat:1}}
 					</td>
 					<td b-1-l style="width:3em; text-align: right;">
 						{{eq.cost}}

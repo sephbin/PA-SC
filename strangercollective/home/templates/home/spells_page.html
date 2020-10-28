@@ -1,5 +1,9 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 <h1>{{ page.title|richtext }}</h1>
-<i>Prerequisites: {{page.prerequisites|richtext}}</i>
+<h2>{{page.category}}</h2>
+{% if page.duration %}<p> <i>Duration: {{page.duration}}</i> </p>{% endif %}
+{% if page.cost %}<p> <i>Cost: {{page.cost}}</i> </p>{% endif %}
+{% if page.timeToCast %}<p> <i>Time to cast: {{page.timeToCast}}</i> </p>{% endif %}
+{% if page.prerequisites %}<p> <i>Prerequisites: {{page.prerequisites}}</i> </p>{% endif %}
 {{ page.body|richtext}}

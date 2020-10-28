@@ -4,6 +4,15 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 # from .serializers import *
 # Create your views here.
+def isMobile(request):
+	import re
+	MOBILE_AGENT_RE=re.compile(r".*(iphone|mobile|androidtouch)",re.IGNORECASE)
+
+	if MOBILE_AGENT_RE.match(request.META['HTTP_USER_AGENT']):
+		return True
+	else:
+		return False
+
 def getPage(request, url):
 	import requests
 	from bs4 import BeautifulSoup
@@ -28,7 +37,8 @@ def splitPage(request,pformat="splitPage", char=None, left=None, right=None, cen
 		if center:
 			center = getPage(request, center)
 
-
+		if isMobile(request):
+			pformat = "splitPage"
 		context = {"char":char, "left":left,"right":right,"center":center}
 		return render(request,"crowbar/layouts/%s.html"%(pformat),context)
 	if request.method == "POST":

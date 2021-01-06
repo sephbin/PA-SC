@@ -19,7 +19,7 @@ def getPage(request, url):
 	page = url.replace("__","/")
 	if "://" not in page:
 		page = "http://"+request.META['HTTP_HOST']+page
-	page_contents = BeautifulSoup(requests.get(page).text, features="lxml")
+	page_contents = BeautifulSoup(requests.get(url = page, headers={'Connection':'close'}).text, features="lxml")
 	page_contents = str(page_contents.find('body').decode_contents())
 	return page_contents
 def charPage(request, char=None):
@@ -42,7 +42,6 @@ def splitPage(request,pformat="splitPage", char=None, left=None, right=None, cen
 		context = {"char":char, "left":left,"right":right,"center":center}
 		return render(request,"crowbar/layouts/%s.html"%(pformat),context)
 	if request.method == "POST":
-		print(request.POST)
 		page = getPage(request, request.POST["href"])
 		return JsonResponse({"isError":isError,"log":log,"page":page})
 

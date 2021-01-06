@@ -37,7 +37,7 @@ class DataFieldFormField(forms.CharField):
 			return value
 class DataField(models.TextField):
 	def __init__(self, *args, **kwargs):
-		kwargs['max_length'] = 99999
+		kwargs['max_length'] = 999999
 		kwargs['default'] = {}
 		kwargs['blank'] = True
 		kwargs['null'] = True
@@ -114,13 +114,14 @@ class parentModel(models.Model):
 	def __str__(self):
 		return str(self.id)+": "+self.name
 	def saveRelative(self):
-		print("saveRelative")
-		print(self.relativeSave)
+		# print("saveRelative")
+		# print(self.relativeSave)
 		for i in self.relativeSave:
 			try:
 				background_saveRelative(self.__class__.__name__, self.id, self.relativeSave)
 			except Exception as e:
-				print(e)
+				# print(e)
+				pass
 	def error(self, message = ""):
 		self.hasError = True
 		self.errorArray.append("%s"%(message))
@@ -140,7 +141,7 @@ class parentModel(models.Model):
 		pass
 	@property
 	def set_data(self):
-		print(self,"set_data")
+		# print(self,"set_data")
 		special = ["css", "itemsInheritance",]
 		d = {"class":""}
 		try:
@@ -167,15 +168,15 @@ class parentModel(models.Model):
 			newdata = dict(self.uniqueData)
 			d = coolUpdate(d, newdata)
 			self.tempData = d
-			print(d)
+			# print(d)
 			return d
 		except Exception as e:
 			return {"error":str(e)}
 	
 	def runAllFunctions(self, application=None):
-		print("runAllFunctions")
+		# print("runAllFunctions")
 		try:
-			print(self.runFunctions)
+			# print(self.runFunctions)
 			for f in self.runFunctions["functions"]:
 				try:
 					print(f)
@@ -215,6 +216,8 @@ class parentModel(models.Model):
 		pass
 
 	def save(self, *args, **kw ):
+		kwa = {"callback":""}
+		kwa.update(kw)
 		self.errorArray = []
 		self.hasError = False
 		#print("default: save")
@@ -233,9 +236,12 @@ class parentModel(models.Model):
 			]}
 		self.dataToFields()
 		self.errorText = "\n".join(self.errorArray)
-		super( parentModel, self ).save( *args, **kw )
+		print("super save")
+		kwc = {}
+		super( parentModel, self ).save( *args, **kwc )
 		self.saveRelative()
-		self.save_end()
+		if kwa["callback"] != "end":
+			self.save_end()
 
 
 
@@ -329,7 +335,7 @@ class character(parentModel):
 	gcaData = DataField()
 
 	gcaXml = models.FileField(upload_to='crowbar/characters/', blank=True, null=True)
-	def save_start(self):
+	def save_end(self):
 		try:
 			import json
 			import xmltodict
@@ -345,7 +351,10 @@ class character(parentModel):
 					"General":dd['Character']["General"],
 				}
 			pass
+			print("callback save")
+			self.save( callback = "end" )
 		except Exception as e:
+			print(e)
 			self.error(str(e))
 			pass
 

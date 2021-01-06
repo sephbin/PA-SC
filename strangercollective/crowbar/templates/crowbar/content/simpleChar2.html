@@ -119,7 +119,8 @@
 				{% for advantage in instance.Traits.Advantage  %}
 				<tr>
 					<td>
-						<a href="/pages/{%if advantage.usernotes%}{{advantage.usernotes}}/{%endif%}advantages/{{advantage.name|slugify}}">{{advantage.name}}{%if advantage.nameext%} ({{advantage.nameext}}){% endif %}</a>
+						<a href="/pages/{%if advantage.usernotes%}{{advantage.usernotes}}/{%endif%}advantages/{{advantage.name|slugify}}">{{advantage.name}} 
+							{% if '/' in advantage.cost %}{{advantage.level}}{% endif %}{%if advantage.nameext%} ({{advantage.nameext}}){% endif %}</a>
 					</td>
 					<td style="width:3em; text-align: right;">
 						[{{advantage.points}}]

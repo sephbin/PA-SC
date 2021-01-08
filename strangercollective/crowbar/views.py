@@ -23,6 +23,8 @@ def getPage(request, url):
 	page_contents = str(page_contents.find('body').decode_contents())
 	return page_contents
 def charPage(request, char=None):
+	instance = get_object_or_404(character, name=char)
+	char = instance.id
 	return redirect("/crowbar/p/splitPageCenter/%s/__crowbar__character__%s__1/__crowbar__character__%s__2/__crowbar__character__%s__3/"%(char,char,char,char))
 
 @csrf_exempt

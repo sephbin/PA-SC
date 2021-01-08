@@ -142,7 +142,9 @@
 				{% for disadvantage in instance.Traits.Disadvantage  %}
 				<tr>
 					<td>
-						<a href="/pages/{%if disadvantage.usernotes%}{{disadvantage.usernotes}}/{%endif%}disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}{%if disavantage.nameext%} ({{disadvantage.nameext}}){% endif %}</a>
+						<a href="/pages/{%if disadvantage.usernotes%}{{disadvantage.usernotes}}/{%endif%}disadvantages/{{disadvantage.name|slugify}}">{{disadvantage.name}}
+							{% if '/' in disadvantage.cost %}{{disadvantage.level}}{% endif %}
+							{%if disadvantage.nameext%} ({{disadvantage.nameext}}){% endif %}</a>
 					</td>
 					<td style="width:3em; text-align: right;">
 						[{{disadvantage.points}}]

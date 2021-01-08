@@ -14,22 +14,22 @@
 			<table wide zebra>
 
 				<tr>
-					<td>ST</td><td><a href="/pages/attributes/st/">{{at.ST.score}}</a></td><td>[{% if at.ST.points %}{{at.ST.points}}{% else %}0{% endif %}]</td>
+					<td >ST</td><td><a href="/pages/attributes/st/">{{at.ST.score}}</a></td><td>[{% if at.ST.points %}{{at.ST.points}}{% else %}0{% endif %}]</td>
 					<td>HP</td><td><a href="/pages/attributes/hp/">{{at.HP.score}}</a></td><td>[{% if at.HP.points %}{{at.HP.points}}{% else %}0{% endif %}]</td>
 					<td>SM</td><td><a href="/pages/attributes/sm/">{{at.SM.score}}</a></td><td>[{% if at.SM.points %}{{at.SM.points}}{% else %}0{% endif %}]</td>
 				</tr>
 				<tr>
-					<td>DX</td><td><a href="/pages/attributes/dx/">{{at.DX.score}}</a></td><td>[{% if at.DX.points %}{{at.DX.points}}{% else %}0{% endif %}]</td>
-					<td>Will</td><td><a href="/pages/attributes/will/">{{at.Will.score}}</a></td><td>[{% if at.Will.points %}{{at.Will.points}}{% else %}0{% endif %}]</td>
+					<td>DX</td><td><a roll={{at.DX.score}}>{{at.DX.score}}</a></td><td>[{% if at.DX.points %}{{at.DX.points}}{% else %}0{% endif %}]</td>
+					<td>Will</td><td><a roll={{at.Will.score}}">{{at.Will.score}}</a></td><td>[{% if at.Will.points %}{{at.Will.points}}{% else %}0{% endif %}]</td>
 					<td>BS</td><td><a href="/pages/attributes/bs/">{{at.Basic_Speed.score}}</a></td><td>[{% if at.Basic_Speed.points %}{{at.Basic_Speed.points}}{% else %}0{% endif %}]</td>
 				</tr>
 				<tr>
-					<td>IQ</td><td><a href="/pages/attributes/iq/">{{at.IQ.score}}</a></td><td>[{% if at.IQ.points %}{{at.IQ.points}}{% else %}0{% endif %}]</td>
-					<td>Per</td><td><a href="/pages/attributes/per/">{{at.Per.score}}</a></td><td>[{% if at.Per.points %}{{at.Per.points}}{% else %}0{% endif %}]</td>
+					<td>IQ</td><td><a roll={{at.IQ.score}}>{{at.IQ.score}}</a></td><td>[{% if at.IQ.points %}{{at.IQ.points}}{% else %}0{% endif %}]</td>
+					<td>Per</td><td><a roll={{at.Per.score}}>{{at.Per.score}}</a></td><td>[{% if at.Per.points %}{{at.Per.points}}{% else %}0{% endif %}]</td>
 					<td>BM</td><td><a href="/pages/attributes/bm/">{{at.Basic_Move.score}}</a></td><td>[{% if at.Basic_Move.points %}{{at.Basic_Move.points}}{% else %}0{% endif %}]</td>
 				</tr>
 				<tr>
-					<td>HT</td><td><a href="/pages/attributes/ht/">{{at.HT.score}}</a></td><td>[{% if at.HT.points %}{{at.HT.points}}{% else %}0{% endif %}]</td>
+					<td>HT</td><td><a roll={{at.HT.score}}>{{at.HT.score}}</a></td><td>[{% if at.HT.points %}{{at.HT.points}}{% else %}0{% endif %}]</td>
 					<td>FP</td><td><a href="/pages/attributes/fp/">{{at.FP.score}}</a></td><td>[{% if at.FP.points %}{{at.FP.points}}{% else %}0{% endif %}]</td>
 					<td>BL</td><td><a href="/pages/attributes/bl/">{{at.BL.score}} {% if at.Metric.score == '1' %}kg{%endif%}</a></td><td></td>
 				</tr>

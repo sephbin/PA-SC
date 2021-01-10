@@ -137,8 +137,8 @@ def fvttCharPage(request, char=None):
 
 		context = {"instance":data, "dr":dr}
 		response = render(request,"crowbar/content/fvtt-cs.html",context)
-		response['bs'] = 5.5
-		return response
+
+		return JsonResponse({"sheetCache": response, "bs": data["Attributes"]["Basic_Speed"]["score"]})
 
 @csrf_exempt
 def splitPage(request,pformat="splitPage", char=None, left=None, right=None, center=None):

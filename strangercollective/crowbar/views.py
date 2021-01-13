@@ -49,7 +49,7 @@ def fvttCharPage(request, char=None):
 		
 		if "Spell" not in data["Traits"]:
 			data["Traits"]["Spell"] = []
-		f "Equipment" not in data["Traits"]:
+		if "Equipment" not in data["Traits"]:
 			data["Traits"]["Equipment"] = []
 		data["Traits"]["All"] = data["Traits"]["Equipment"]+data["Traits"]["Advantage"]+data["Traits"]["Spell"]+data["Traits"]["Skill"]
 		data["Block"] = 0

@@ -21,20 +21,20 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 
 from wagtail.admin import urls as wagtailadmin_urls
-from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.core import urls as wagtail_urls
-from .api import api_router
+from wagtail.documents import urls as wagtaildocs_urls
+# from .api import api_router
 
 
 urlpatterns = [
-    path('polls/', include('polls.urls')),
+    # path('polls/', include('polls.urls')),
     # path('jet/', include('jet.urls')), # jet URLS
     path('admin/', admin.site.urls), # admin site
     path(r'markdownx/', include('markdownx.urls')),
     path(r'articles/', include('articles.urls')),
     path(r'tests/', include('tests.urls')),
     path(r'rpg/', include('scrpgtest.urls')),
-    path(r'redback/', include('redback.urls')),
+    # path(r'redback/', include('redback.urls')),
     path(r'code/', include('unswcode.urls')),
     path(r'cv/', include('cv.urls')),
     path(r'sc/', include('sc.urls'),name='sc'),
@@ -43,17 +43,13 @@ urlpatterns = [
     path(r'huginn/', include('huginn.urls'),name='huginn'),
     path(r'changeling/', include('changeling.urls')),
     path(r'crowbar/', include('crowbar.urls')),
-    path(r'', include('home.urls'),name='home'),
-    # re_path(r'crowbar/', TemplateView.as_view(template_name='index.html')),
+    path(r'', include('home.urls')),
+    path('cms/', include(wagtailadmin_urls)),
+    path('documents/', include(wagtaildocs_urls)),
+    path('pages/', include(wagtail_urls)),
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-urlpatterns += [
-    url(r'^wtapi/v2/', api_router.urls),
-    re_path(r'^cms/', include(wagtailadmin_urls)),
-    re_path(r'^documents/', include(wagtaildocs_urls)),
-    re_path(r'^pages/', include(wagtail_urls)),
-]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

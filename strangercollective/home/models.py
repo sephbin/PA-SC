@@ -13,7 +13,9 @@ from modelcluster.fields import ParentalKey, ParentalManyToManyField
 from modelcluster.tags import ClusterTaggableManager
 from django.utils.safestring import mark_safe
 from .blocks import *
-
+from django.db.models.signals import post_save, post_init, post_delete, pre_save
+from django.dispatch import receiver
+from wagtail.core.models import PageRevision
 
 def dyn_text(origintext):
 	import json
@@ -133,12 +135,14 @@ class AdvantagePage(Page):
 		return dyn_text(self.special_enhancements)
 	enhance_dyn.allow_tags = True
 
-	def save(self, *args, **kwargs):
-		import re
-		s = self.body
-		replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
-		self.body = replaced
-		super(AdvantagePage, self).save(*args, **kwargs)
+	# def save(self, *args, **kwargs):
+	# 	print(":"*40)
+	# 	print(self.body)
+	# 	import re
+	# 	s = self.body
+	# 	replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
+	# 	self.body = replaced
+	# 	super(AdvantagePage, self).save(*args, **kwargs)
 
 class DisadvantagePage(Page):
 	body = RichTextField(blank=True)
@@ -275,18 +279,18 @@ class SpellsPage(Page):
 
 
 class PageTag(TaggedItemBase):
-    content_object = ParentalKey('DynamicPage', related_name='page_tags')
+	content_object = ParentalKey('DynamicPage', related_name='page_tags')
 
 @register_snippet
 class Tag(TaggitTag):
-    class Meta:
-        proxy = True
+	class Meta:
+		proxy = True
 
 class DynamicPage(Page):
 	tags = ClusterTaggableManager(through='home.PageTag', blank=True)
 	body = StreamField([
 		('heading', blocks.CharBlock(classname="full title")),
-		('paragraph', blocks.RichTextBlock()),
+		('paragraph', dynamicBlock()),
 		('table',TableBlock()),
 		('test', TwoColumnBlock()),
 		('test2', ColumnBlock()),
@@ -296,4 +300,110 @@ class DynamicPage(Page):
 		StreamFieldPanel('body'),
 		FieldPanel('tags'),
 	]
+	def save(self, *args, **kwargs):
+		super(DynamicPage, self).save(*args, **kwargs)
 
+	# def clean(self):
+		# print("Cleaning Dynamic Page")
+	def serve(self, request, *args, **kwargs):
+		from django.template.response import TemplateResponse
+		request.is_preview = getattr(request, 'is_preview', False)
+		response = TemplateResponse(
+			request,
+			self.get_template(request, *args, **kwargs),
+			self.get_context(request, *args, **kwargs)
+		)
+		try:
+			print("▼"*40)
+			print("Serving Dynamic Page")
+			response.render()
+			s = response.content.decode("utf-8")
+
+			import re
+			from .models import DynamicPage
+			from wagtail.core.models import Page
+			import json
+			# print("cleaning")
+			# print(self, dir(self))
+			# print(context, dir(context))
+			pattern = re.compile('\[(.+?)\]')
+			for match in re.findall(pattern,s):
+				var = {"cat":"default"}
+				lut = {
+				"cat_parent":{
+				"default": self,
+				"character": Page.objects.all().search("Characters")[0].specific,
+				}
+				}
+				# s = value.source
+			#     print(match)
+				display = match.split("|")[0]
+				options = match.split("|")[1:]
+				# print(display,options)
+				for op in options:
+					op = op.replace("=",'":"')
+					op = '{"%s"}'%(op)
+					op = json.loads(op)
+					var.update(op)
+				# print(var)
+				parent_page = lut["cat_parent"][var["cat"]]
+				try:
+					# pages = DynamicPage.objects.all().search(display)[0]
+					
+					pages = parent_page.get_children().search(display)[0]
+				except:
+					# parent_page = Page.objects.get(title=var["cat"]).specific
+					pages = DynamicPage(title=display.title())
+					parent_page.add_child(instance=pages)
+					pages.save()
+
+					# print("new page",pages)
+				# print(type(pages),pages)
+				url = pages.url_path.replace("/home/","/pages/")
+				replacepattern = '<a href="%s">%s</a>'%(url,display)
+				# print(match,replacepattern)
+				match = match.replace("|","\|")
+				# print(url)
+				replaced = re.sub('\[%s\]'%(match), replacepattern, s)
+			#     print(replaced)
+				s = replaced
+			response.content = s.encode('utf-8')
+			print("▲"*40)
+			return response
+		except Exception as e:
+			print(e)
+			print("▲"*40)
+			
+			return response
+
+
+# @receiver(pre_save)
+# @receiver(pre_save, sender=PageRevision)
+# def preSaveDynamic(sender, instance, *args, **kwargs):
+	# try:
+	# 	print("▼"*40)
+	# 	import re
+		
+	# 	# print(dir(instance))
+	# 	# print(instance.page, type(instance.page))
+	# 	s = instance.body
+	# 	pages = DynamicPage.objects.all().search("Rat")
+	# 	print("pages", pages)
+	# 	replaced = re.sub('\[(.+?)\]', '<a href="http://localhost:8000/pages/advantages/\g<1>">\g<1></a>', s)
+	# 	replaced = "<p>Hello</p>"
+	# 	instance.body = replaced
+	# 	print(replaced)
+	# 	print("done",sender,instance)
+	# 	# instance.save()
+	# except Exception as e:
+	# 	try:
+			
+	# 		print("error",e)
+	# 	except:
+	# 		pass
+	# 	pass
+	# print("▲"*40)
+@receiver(post_save, sender=PageRevision)
+def postSaveDynamic(sender, instance, *args, **kwargs):
+	instance.publish()
+	pass

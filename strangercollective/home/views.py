@@ -7,7 +7,7 @@ from .models import *
 import json
 # Create your views here.
 
-def home(request):
+def main(request):
 	return render(request, "schome.html")
 
 def temp(request):

@@ -1,6 +1,8 @@
 from django.db import models
 
-from django.db.models.signals import post_save, post_init, post_delete
+from django.db.models.signals import post_save, post_init, post_delete, pre_save
+from django.dispatch import receiver
+
 # Create your models here.
 class family(models.Model):
 	name = models.CharField(max_length = 120)
@@ -98,3 +100,6 @@ class testModel(models.Model):
 		except Exception as e: pass
 		super(testModel, self).save(*args, **kwargs)
 post_init.connect(testModel.remember_state, sender=testModel)
+
+
+

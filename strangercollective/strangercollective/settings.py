@@ -71,9 +71,7 @@ INSTALLED_APPS = [
 	'cv',
 	'sc',
 	'colorfield',
-	'tagging',
 	'taggit',
-	'redback',
 	'corsheaders',
 	'api',
 	'jorm',
@@ -94,7 +92,7 @@ MIDDLEWARE = [
 	'django.contrib.messages.middleware.MessageMiddleware',
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	###### Wagtail
-	'wagtail.core.middleware.SiteMiddleware',
+	# 'wagtail.core.middleware.SiteMiddleware',
 	'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -119,7 +117,7 @@ TEMPLATES = [
 	},
 ]
 
-WSGI_APPLICATION = 'strangercollective.wsgi.application'
+WSGI_APPLICATION = 'strangercollective.test_wsgi.application'
 
 
 # Password validation
@@ -185,3 +183,4 @@ except ImportError:
 	pass
 
 WAGTAIL_SITE_NAME = 'Stranger Collective CMS'
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

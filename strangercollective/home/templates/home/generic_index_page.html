@@ -13,15 +13,14 @@
 <a href="{{parent.url}}">{{parent}}</a>{% if not forloop.last %}  >> {% endif %}
 {% endfor %}
 <h1>{{ page.title|richtext }}</h1>
-<a href="/cms/pages/{{ page.id }}/edit/">Edit</a>
+<!-- <a href="/cms/pages/{{ page.id }}/edit/">Edit</a> -->
 {{ page.body }}
 
 {% for tag in page.tags.all %}
 <a href="/asd/?tag={{tag.slug}}">{{tag}}</a>
 {% endfor %}
 
-<!-- {% for child in page.get_children %}
+{% for child in page.get_children %}
 {% load wagtailcore_tags %}
-<h2>{{ child.specific.title }}</h2>
-{{ child.specific.body }}
-{% endfor %} -->
+<a href="{{ child.specific.url }}">{{ child.specific.title }}</a><br>
+{% endfor %}

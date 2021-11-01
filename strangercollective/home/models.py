@@ -86,8 +86,21 @@ class BlogPage(Page):
 
 class GenericIndexPage(Page):
 	intro = RichTextField(blank=True)
-	content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
-
+	def get_parents(self, cut="Home"):
+		outOb = []
+		run = True
+		getParent = self
+		while run:
+			try:
+				if getParent.get_parent().title	== cut:
+					run = False
+				else:
+					getParent = getParent.get_parent()
+					outOb.append(getParent)
+			except:
+				run = False
+		outOb.reverse()
+		return outOb
 class AdvantageIndexPage(Page):
 	intro = RichTextField(blank=True)
 	content_panels = Page.content_panels + [FieldPanel('intro', classname="full")]
@@ -267,7 +280,7 @@ class SpellsPage(Page):
 	@property
 	def prev_sibling(self):
 		return self.get_prev_siblings().type(self.__class__).live().first()
-	
+
 	@mark_safe
 	def body_progress(self):
 		return dyn_text(self.body)
@@ -300,6 +313,21 @@ class DynamicPage(Page):
 		StreamFieldPanel('body'),
 		FieldPanel('tags'),
 	]
+	def get_parents(self, cut="Home"):
+		outOb = []
+		run = True
+		getParent = self
+		while run:
+			try:
+				if getParent.get_parent().title	== cut:
+					run = False
+				else:
+					getParent = getParent.get_parent()
+					outOb.append(getParent)
+			except:
+				run = False
+		outOb.reverse()
+		return outOb
 	def save(self, *args, **kwargs):
 		super(DynamicPage, self).save(*args, **kwargs)
 
@@ -326,13 +354,25 @@ class DynamicPage(Page):
 			# print("cleaning")
 			# print(self, dir(self))
 			# print(context, dir(context))
+			beforeBase = True
+			checkBasePage = self
+			baseList = ["Campaigns"]
+			while beforeBase:
+				if checkBasePage.get_parent().title in baseList:
+					beforeBase = False
+				else:
+					checkBasePage = checkBasePage.get_parent()
+
+
+
 			pattern = re.compile('\[(.+?)\]')
 			for match in re.findall(pattern,s):
 				var = {"cat":"default"}
 				lut = {
 				"cat_parent":{
 				"default": self,
-				"character": Page.objects.all().search("Characters")[0].specific,
+				"character": checkBasePage.get_children().search("Characters")[0].specific,
+				"npc": checkBasePage.get_children().search("Characters")[0].specific,
 				}
 				}
 				# s = value.source

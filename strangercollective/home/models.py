@@ -333,6 +333,9 @@ class DynamicPage(Page):
 
 	# def clean(self):
 		# print("Cleaning Dynamic Page")
+	def _map(self, text):
+		pass
+
 	def serve(self, request, *args, **kwargs):
 		from django.template.response import TemplateResponse
 		request.is_preview = getattr(request, 'is_preview', False)
@@ -364,6 +367,9 @@ class DynamicPage(Page):
 					checkBasePage = checkBasePage.get_parent()
 
 
+			pattern = re.compile(r'{\%.+?\%}.+?\%}')
+			for match in re.findall(pattern,s):
+				print("functions",match)
 
 			pattern = re.compile('\[(.+?)\]')
 			for match in re.findall(pattern,s):

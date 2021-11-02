@@ -9,9 +9,11 @@
 </style>
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
+
 {% for parent in page.get_parents %}
 <a href="{{parent.url}}">{{parent}}</a>{% if not forloop.last %}  >> {% endif %}
 {% endfor %}
+
 <h1>{{ page.title|richtext }}</h1>
 <!-- <a href="/cms/pages/{{ page.id }}/edit/">Edit</a> -->
 {{ page.body }}

@@ -1,10 +1,33 @@
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+	@import url('https://fonts.googleapis.com/css2?family=Fruktur&display=swap');
+	:root {
+	  --100: #f6bd5d;
+	  --200: #eda552;
+	  --300: #e98145;
+	  --400: #d8611d;
+	  --500: #253634;
+	}
 	body{
-		background: #111;
-		color: #eee;
+		/*background: #111;*/
+		font-family: 'Zen Old Mincho', serif;
+		background:	var(--100);
+		color:		var(--500);
 	}
 	a{
-		color: #ff0;
+		color: var(--500);
+		text-decoration: none;
+		/*font-weight: bold;*/
+		font-family: 'Roboto', sans-serif;
+		font-size: 95%;
+	}
+	.container {
+	column-width: 500px;
+	}
+	h1, h2, h3, h4 {
+	column-span: all;
+	font-family: 'Fruktur', cursive;
 	}
 </style>
 {% load wagtailcore_tags %}

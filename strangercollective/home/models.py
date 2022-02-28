@@ -313,6 +313,7 @@ class DynamicPage(Page):
 		StreamFieldPanel('body'),
 		FieldPanel('tags'),
 	]
+	renderChildren = models.BooleanField(default=False)
 	def get_parents(self, cut="Home"):
 		outOb = []
 		run = True
@@ -329,15 +330,35 @@ class DynamicPage(Page):
 		outOb.reverse()
 		return outOb
 	def save(self, *args, **kwargs):
+		# print(self.body.RawDatavie)
+		check = [{"tag":"[/children]","var":"renderChildren", "val":False}]
+		for i in self.body:
+			# print(dir(i))
+			text = str(i.render())
+			print("TEXT BLOCK",text,type(text),dir(text))
+			for c in check:
+				if c["tag"] in text:
+					c["val"] = True
+		for c in check:
+			attrchange = setattr(self, c["var"],c["val"])
+
+
 		super(DynamicPage, self).save(*args, **kwargs)
 
 	# def clean(self):
-		# print("Cleaning Dynamic Page")
-	def _map(self, text):
-		pass
+	# 	print("Cleaning Dynamic Page")
+	def _map(self, outText, soup):
+		for p in soup.find_all('p'):
+			# print(p.get_text())
+			text = p.get_text()
+			if text != "":
+				outText += '<p>[%s|cat=map]</p>'%(text.title())
+		outText = '<div class="map">%s</div>'%(outText)
+		return outText
 
 	def serve(self, request, *args, **kwargs):
 		from django.template.response import TemplateResponse
+		from bs4 import BeautifulSoup
 		request.is_preview = getattr(request, 'is_preview', False)
 		response = TemplateResponse(
 			request,
@@ -367,22 +388,34 @@ class DynamicPage(Page):
 					checkBasePage = checkBasePage.get_parent()
 
 
-			pattern = re.compile(r'{\%.+?\%}.+?\%}')
-			for match in re.findall(pattern,s):
-				print("functions",match)
+			pattern = re.compile(r'&lt;.+?&gt;.+?&lt;/.+?&gt;')
+			for base in re.findall(pattern,s):
+				outText = ""
+				match = base.replace("&lt;","<").replace("&gt;",">").replace("></p>",">").replace("<p></","</")
+				print(match)
+				soup = BeautifulSoup(match, 'html.parser')
+				# print(dir(soup.find("function")))
+				print(soup.find("function").attrs)
+				for k in soup.find("function").attrs:
+					functionToRun = getattr(self, "_"+k)
+					outText = functionToRun(outText, soup)
+				
+				s = s.replace(base,outText)
 
-			pattern = re.compile('\[(.+?)\]')
+			pattern = re.compile('\[([^/]+?)\]')
 			for match in re.findall(pattern,s):
 				var = {"cat":"default"}
 				lut = {
 				"cat_parent":{
 				"default": self,
 				"character": checkBasePage.get_children().search("Characters")[0].specific,
+				"map": checkBasePage.get_children().search("Characters")[0].specific,
 				"npc": checkBasePage.get_children().search("Characters")[0].specific,
 				}
 				}
 				# s = value.source
 			#     print(match)
+				print(match)
 				display = match.split("|")[0]
 				options = match.split("|")[1:]
 				# print(display,options)
@@ -413,11 +446,18 @@ class DynamicPage(Page):
 				replaced = re.sub('\[%s\]'%(match), replacepattern, s)
 			#     print(replaced)
 				s = replaced
+			
+			pattern = re.compile('\[/.+?\]')
+			for match in re.findall(pattern,s):
+				print("hide",match)
+				s = s.replace(match,'<span style="display:none;">%s</span>'%(match))
+
+			# print(s)
 			response.content = s.encode('utf-8')
 			print("▲"*40)
 			return response
 		except Exception as e:
-			print(e)
+			print("ERROR",e)
 			print("▲"*40)
 			
 			return response

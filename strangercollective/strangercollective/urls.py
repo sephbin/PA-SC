@@ -32,7 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls), # admin site
     path(r'markdownx/', include('markdownx.urls')),
     path(r'articles/', include('articles.urls')),
-    path(r'tests/', include('tests.urls')),
+    # path(r'tests/', include('tests.urls')),
     path(r'rpg/', include('scrpgtest.urls')),
     # path(r'redback/', include('redback.urls')),
     path(r'code/', include('unswcode.urls')),

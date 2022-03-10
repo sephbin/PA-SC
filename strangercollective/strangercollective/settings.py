@@ -63,7 +63,7 @@ INSTALLED_APPS = [
 	'widget_tweaks',
 
 	'articles',
-	'tests',
+	# 'tests',
 	'home',
 	'crowbar',
 	'scrpgtest',

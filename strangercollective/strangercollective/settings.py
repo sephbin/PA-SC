@@ -43,37 +43,39 @@ INSTALLED_APPS = [
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'django_admin_search',
 	
 	##Wagtail
-	'wagtail.contrib.forms',
-	'wagtail.contrib.redirects',
-	'wagtail.embeds',
-	'wagtail.sites',
-	'wagtail.users',
-	'wagtail.snippets',
-	'wagtail.documents',
-	'wagtail.images',
-	'wagtail.search',
-	'wagtail.admin',
-	'wagtail.core',
-	'wagtail.contrib.table_block',
+	# 'wagtail.contrib.forms',
+	# 'wagtail.contrib.redirects',
+	# 'wagtail.embeds',
+	# 'wagtail.sites',
+	# 'wagtail.users',
+	# 'wagtail.snippets',
+	# 'wagtail.documents',
+	# 'wagtail.images',
+	# 'wagtail.search',
+	# 'wagtail.admin',
+	# 'wagtail.core',
+	# 'wagtail.contrib.table_block',
+	# 'wagtail.api.v2',
 	'modelcluster',
-	'wagtail.api.v2',
 	'background_task',
 	'widget_tweaks',
 
 	'articles',
 	# 'tests',
-	'home',
+	# 'home',
 	'crowbar',
-	'scrpgtest',
+	# 'scrpgtest',
+	'silenus',
 	'unswcode',
 	'cv',
 	'sc',
 	'colorfield',
 	'taggit',
 	'corsheaders',
-	'api',
+	# 'api',
 	'jorm',
 	'maps',
 	'huginn',
@@ -93,7 +95,7 @@ MIDDLEWARE = [
 	# 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 	###### Wagtail
 	# 'wagtail.core.middleware.SiteMiddleware',
-	'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+	# 'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'strangercollective.urls'
@@ -182,5 +184,6 @@ except ImportError:
 	from .production_settings import *
 	pass
 
-WAGTAIL_SITE_NAME = 'Stranger Collective CMS'
+# WAGTAIL_SITE_NAME = 'Stranger Collective CMS'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+APPEND_SLASH = False

@@ -101,7 +101,7 @@ typed-ast==1.4.1
 unicodecsv==0.14.1
 Unidecode==1.1.1
 Unipath==1.1
-urllib3==1.25.10
+urllib3==1.26.5
 wagtail==2.9.3
 webencodings==0.5.1
 Willow==1.3

@@ -14,3 +14,6 @@ from .models_utils import *
 
 class graphObject(parentModel):
 	pass
+
+class geometryObject(parentModel):
+	pass

@@ -100,6 +100,9 @@ def _coerce_value(param_type, param_data):
 		try: data = json.loads(data)
 		except Exception as e: print(e)
 		return data
+	if param_type.startswith("System.Double"):
+		data = float(param_data)
+		return data
 	return param_data
 
 def parse_params(payload):
@@ -109,6 +112,7 @@ def parse_params(payload):
 		upOb = []
 		for treeAdress, treeBranch in hopsInput["InnerTree"].items():
 			apOb = []
+			outOb[hopsInput["ParamName"]+"_original"] = treeBranch
 			for hopsObject in treeBranch:
 				try:
 					a = _coerce_value(hopsObject["type"],hopsObject["data"])
@@ -312,6 +316,96 @@ def packMono(request, payload={}):
 			{"ParamName": "Output", "InnerTree": {"0": [{"type": "System.String", "data": "\""+outputContent+"\""}]}}
 		]}
 		return out
+def partitionList(list_a, chunk_size):
+	for i in range(0, len(list_a), chunk_size):
+		yield list_a[i:i + chunk_size]
+
+def convertRhinoMeshtoTriMesh(rhinoMesh, transform):
+	import trimesh
+	v_i = 0
+	vertices = []
+	while v_i < len(rhinoMesh.Vertices):
+		v = rhinoMesh.Vertices[v_i]
+		# print(v_i, v)
+		vertices.append([v.X+transform[0],v.Y+transform[1],v.Z+transform[2]])
+		v_i += 1
+
+	faces = []
+	for f_i, f in enumerate(rhinoMesh.Faces):
+		# print("face",f_i, f)
+		faces.append([f[0],f[1],f[2]])
+		if f_i >= len(rhinoMesh.Faces)-1:
+			break
+	mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+	return mesh
+def packGeom(request, payload={}):
+	import time
+	import trimesh
+	log=[]
+	start_time = time.time()
+	name = "packMono"
+	structure = {
+		"Python": {"version":str(sys.version), "info":str(sys.version_info)}, "Category": "Hops", "Subcategory": "Hops Python", "Uri": "/"+name, "Name": name, "Nickname": name, "Description": name,
+		"Inputs": [
+			# {"Name": "url", "Nickname": "url", "Description": "url", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+			{"Name": "majorGrid", "Nickname": "M", "Description": "majorGrid", "ParamType": "Number", "ResultType": "System.Double", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+			{"Name": "subGeometry", "Nickname": "S", "Description": "subGeometry", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+		],
+		"Outputs": [{"Name": "Log", "Nickname": "L", "Description": "Log", "ParamType": "Text", "ResultType": "System.String", "AtLeast": 1, "AtMost": 1},
+			{"Name": "Output", "Nickname": "O", "Description": "Output", "ParamType": "Text", "ResultType": "System.String", "AtLeast": 1, "AtMost": 1},
+		]}
+	if request.method =="GET":	return JsonResponse(structure)
+	if payload != {}:
+		grid = list(partitionList(payload["majorGrid"], 3))
+		sub_Geom = list(map(lambda x: get_object_or_404(geometryObject, name=x).data["geometry"], payload["subGeometry"]))
+
+		sub_Geom =	list(map(lambda y:
+						list(map(lambda x: _coerce_value(x["type"],x["data"]), y))
+					, sub_Geom))
+		print(sub_Geom)
+		# for d in dir(sub_Geom[0]):
+			# print(d)
+		# print (sub_Geom[0].Translate.__doc__)
+		# print(rhino3dm.Intersection.__doc__)
+		meshes = []
+		transforms = []
+		collisions = trimesh.collision.CollisionManager()
+		
+		for index, geom in enumerate(sub_Geom):
+			willBreak = False
+			for gridPoint in grid:
+				# print(gridPoint)
+				# geom.Translate(rhino3dm.Vector3d(4000,1000,0))
+				temp_collision = trimesh.collision.CollisionManager()
+				hard = geom[0]
+				soft = geom[1]
+				soft_mesh = convertRhinoMeshtoTriMesh(soft,gridPoint)
+				
+				temp_collision.add_object(str(index),soft_mesh)
+				if collisions.in_collision_other(temp_collision):
+					# print(gridPoint, "collide")
+					pass
+				else:
+					transforms.append(gridPoint)
+					hard_mesh = convertRhinoMeshtoTriMesh(hard,gridPoint)
+					collisions.add_object(str(index),hard_mesh)
+					willBreak = True
+					if willBreak:
+						break
+		# print(transforms)
+
+				# meshes.append(mesh)
+			# collisions.add_object(str(index),mesh)
+		# print(collisions.__doc__)
+		# print(collisions.in_collision_internal(True,False))
+		log.append("--- %s seconds ---" % (time.time() - start_time))
+		log = json.dumps(list(map(lambda x: str(x), log)))
+		outputContent = json.dumps(transforms)
+		out = {"values": [
+			{"ParamName": "Log", "InnerTree": {"0": [{"type": "System.String", "data": "\""+log+"\""}]}},
+			{"ParamName": "Output", "InnerTree": {"0": [{"type": "System.String", "data": "\""+outputContent+"\""}]}}
+		]}
+		return out
 
 def objectCRUD(request, payload={}, log=[]):
 	name = "objectCRUD"
@@ -322,17 +416,33 @@ def objectCRUD(request, payload={}, log=[]):
 			{"Name": "modelClass", "Nickname": "C", "Description": "modelClass", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
 			{"Name": "identifiers", "Nickname": "I", "Description": "identifiers", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
 			{"Name": "defaults", "Nickname": "D", "Description": "defaults", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+			{"Name": "geometry", "Nickname": "G", "Geometry": "defaults", "ParamType": "Mesh", "ResultType": "Rhino.Geometry.Mesh", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+			# {"Name": "geometry", "Nickname": "G", "Geometry": "defaults", "ParamType": "Geometry", "ResultType": "Rhino.Geometry.Curve", "Default":None, "AtLeast": 1, "AtMost": 2147483647, "Default": None},
+
 		],
 		"Outputs": [{"Name": "Log", "Nickname": "L", "Description": "Log", "ParamType": "Text", "ResultType": "System.String", "AtLeast": 1, "AtMost": 1},
 			{"Name": "Output", "Nickname": "O", "Description": "Output", "ParamType": "Text", "ResultType": "System.String", "AtLeast": 1, "AtMost": 1},
 		]}
 	if request.method =="GET":	return JsonResponse(structure)
 	if payload != {}:
+		# print(payload)
 		import json
 		from itertools import cycle
+		geometry_o = payload["geometry_original"]
 		for modelClass, kwargs, defaults in zip(cycle(payload["modelClass"]), payload["identifiers"], cycle(payload["defaults"])):
 			print(modelClass, kwargs, defaults)
 			print(type(modelClass), type(kwargs), type(defaults))
+			print(type(geometry_o), geometry_o)
+			# for d in dir(geometry):
+				# print(d)
+			# print("-"*100)
+			# for d in dir(rhino3dm):
+				# print(d)
+
+
+			if "data" not in defaults:
+				defaults["data"] = {}
+			defaults["data"]["geometry"] = geometry_o
 			kwargs["defaults"] = defaults
 			modelInstance = getattr(sys.modules[__name__], modelClass)
 			objectInstance, created = modelInstance.objects.update_or_create(**kwargs)

@@ -320,8 +320,10 @@ def partitionList(list_a, chunk_size):
 	for i in range(0, len(list_a), chunk_size):
 		yield list_a[i:i + chunk_size]
 
-def convertRhinoMeshtoTriMesh(rhinoMesh, transform):
+def convertRhinoMeshtoTriMesh(rhinoMesh, transform=None):
 	import trimesh
+	if transform == None:
+		transform = [0,0,0]
 	v_i = 0
 	vertices = []
 	while v_i < len(rhinoMesh.Vertices):
@@ -349,6 +351,7 @@ def packGeom(request, payload={}):
 		"Inputs": [
 			# {"Name": "url", "Nickname": "url", "Description": "url", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
 			{"Name": "majorGrid", "Nickname": "M", "Description": "majorGrid", "ParamType": "Number", "ResultType": "System.Double", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
+			{"Name": "majorBounds", "Nickname": "B", "Description": "majorBounds", "ParamType": "Mesh", "ResultType": "Rhino.Geometry.Mesh", "Default":None, "AtLeast": 1, "AtMost": 1},
 			{"Name": "subGeometry", "Nickname": "S", "Description": "subGeometry", "ParamType": "Text", "ResultType": "System.String", "Default":None, "AtLeast": 1, "AtMost": 2147483647},
 		],
 		"Outputs": [{"Name": "Log", "Nickname": "L", "Description": "Log", "ParamType": "Text", "ResultType": "System.String", "AtLeast": 1, "AtMost": 1},
@@ -370,7 +373,8 @@ def packGeom(request, payload={}):
 		meshes = []
 		transforms = []
 		collisions = trimesh.collision.CollisionManager()
-		
+		collisions.add_object("-1",convertRhinoMeshtoTriMesh(payload["majorBounds"][0]))
+
 		for index, geom in enumerate(sub_Geom):
 			willBreak = False
 			for gridPoint in grid:

@@ -1,0 +1,3 @@
+[submodule "strangercollective/silenus"]
+	path = strangercollective/silenus
+	url = https://github.com/sephbin/silenus

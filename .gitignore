@@ -110,3 +110,4 @@ db.sqlite3
 mydatabase
 *test_settings.py
 */static/*
+strangercollective/media/*

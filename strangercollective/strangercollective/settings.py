@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 	# 'tests',
 	# 'home',
 	'crowbar',
+	'mimir',
 	# 'scrpgtest',
 	'silenus',
 	'unswcode',

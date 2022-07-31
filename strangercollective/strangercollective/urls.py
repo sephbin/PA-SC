@@ -45,6 +45,7 @@ urlpatterns = [
 	path(r'solve', include('silenus.urls'),name='silenus'),
 	path(r'changeling/', include('changeling.urls')),
 	path(r'crowbar/', include('crowbar.urls')),
+	path(r'mimir/', include('mimir.urls')),
 	# path(r'', include('home.urls')),
 	# path('cms/', include(wagtailadmin_urls)),
 	# path('documents/', include(wagtaildocs_urls)),

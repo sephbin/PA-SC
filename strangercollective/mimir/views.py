@@ -17,6 +17,8 @@ def index(request, path=None):
 		try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
 		except Exception as e: print(e)
 		md_files = glob.glob(subpath + "\**\*.md", recursive = True)
+		log.append(subpath)
+		log.append(md_files)
 		searchFile = "README.md"
 		if path:
 			searchFile = path

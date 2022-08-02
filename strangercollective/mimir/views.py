@@ -9,20 +9,21 @@ def index(request, path=None):
 	try:
 		import requests
 		import markdown
-		import re, glob, os
+		import re, glob, os, json
 		from git import Repo
 
 		mediaPath = settings.MEDIA_ROOT
 		subpath = os.path.join(mediaPath,"mimir","1")
 		try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
 		except Exception as e:
-			print(e)
+			log.append(str(e))
 			try:
 				repo = git.Repo(subpath)
 				o = repo.remotes.origin
 				o.pull()
 			except Exception as e:
 				print(e)
+				log.append(str(e))
 		globPath = os.path.join(subpath,"**","*.md")
 		md_files = glob.glob(globPath, recursive = True)
 		log.append(subpath)
@@ -50,6 +51,7 @@ def index(request, path=None):
 			mdtext = mdtext.replace(fromString,toString+toLink)
 		mdtext = mdtext.replace("\n","\n\n")
 		html = markdown.markdown(mdtext)
+		html = html+"<br>"+json.dumps(log)
 
 		# https://sephbin.github.io/SyCoDe_Scribe/
 		# https://raw.githubusercontent.com/sephbin/SyCoDe_Scribe/main/README.md

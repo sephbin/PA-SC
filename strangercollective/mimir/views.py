@@ -9,10 +9,10 @@ def index(request, path=None):
 	import re, glob, os
 	from git import Repo
 
-	try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", "../media/mimir/1")
-	except Exception as e: print(e)
 	mediaPath = settings.MEDIA_ROOT
-	subpath = os.path.join(mediaPath,"mimir/1")
+	subpath = os.path.join(mediaPath,"mimir","1")
+	try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
+	except Exception as e: print(e)
 	md_files = glob.glob(subpath + "\**\*.md", recursive = True)
 	searchFile = "The Sublime Run of the Tangerine Oroborus.md"
 	if path:

@@ -51,7 +51,7 @@ def index(request, path=None):
 			mdtext = mdtext.replace(fromString,toString+toLink)
 		mdtext = mdtext.replace("\n","\n\n")
 		html = markdown.markdown(mdtext)
-		html = html+"<br>"+json.dumps(logobj)
+		html = html+"<br>"+json.dumps(log)
 
 		# https://sephbin.github.io/SyCoDe_Scribe/
 		# https://raw.githubusercontent.com/sephbin/SyCoDe_Scribe/main/README.md

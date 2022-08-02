@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from .models import *
 
 def index(request, path=None):

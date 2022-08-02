@@ -14,16 +14,16 @@ def index(request, path=None):
 
 		mediaPath = settings.MEDIA_ROOT
 		subpath = os.path.join(mediaPath,"mimir","1")
-		try:	git.Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
-		except Exception as e:
-			log.append(str(e))
-			try:
-				repo = git.Repo(subpath)
-				o = repo.remotes.origin
-				o.pull()
-			except Exception as e:
-				print(e)
-				log.append(str(e))
+		# try:	git.Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
+		# except Exception as e:
+		# 	log.append(str(e))
+		# 	try:
+		# 		repo = git.Repo(subpath)
+		# 		o = repo.remotes.origin
+		# 		o.pull()
+		# 	except Exception as e:
+		# 		print(e)
+		# 		log.append(str(e))
 		globPath = os.path.join(subpath,"**","*.md")
 		md_files = glob.glob(globPath, recursive = True)
 		log.append(subpath)

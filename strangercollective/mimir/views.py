@@ -10,11 +10,11 @@ def index(request, path=None):
 		import requests
 		import markdown
 		import re, glob, os, json
-		from git import Repo
+		import git
 
 		mediaPath = settings.MEDIA_ROOT
 		subpath = os.path.join(mediaPath,"mimir","1")
-		try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
+		try:	git.Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
 		except Exception as e:
 			log.append(str(e))
 			try:
@@ -51,7 +51,7 @@ def index(request, path=None):
 			mdtext = mdtext.replace(fromString,toString+toLink)
 		mdtext = mdtext.replace("\n","\n\n")
 		html = markdown.markdown(mdtext)
-		html = html+"<br>"+json.dumps(log)
+		html = html+"<br>"+json.dumps(logobj)
 
 		# https://sephbin.github.io/SyCoDe_Scribe/
 		# https://raw.githubusercontent.com/sephbin/SyCoDe_Scribe/main/README.md

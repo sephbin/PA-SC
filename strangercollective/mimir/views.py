@@ -9,7 +9,7 @@ def index(request, path=None):
 	import re, glob
 	from git import Repo
 
-	try:	Repo.clone_from("https://github.com/sephbin/ultimaThule_campaign", "../media/mimir/1")
+	try:	Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", "../media/mimir/1")
 	except Exception as e: print(e)
 	subpath = "../media/mimir/1"
 	md_files = glob.glob(subpath + "\**\*.md", recursive = True)

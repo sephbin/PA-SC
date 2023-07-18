@@ -15,15 +15,16 @@ def index(request, path=None):
 		mediaPath = settings.MEDIA_ROOT
 		subpath = os.path.join(mediaPath,"mimir","1")
 		# try:	git.Repo.clone_from("https://github.com/sephbin/SyCoDe_Scribe", subpath)
-		# except Exception as e:
-		# 	log.append(str(e))
-		# 	try:
-		# 		repo = git.Repo(subpath)
-		# 		o = repo.remotes.origin
-		# 		o.pull()
-		# 	except Exception as e:
-		# 		print(e)
-		# 		log.append(str(e))
+		try:	git.Repo.clone_from("https://github.com/sephbin/ultimaThule_campaign", subpath)
+		except Exception as e:
+			log.append(str(e))
+			try:
+				repo = git.Repo(subpath)
+				o = repo.remotes.origin
+				o.pull()
+			except Exception as e:
+				print(e)
+				log.append(str(e))
 		globPath = os.path.join(subpath,"**","*.md")
 		md_files = glob.glob(globPath, recursive = True)
 		log.append(subpath)
@@ -51,10 +52,17 @@ def index(request, path=None):
 			mdtext = mdtext.replace(fromString,toString+toLink)
 		mdtext = mdtext.replace("\n","\n\n")
 		html = markdown.markdown(mdtext)
-		html = html+"<br>"+json.dumps(log)
+		search = re.finditer(r"(<h[0-9].+?</h[0-9]>)", html)
+		for index, s in enumerate(search):
+			if index == 0:
+				html = html.replace(s.group(1), s.group(1)+'<div class="columns">')
+			if index != 0:
+				html = html.replace(s.group(1), "</div>"+s.group(1)+'<div class="columns">')
+		# html = html+"<br>"+json.dumps(log)
 
 		# https://sephbin.github.io/SyCoDe_Scribe/
 		# https://raw.githubusercontent.com/sephbin/SyCoDe_Scribe/main/README.md
-		return HttpResponse(html)
+		context = {"markdown":html, "title":path.replace(".md","")}
+		return render(request, "page.html", context)
 	except Exception as e:
 		return JsonResponse({"log":log, "error":str(e)})

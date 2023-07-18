@@ -70,6 +70,7 @@ INSTALLED_APPS = [
 	'mimir',
 	# 'scrpgtest',
 	'silenus',
+	'muninn',
 	'unswcode',
 	'cv',
 	'sc',

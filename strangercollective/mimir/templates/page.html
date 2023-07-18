@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Mimir: {{title}}{% endblock %}
+
+<style type="text/css">
+{% block style %}
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Roboto:wght@900&display=swap');
+*{font-family: 'EB Garamond', serif; }
+p{font-size: 18px;
+text-align: justify;
+text-justify: inter-word;
+}
+blockquote{
+	font-style: italic;
+}
+.columns{
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border-top: 2px solid rgb(230,0,0);
+	border-bottom: 2px solid;
+	columns: 3;
+	column-rule: 2px solid;
+	column-gap: 80px;
+}
+h1, h2, h3, h4, h5, h6{
+	font-family: 'Roboto', sans-serif;
+	color: rgb(230,0,0);}
+.content{
+	margin-left: 5em;
+	margin-right: 5em;
+
+}
+{% endblock %}
+</style>
+{% block content %}
+<div class="content">
+	{{ markdown|safe }}
+</div>
+{% endblock %}
